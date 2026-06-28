@@ -1,788 +1,1122 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>Sales</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Garanties &amp; Reparaties</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --border:#e5e7eb; --muted:#6b7280; --bg:#fff; --soft:#f9fafb;
-      --accent:#111827; --ok:#0f7b2f; --bad:#b00020;
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#171717;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --primary:#1f2024;
+      --primary2:#111214;
+      --ok:#16a34a;
+      --warn:#d97706;
+      --bad:#dc2626;
+      --info:#2563eb;
+      --soft:#f8fafc;
+      --pill:#ececec;
+      --pillText:#4b5563;
+      --pillActive:#1f2024;
     }
-    *{ box-sizing:border-box; }
-    body{ margin:0; font-family:'Poppins',system-ui,sans-serif; font-weight:300; background:#fcfcfc; color:#111; }
-
-    input,textarea{ background:#fff; color:#111; -webkit-text-fill-color:#111; transition:background-color 9999s ease-in-out 0s; }
-    input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,textarea:-webkit-autofill{
-      -webkit-text-fill-color:#111 !important; box-shadow:0 0 0px 1000px #fff inset !important; caret-color:#111 !important;
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-weight:500;
+      background:linear-gradient(180deg,#ffffff 0%,#f7f7f8 100%);
+      color:var(--text);
+      min-height:100vh;
     }
-
-    #loginView{ display:block; }
-    #appView{ display:none; }
-
-    .centerWrap{ max-width:520px; margin:0 auto; padding:34px 18px 28px; text-align:center; }
-    .wrap{ max-width:1300px; margin:0 auto; padding:16px 18px 120px; }
-    @media(max-width:480px){ .centerWrap{ padding:20px 14px 16px; } .wrap{ padding:10px 12px 110px; } }
-
-    .logo{ display:block; width:min(520px,100%); height:auto; max-height:90px; object-fit:contain; margin:24px auto 20px; }
-    @media(max-width:480px){ .logo{ max-height:70px; margin:16px auto 14px; } }
-
+    .wrap{max-width:1180px;margin:0 auto;padding:26px 16px}
+    .hidden{display:none !important}
+    .muted{color:var(--muted)}
+    .center{min-height:100vh;display:grid;place-items:center;padding:18px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 10px 22px rgba(2,6,23,.06);
+    }
+    header{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-height:42px}
+    .brand img{height:42px;max-width:220px;object-fit:contain;display:block}
+    label{display:block;color:var(--muted);font-size:12px;margin:10px 0 6px;font-weight:500}
+    input,select,textarea{
+      width:100%;border:1px solid var(--border);background:#fff;color:var(--text);
+      padding:11px 13px;border-radius:12px;outline:none;
+      font-family:inherit;font-weight:500;font-size:14px;
+    }
+    textarea{resize:vertical}
+    input:focus,select:focus,textarea:focus{border-color:rgba(15,23,42,.18);box-shadow:0 0 0 4px rgba(15,23,42,.06)}
+    select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:none}
     .btn{
-      font-family:'Poppins',sans-serif; font-weight:500; padding:10px 14px;
-      border-radius:14px; border:1px solid var(--border); background:#fff;
-      cursor:pointer; white-space:nowrap; color:#111; appearance:none; -webkit-appearance:none;
+      border:1px solid var(--border);background:#fff;color:var(--text);
+      padding:10px 14px;border-radius:14px;cursor:pointer;white-space:nowrap;
+      transition:transform .05s ease,box-shadow .15s ease,background .15s ease;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      font-family:inherit;font-weight:700;font-size:13px;
     }
-    .btn:hover{ background:#f3f4f6; }
-    .btnPrimary{ background:var(--accent); color:#fff; border-color:var(--accent); }
-    .btnPrimary:hover{ opacity:.92; background:var(--accent); }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background:linear-gradient(180deg,var(--primary),var(--primary2));border-color:transparent;color:#fff;box-shadow:0 8px 16px rgba(15,23,42,.16)}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn.small{padding:8px 10px;border-radius:10px;font-size:12px;font-weight:500}
+    .btn.icon{width:46px;height:46px;padding:0;border-radius:14px;background:#fff;border:1px solid var(--border);color:var(--text);box-shadow:0 4px 10px rgba(15,23,42,.06)}
+    .btn.openBtn{min-height:36px;padding:0 12px;border-radius:11px;font-weight:500;font-size:13px;box-shadow:none}
+    #newCaseBtn{min-height:46px;padding:0 16px;border-radius:14px;background:#fff;border:1px solid var(--border);color:var(--text);box-shadow:0 4px 10px rgba(15,23,42,.06);font-weight:500}
+    .topRightTools{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+    .two{display:grid;grid-template-columns:460px 1fr;gap:14px;align-items:stretch}
+    .colStretch{height:100%;display:flex;flex-direction:column}
+    @media (max-width:980px){.two{grid-template-columns:1fr}}
+    .hint{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.5;font-weight:500}
+    .kvRow{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin:10px 0 6px}
+    .kvBlock{min-width:0}
+    .kvLabel{color:var(--muted);font-size:12px;font-weight:500}
+    .kvValue{font-size:15px;font-weight:700;overflow-wrap:break-word;word-break:break-word}
+    .kvValueSmall{font-size:13px;font-weight:600;overflow-wrap:break-word;word-break:break-word}
+    .smallLine{margin-top:3px;font-size:12px;color:var(--muted);overflow-wrap:break-word;word-break:break-word;font-weight:500}
+    .loginCard{max-width:520px;width:100%;padding:22px;border-radius:24px}
+    .loginHeader{text-align:center;margin-bottom:8px}
+    .loginLogo{height:78px;max-width:280px;object-fit:contain;display:block;margin:0 auto 8px}
+    .loginForm{max-width:380px;margin:0 auto}
+    .loginActions{justify-content:center}
+    .loginMsg{text-align:center;min-height:18px}
+    .table{width:100%;border-collapse:separate;border-spacing:0;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#fff}
+    .table th,.table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;text-align:left}
+    .table th{color:var(--muted);font-weight:700;background:var(--soft)}
+    .table tr:last-child td{border-bottom:none}
+    .statusPill{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font-size:11px;font-weight:700;white-space:nowrap;background:#fff}
+    .statusPill .dot{width:7px;height:7px;border-radius:999px;flex-shrink:0}
+    .statusPill.s-new .dot{background:#6366f1}
+    .statusPill.s-sent .dot{background:var(--warn)}
+    .statusPill.s-inrepair .dot{background:var(--info)}
+    .statusPill.s-done .dot{background:var(--ok)}
+    .statusPill.s-rejected .dot{background:var(--bad)}
+    .statusPill.s-new{border-color:rgba(99,102,241,.25)}
+    .statusPill.s-sent{border-color:rgba(217,119,6,.25)}
+    .statusPill.s-inrepair{border-color:rgba(37,99,235,.25)}
+    .statusPill.s-done{border-color:rgba(22,163,74,.25)}
+    .statusPill.s-rejected{border-color:rgba(220,38,38,.25)}
+    .statusCell{text-align:center}
+    .statusWrap{width:100%;display:flex;justify-content:center}
+    .actionsCell{white-space:nowrap;display:flex;gap:8px;justify-content:flex-start;align-items:center;flex-wrap:nowrap}
+    .completedCell{text-align:center;width:90px}
+    .checkPill{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:26px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted);font-size:14px;font-weight:700}
+    .checkPill.yes{border-color:rgba(22,163,74,.35);background:rgba(22,163,74,.08);color:var(--ok)}
+    .sectionTitle{font-size:12px;color:var(--muted);letter-spacing:.2px;font-weight:700}
+    .toggleRow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px dashed var(--border);background:var(--soft);border-radius:12px;cursor:pointer;user-select:none}
+    .plusSym{font-weight:700;font-size:18px;line-height:1;color:var(--muted)}
+    .flag{font-size:16px;line-height:1}
+    .flagRow{display:flex;gap:8px;flex-wrap:wrap}
+    .mailFlagBtn{width:38px;height:38px;padding:0;border-radius:11px;background:#fff;border:1px solid var(--border);box-shadow:0 3px 8px rgba(15,23,42,.04)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media (max-width:520px){.grid2,.grid3{grid-template-columns:1fr}}
+    .overlay{position:fixed;inset:0;background:rgba(15,23,42,.35);display:grid;place-items:center;padding:18px;z-index:9999}
+    .tokenRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .savedTemplateRow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:#fff}
+    .savedLeft{min-width:0;display:flex;gap:10px;align-items:flex-start}
+    .tplName{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}
+    .tplMeta{color:var(--muted);font-size:12px;overflow-wrap:anywhere;word-break:break-word;max-width:360px;font-weight:500}
 
-    .btnCalc{
-      font-family:'Poppins',sans-serif; font-weight:700; padding:10px 12px;
-      border-radius:14px; border:1px solid var(--border); background:#fff; color:#111;
-      cursor:pointer; line-height:1; appearance:none; -webkit-appearance:none; -webkit-tap-highlight-color:transparent;
-    }
-    .btnCalc:hover{ background:#f3f4f6; }
+    /* Photo grid */
+    .photoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin-top:8px}
+    .photoThumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);aspect-ratio:1;display:block;background:var(--soft)}
+    .photoThumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .photoThumb:hover{border-color:rgba(15,23,42,.3)}
+    .photoAdd{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .photoInputRow{display:flex;gap:8px;align-items:center}
+    .photoInputRow input{flex:1}
 
-    .input{
-      width:100%; padding:12px 14px; border-radius:16px; border:1px solid var(--border);
-      font-family:'Poppins',sans-serif; font-weight:500; font-size:16px; background:#fff;
-      outline:none;
-    }
-    .input:focus{ border-color:#9ca3af; }
+    /* Status select */
+    .statusSelectWrap{position:relative}
+    .statusSelectWrap select{padding-right:32px}
 
-    .filterSelect{
-      padding:12px 14px; border-radius:16px; border:1px solid var(--border);
-      font-family:'Poppins',sans-serif; font-weight:500; font-size:16px;
-      background:#fff; color:#111; appearance:none; -webkit-appearance:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat:no-repeat; background-position:right 12px center; padding-right:36px; cursor:pointer;
-    }
-    .filterSelect:focus{ outline:none; border-color:#9ca3af; }
+    /* Invoice link */
+    .invoiceLink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--info);text-decoration:none;padding:6px 10px;border:1px solid rgba(37,99,235,.2);border-radius:10px;background:rgba(37,99,235,.04)}
+    .invoiceLink:hover{background:rgba(37,99,235,.09)}
 
-    .muted{ color:var(--muted); font-size:13px; font-weight:300; }
-    .err{ color:var(--bad); font-size:13px; margin-top:8px; text-align:left; }
+    .mailLogRow{display:flex;justify-content:space-between;gap:16px;align-items:center;width:100%}
+    .mailLogDate{font-size:13px;font-weight:700;color:var(--text)}
+    .mailLogTime{font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap}
 
-    .loginCard{ background:var(--bg); border:1px solid var(--border); border-radius:20px; padding:16px; text-align:left; }
+    .kvGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:6px}
+    .kvGridItem{min-width:0}
+    .linkBtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--info);background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.18);border-radius:8px;padding:4px 9px;text-decoration:none;white-space:nowrap}
+    .linkBtn:hover{background:rgba(37,99,235,.12)}
 
-    .topbar{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:6px 0 10px; }
-
-    .searchArea{ display:flex; flex-direction:column; gap:8px; margin:6px 0 12px; }
-    .searchRow{ display:flex; gap:8px; align-items:center; }
-    .searchRow .input{ flex:1; }
-    .filterRow{ display:flex; gap:8px; flex-wrap:wrap; }
-    .filterRow .filterSelect{ flex:1; min-width:120px; }
-
-    @media(max-width:640px){
-      .mobileSearchBar{
-        position:sticky; top:0; z-index:100;
-        background:rgba(252,252,252,.97); backdrop-filter:blur(10px);
-        padding:10px 12px 8px; margin:0 -12px 10px;
-      }
-      .mobileSearchBar .input{
-        font-size:17px; padding:14px 16px; border-radius:18px;
-        border:1.5px solid var(--border); background:#fff;
-        box-shadow:0 2px 12px rgba(0,0,0,.08);
-      }
-      .mobileSearchBar .input:focus{ outline:none; border-color:#9ca3af; }
-      .mobileSearchBar .filterRow{ margin-top:6px; }
-      .mobileSearchBar .filterRow .filterSelect{ font-size:14px; padding:10px 12px; }
-    }
-
-    .activeFilters{ display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; }
-    .filterChip{
-      display:inline-flex; align-items:center; gap:5px; padding:3px 10px 3px 12px;
-      border-radius:999px; background:#f3f4f6; border:1px solid var(--border); font-size:12px; font-weight:500;
-    }
-    .filterChip button{ border:none; background:none; cursor:pointer; padding:0; font-size:14px; line-height:1; color:var(--muted); }
-
-    .card{ background:var(--bg); border:1px solid var(--border); border-radius:20px; padding:12px; }
-
-    .tableWrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    table{ width:100%; border-collapse:collapse; font-size:14px; min-width:720px; }
-    th{ padding:10px; border-bottom:1px solid #eee; font-weight:500; text-align:left; white-space:nowrap; }
-    td{ padding:10px; border-bottom:1px solid #f1f1f1; font-weight:300; vertical-align:top; }
-    .detailsRow td{ background:var(--soft); border-bottom:1px solid #eaeaea; }
-    .small{ font-size:12px; color:var(--muted); }
-
-    .mobileOnly{ display:none; }
-    .desktopOnly{ display:block; }
-    @media(max-width:640px){ .mobileOnly{ display:block; } .desktopOnly{ display:none; } }
-
-    /* Mobile cards - compact */
-    .productList{ display:flex; flex-direction:column; gap:8px; }
-    .pCard{ border:1px solid var(--border); border-radius:16px; background:#fff; overflow:hidden; }
-    .pRow{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
-    .pName{ font-weight:500; font-size:14px; line-height:1.2; flex:1; min-width:0; word-break:break-word; display:flex; align-items:center; }
-    .pActions{ display:flex; gap:6px; align-items:center; flex-shrink:0; }
-    .pTiny{ padding:8px 10px; border-radius:12px; font-weight:700; font-size:13px; }
-    .pToggle{ padding:8px 10px; border-radius:12px; color:#111; font-size:13px; }
-    .pIconBtn{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:36px; height:36px; border-radius:12px; border:1px solid var(--border);
-      background:#fff; cursor:pointer; flex-shrink:0; -webkit-tap-highlight-color:transparent;
-      appearance:none; -webkit-appearance:none;
-    }
-    .pIconBtn:hover{ background:#f3f4f6; }
-    .pIconBtnPrimary{ background:var(--accent); border-color:var(--accent); }
-
-    .pDetails{ display:none; padding:8px 12px 12px; border-top:1px solid #eee; background:var(--soft); }
-    .pDetails.open{ display:block; }
-
-    .kv{ display:grid; grid-template-columns:110px 1fr; gap:6px 10px; font-size:13px; }
-    .k{ color:var(--muted); font-weight:500; }
-    .v{ color:#111; font-weight:300; word-break:break-word; }
-
-    .whBreakdown{ display:flex; flex-direction:column; gap:2px; }
-    .whLine{ font-size:12px; }
-
-    .stockDot{
-      display:inline-block; width:9px; height:9px; border-radius:999px;
-      margin-right:8px; vertical-align:middle; flex-shrink:0;
-    }
-    .dotGreen{ background:#16a34a; }
-    .dotOrange{ background:#f59e0b; }
-    .dotRed{ background:#ef4444; }
-
-    .tdActions{ text-align:right; white-space:nowrap; }
-    .actionWrap{ display:inline-flex; gap:8px; align-items:center; justify-content:flex-end; }
-
-    /* Show more button */
-    .showMoreWrap{ display:flex; justify-content:center; padding:14px 0 4px; }
-    .showMoreBtn{
-      font-family:'Poppins',sans-serif; font-weight:500; font-size:14px;
-      padding:10px 24px; border-radius:14px; border:1px solid var(--border);
-      background:#fff; cursor:pointer; color:#111;
-    }
-    .showMoreBtn:hover{ background:#f3f4f6; }
-
-    .overlay{
-      position:fixed; inset:0; background:rgba(0,0,0,.45);
-      display:none; align-items:center; justify-content:center; z-index:10000; padding:14px;
-    }
-    .overlay.active{ display:flex; }
-    .modal{
-      background:#fff; width:min(1100px,96vw); height:min(760px,92vh);
-      border-radius:20px; overflow:hidden; display:flex; flex-direction:column;
-    }
-    .modalHeader{
-      padding:12px 14px; border-bottom:1px solid #eee;
-      display:flex; justify-content:space-between; align-items:center; font-weight:500; gap:10px;
-    }
-    .modalHeader .actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    .modalBody{ padding:14px; overflow:auto; }
-
-    #calcOverlay .modalBody{ padding:0; overflow:hidden; height:100%; }
-    #calcOverlay .modalBody iframe{ width:100%; height:100%; border:0; display:block; }
-
-    .formGrid{ display:grid; grid-template-columns:1fr; gap:12px; }
-    .field label{ display:block; font-size:12px; color:var(--muted); margin:0 0 5px; font-weight:500; }
-    .field input,.field textarea{
-      width:100%; padding:10px 12px; border-radius:14px; border:1px solid var(--border);
-      font-family:'Poppins',sans-serif; font-weight:500; font-size:16px; background:#fff;
-      outline:none;
-    }
-    .field input:focus,.field textarea:focus{ border-color:#9ca3af; }
-    .field textarea{ min-height:80px; resize:vertical; font-weight:300; }
-
-    .cartList{ margin:10px 0 0; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
-    .cartRow{ display:flex; justify-content:space-between; gap:10px; padding:12px; border-bottom:1px solid #eee; }
-    .cartRow:last-child{ border-bottom:none; }
-    .cartRow .left{ display:flex; flex-direction:column; gap:3px; }
-
-    .tick{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 12px;
-      border:1px solid rgba(15,123,47,.25); background:rgba(15,123,47,.06);
-      border-radius:14px; color:var(--ok); font-weight:500; margin-top:12px;
-    }
-    .tick .dot{
-      width:22px; height:22px; border-radius:50%; display:inline-flex;
-      align-items:center; justify-content:center; background:var(--ok); color:#fff; font-weight:700;
-    }
-
-    .cartFab{
-      position:fixed; left:18px; bottom:18px; height:56px; padding:0 16px; border-radius:999px;
-      background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; gap:10px;
-      cursor:pointer; box-shadow:0 10px 25px rgba(0,0,0,.25); z-index:9999; user-select:none;
-      font-family:'Poppins',sans-serif; font-weight:700;
-    }
-    .cartFab .badge{
-      display:inline-flex; align-items:center; justify-content:center;
-      min-width:30px; height:30px; padding:0 9px; border-radius:999px;
-      background:#fff; color:#111; font-weight:700; font-size:13px;
-    }
-
-    .cartBar{
-      display:none; position:fixed; left:0; right:0; bottom:0;
-      padding:10px 14px; background:rgba(252,252,252,.92); border-top:1px solid var(--border);
-      backdrop-filter:blur(10px); z-index:9999;
-      padding-bottom:calc(10px + env(safe-area-inset-bottom));
-    }
-    .cartBarInner{ max-width:1300px; margin:0 auto; display:flex; gap:10px; align-items:center; }
-    .cartBarBtn{
-      width:100%; height:50px; border-radius:16px; background:var(--accent); color:#fff;
-      border:1px solid var(--accent); font-family:'Poppins',sans-serif; font-weight:700; font-size:16px;
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      appearance:none; -webkit-appearance:none;
-    }
-    .cartBarBtn .badge{
-      display:inline-flex; align-items:center; justify-content:center;
-      min-width:26px; height:26px; padding:0 8px; border-radius:999px;
-      background:#fff; color:#111; font-weight:700; font-size:13px;
-    }
-    @media(max-width:640px){ .cartBar{ display:block; } .cartFab{ display:none !important; } }
+    /* Supplier cards */
+    .supGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
+    .supCard{border:1px solid var(--border);border-radius:16px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:8px}
+    .supCard:hover{border-color:rgba(15,23,42,.2);box-shadow:0 6px 16px rgba(15,23,42,.07)}
+    .supName{font-size:15px;font-weight:700}
+    .supMeta{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .supActions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+    .modeSwitch{display:inline-flex;align-items:center;gap:6px;padding:6px;background:var(--pill);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+    .modeBtn{border:none;background:transparent;color:var(--pillText);padding:10px 18px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500}
+    .modeBtn.active{background:var(--pillActive);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(15,23,42,.18)}
   </style>
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div id="loginView" class="centerWrap">
-    <img src="./logo.png" alt="Logo" class="logo" onerror="this.style.display='none';">
-    <div class="loginCard">
-      <div style="font-weight:700; margin-bottom:10px;">Login</div>
-      <input id="loginKey" class="input" placeholder="Key" autocomplete="off" autocapitalize="off" spellcheck="false">
-      <div style="display:flex; gap:10px; margin-top:12px;">
-        <button id="loginBtn" class="btn btnPrimary" style="flex:1;">Login</button>
+<!-- LOGIN -->
+<section id="loginView" class="center">
+  <div class="card loginCard">
+    <div class="loginHeader"><img src="logo.png" alt="Logo" class="loginLogo"></div>
+    <div class="loginForm">
+      <input id="keyInput" type="password" autocomplete="current-password" placeholder="Wachtwoord" />
+      <div class="row loginActions" style="margin-top:14px">
+        <button id="loginBtn" class="btn primary" type="button" style="min-width:160px">Inloggen</button>
       </div>
-      <div id="loginErr" class="err"></div>
+      <div id="loginMsg" class="hint loginMsg"></div>
     </div>
   </div>
+</section>
 
-  <!-- APP -->
-  <div id="appView" class="wrap">
-    <div class="topbar">
-      <div></div>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <button id="accountBtn" class="btn">Account</button>
-        <button id="logoutBtn" class="btn" title="Log out" style="padding:9px 11px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+<!-- PORTAL -->
+<section id="portalView" class="hidden">
+  <div class="wrap">
+    <header>
+      <div class="brand"><img src="logo.png" alt="Logo"></div>
+      <div class="row topRightTools">
+        <div id="viewSwitch" class="modeSwitch hidden">
+          <button id="viewCasesBtn" class="modeBtn active" type="button">Zaken</button>
+          <button id="viewSuppliersBtn" class="modeBtn" type="button">Leveranciers</button>
+        </div>
+        <button id="newCaseBtn" class="btn hidden" type="button">
+          <span style="font-weight:700;font-size:16px;line-height:1">+</span>
+          <span>Nieuwe zaak</span>
         </button>
+        <button id="logoutBtn" class="btn icon" type="button" title="Uitloggen">‚èª</button>
       </div>
-    </div>
+    </header>
 
-    <img src="./logo.png" alt="Logo" class="logo" onerror="this.style.display='none';">
+    <div class="two">
+      <!-- LEFT: detail panel -->
+      <section class="card colStretch">
+        <div id="noSelection" class="hint">Open een zaak uit de tabel.</div>
+        <div id="form" class="hidden" style="flex:1;display:flex;flex-direction:column;gap:0">
 
-    <div class="searchArea mobileSearchBar">
-      <div class="searchRow">
-        <input id="searchInput" class="input" placeholder="Search product or EAN..." disabled>
-      </div>
-      <div class="filterRow">
-        <select id="filterCategory" class="filterSelect" disabled><option value="">All categories</option></select>
-        <select id="filterSupplier" class="filterSelect" disabled><option value="">All brands</option></select>
-        <button id="clearFiltersBtn" class="btn" style="flex-shrink:0; display:none; padding:10px 12px;">&#x2715;</button>
-      </div>
-      <div id="activeFilters" class="activeFilters"></div>
-    </div>
+          <!-- Top: customer + status badge -->
+          <div class="kvRow">
+            <div class="kvBlock" style="flex:1;min-width:0">
+              <div class="kvLabel">Klant</div>
+              <div class="kvValue" id="d_customer">‚Äî</div>
+              <div class="smallLine" id="d_customerMail"></div>
 
-    <div id="meta" class="muted" style="min-height:18px; margin:0 0 10px;"></div>
-    <div id="err" class="err"></div>
+              <div style="margin-top:10px">
+                <div class="kvLabel">Leverancier</div>
+                <div class="kvValue" id="d_supplier">‚Äî</div>
+              </div>
 
-    <!-- Desktop table -->
-    <div class="card desktopOnly">
-      <div class="tableWrap">
-        <table>
+              <div style="margin-top:10px">
+                <div class="kvLabel">Product</div>
+                <div class="kvValueSmall" id="d_product">‚Äî</div>
+              </div>
+
+              <div class="kvGrid" style="margin-top:10px">
+                <div class="kvGridItem">
+                  <div class="kvLabel">Aankoopdatum</div>
+                  <div class="kvValueSmall" id="d_purchaseDate">‚Äî</div>
+                </div>
+                <div class="kvGridItem">
+                  <div class="kvLabel">Zaaknummer</div>
+                  <div class="kvValueSmall" id="d_caseNumber">‚Äî</div>
+                </div>
+              </div>
+
+              <!-- Invoice -->
+              <div style="margin-top:10px" id="d_invoiceBlock">
+                <div class="kvLabel">Aankoopfactuur</div>
+                <div id="d_invoiceDisplay">‚Äî</div>
+              </div>
+            </div>
+            <div class="kvBlock" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+              <span id="statusBadge" class="statusPill s-new"><span class="dot"></span><span id="statusText">Nieuw</span></span>
+              <select id="statusSelect" style="width:130px;font-size:12px;padding:7px 10px;border-radius:10px"></select>
+              <button id="statusSaveBtn" class="btn small primary" type="button">Opslaan</button>
+            </div>
+          </div>
+
+          <!-- Complaint -->
+          <div class="divider"></div>
+          <div class="kvLabel" style="margin-top:0">Klacht / omschrijving</div>
+          <div id="d_complaint" style="font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:50px">‚Äî</div>
+
+          <!-- Photos -->
+          <div style="margin-top:12px">
+            <div class="sectionTitle">Foto's</div>
+            <div id="photoGrid" class="photoGrid"></div>
+            <div id="noPhotos" class="hint" style="margin-top:6px">Geen foto's.</div>
+            <div id="photoLinkList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
+          </div>
+
+          <!-- Add/edit photos -->
+          <div style="margin-top:10px">
+            <div class="toggleRow" id="photoEditToggle"><div class="sectionTitle">Foto-links bewerken</div><div class="plusSym" id="photoEditPlus">+</div></div>
+            <div id="photoEditBody" class="hidden" style="margin-top:10px">
+              <div id="photoInputsWrap"></div>
+              <button id="addPhotoBtn" class="btn small" type="button" style="margin-top:8px">+ Veld toevoegen</button>
+              <div class="row" style="margin-top:10px;justify-content:flex-end">
+                <button id="savePhotosBtn" class="btn primary" type="button">Foto's opslaan</button>
+              </div>
+              <div class="hint" id="photoSaveMsg"></div>
+            </div>
+          </div>
+
+          <!-- Notes field -->
+          <div class="divider"></div>
+          <div class="sectionTitle">Notities</div>
+          <textarea id="notesField" rows="3" placeholder="Interne notities‚Ä¶" style="margin-top:6px"></textarea>
+          <div class="row" style="margin-top:8px;justify-content:flex-end">
+            <button id="saveNotesBtn" class="btn primary small" type="button">Notities opslaan</button>
+          </div>
+          <div class="hint" id="notesSaveMsg"></div>
+
+          <!-- Supplier reference -->
+          <div class="divider"></div>
+          <div class="sectionTitle">Leveranciers referentie</div>
+          <input id="supplierRef" placeholder="RMA / zaaknummer leverancier" style="margin-top:6px" />
+          <div class="row" style="margin-top:8px;justify-content:flex-end">
+            <button id="saveRefBtn" class="btn primary small" type="button">Opslaan</button>
+          </div>
+          <div class="hint" id="refSaveMsg"></div>
+
+          <!-- Mail section -->
+          <div class="divider"></div>
+          <div class="sectionTitle" style="margin-bottom:8px">Mail leverancier</div>
+          <div class="flagRow" id="supplierMailFlags">
+            <button class="btn mailFlagBtn" id="ms_en" type="button"><span class="flag">üá¨üáß</span></button>
+            <button class="btn mailFlagBtn" id="ms_nl" type="button"><span class="flag">üá≥üá±</span></button>
+          </div>
+          <div class="hint" id="mailSupplierMsg"></div>
+
+          <div id="mailCustomerSection" class="hidden">
+            <div class="divider"></div>
+            <div class="sectionTitle" style="margin-bottom:8px">Mail klant</div>
+            <div class="flagRow" id="customerMailFlags">
+              <button class="btn mailFlagBtn" id="mc_en" type="button"><span class="flag">üá¨üáß</span></button>
+              <button class="btn mailFlagBtn" id="mc_nl" type="button"><span class="flag">üá≥üá±</span></button>
+              <button class="btn mailFlagBtn" id="mc_de" type="button"><span class="flag">üá©üá™</span></button>
+              <button class="btn mailFlagBtn" id="mc_fr" type="button"><span class="flag">üá´üá∑</span></button>
+            </div>
+            <div class="hint" id="mailCustomerMsg"></div>
+          </div>
+
+          <!-- Templates -->
+          <div id="templatesWrap" style="margin-top:10px">
+            <div class="divider"></div>
+            <div class="toggleRow" id="templatesToggle"><div class="sectionTitle">Mail templates</div><div class="plusSym" id="templatesPlus">+</div></div>
+            <div id="templatesBody" class="hidden" style="margin-top:10px">
+              <div id="supplierTemplatesList"><div class="muted" style="font-size:13px">Geen templates.</div></div>
+              <div class="hint" id="tplSendMsg"></div>
+              <div class="divider"></div>
+              <div class="toggleRow" id="addTplToggle"><div class="sectionTitle">Template toevoegen</div><div class="plusSym" id="addTplPlus">+</div></div>
+              <div id="addTplBody" class="hidden" style="margin-top:10px">
+                <div class="grid2">
+                  <div><label style="margin-top:0">Taal</label>
+                    <select id="tplLang">
+                      <option value="en">EN</option>
+                      <option value="nl">NL</option>
+                    </select>
+                  </div>
+                  <div><label style="margin-top:0">Naam</label><input id="tplLabel" /></div>
+                </div>
+                <label>Onderwerp</label><input id="tplSubject" />
+                <label>Tekst</label><textarea id="tplBodyText" rows="8"></textarea>
+                <div class="tokenRow">
+                  <button class="btn small" type="button" data-token="{{Klant}}">{{Klant}}</button>
+                  <button class="btn small" type="button" data-token="{{KlantVolledig}}">{{KlantVolledig}}</button>
+                  <button class="btn small" type="button" data-token="{{Leverancier}}">{{Leverancier}}</button>
+                  <button class="btn small" type="button" data-token="{{Product}}">{{Product}}</button>
+                  <button class="btn small" type="button" data-token="{{Klacht}}">{{Klacht}}</button>
+                  <button class="btn small" type="button" data-token="{{Zaaknummer}}">{{Zaaknummer}}</button>
+                  <button class="btn small" type="button" data-token="{{Aankoopdatum}}">{{Aankoopdatum}}</button>
+                  <button class="btn small" type="button" data-token="{{Factuurnummer}}">{{Factuurnummer}}</button>
+                  <button class="btn small" type="button" data-token="{{LeveranciersRef}}">{{LeveranciersRef}}</button>
+                  <button class="btn small" type="button" data-token="{{FotoLinks}}">{{FotoLinks}}</button>
+                  <button class="btn small" type="button" data-token="{{FactuurLink}}">{{FactuurLink}}</button>
+                </div>
+                <div class="row" style="margin-top:10px;justify-content:flex-end;gap:8px">
+                  <button id="tplCancel" class="btn" type="button">Annuleren</button>
+                  <button id="tplSave" class="btn primary" type="button">Opslaan</button>
+                </div>
+                <div class="hint" id="tplSaveMsg"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mail log -->
+          <div class="divider"></div>
+          <div class="toggleRow" id="mailLogToggle"><div class="sectionTitle">Mail log</div><div class="plusSym" id="mailLogPlus">+</div></div>
+          <div id="mailLogBody" class="hidden" style="margin-top:10px">
+            <div id="mailLogList" class="muted" style="font-size:13px">Geen log.</div>
+          </div>
+
+          <div class="hint" id="msg" style="margin-top:auto"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT: table -->
+      <section class="card colStretch">
+        <input id="historySearch" placeholder="Zoeken‚Ä¶" style="width:100%;margin-bottom:12px" />
+        <table class="table">
           <thead>
             <tr>
-              <th>Product</th>
-              <th>Stock</th>
-              <th>Warehouse</th>
-              <th>Total</th>
-              <th style="text-align:right;"></th>
+              <th style="width:45%">Klant / Product</th>
+              <th style="width:160px;text-align:center">Status</th>
+              <th>Actie</th>
+              <th class="completedCell">Klaar</th>
             </tr>
           </thead>
-          <tbody id="tbody">
-            <tr><td colspan="5" class="small">Loading...</td></tr>
-          </tbody>
+          <tbody id="tbodyOpen"><tr><td colspan="4" class="muted">Laden‚Ä¶</td></tr></tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- Mobile cards -->
-    <div class="mobileOnly">
-      <div id="mobileProducts" class="productList"></div>
-    </div>
-  </div>
-
-  <!-- Desktop floating LEAD -->
-  <div class="cartFab" id="cartBtn" style="display:none;">
-    <span>Enter contact</span><span class="badge" id="cartBadge">0</span>
-  </div>
-
-  <!-- Mobile bottom lead bar -->
-  <div class="cartBar" id="cartBar" style="display:none;">
-    <div class="cartBarInner">
-      <button class="cartBarBtn" id="cartBarBtn">
-        Enter contact <span class="badge" id="cartBarBadge">0</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Lead modal -->
-  <div id="cartOverlay" class="overlay">
-    <div class="modal">
-      <div class="modalHeader">
-        <span>Enter contact</span>
-        <div class="actions"><button id="cartClose" class="btn">Close</button></div>
-      </div>
-      <div class="modalBody">
-        <div class="formGrid">
-          <div class="field"><label>Name</label><input id="custName" placeholder="Name"></div>
-          <div class="field"><label>Phone number</label><input id="phone" placeholder="Phone number" inputmode="tel"></div>
-          <div class="field"><label>Email</label><input id="mail" placeholder="Email" inputmode="email"></div>
-          <div class="field"><label>Note</label><textarea id="note1" placeholder="Note"></textarea></div>
-        </div>
-        <div style="margin-top:14px; font-weight:700;">Items:</div>
-        <div id="cartList" class="cartList"></div>
-        <button id="waBtn" style="width:100%; margin-top:12px; height:52px; border-radius:16px; background:#25D366; color:#fff; border:none; font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; appearance:none; -webkit-appearance:none;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Send via WhatsApp
-        </button>
-        <div id="cartErr" class="err"></div>
-        <div id="cartTick" class="tick" style="display:none;"><span class="dot">v</span><span> Saved</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Account modal -->
-  <div id="accountOverlay" class="overlay">
-    <div class="modal">
-      <div class="modalHeader">
-        <span id="accountTitle">Account</span>
-        <div class="actions"><button id="accountClose" class="btn">Close</button></div>
-      </div>
-      <div class="modalBody">
-        <div class="muted" id="accountSub" style="margin-bottom:10px;"></div>
-        <div class="card desktopOnly">
-          <div style="font-weight:700; margin-bottom:8px;">Leads overview</div>
-          <div class="tableWrap">
-            <table style="min-width:820px;">
+        <div id="completedWrap" style="margin-top:12px">
+          <div class="divider"></div>
+          <div class="toggleRow" id="completedToggle"><div class="sectionTitle">Afgerond</div><div class="plusSym" id="completedPlus">+</div></div>
+          <div id="completedBody" class="hidden" style="margin-top:10px">
+            <table class="table">
               <thead>
-                <tr><th>Name</th><th>Phone</th><th>Mail</th><th>Product</th><th>Retail price</th><th>Note</th></tr>
+                <tr>
+                  <th style="width:45%">Klant / Product</th>
+                  <th style="width:160px;text-align:center">Status</th>
+                  <th>Actie</th>
+                  <th class="completedCell">Klaar</th>
+                </tr>
               </thead>
-              <tbody id="accountOrdersTbody">
-                <tr><td colspan="6" class="small">Loading...</td></tr>
-              </tbody>
+              <tbody id="tbodyCompleted"><tr><td colspan="4" class="muted">Geen afgeronde zaken.</td></tr></tbody>
             </table>
           </div>
         </div>
-        <div class="mobileOnly">
-          <div style="font-weight:700; margin-bottom:10px;">Leads overview</div>
-          <div id="mobileLeads" class="productList"></div>
-        </div>
-        <div id="accountErr" class="err"></div>
-      </div>
+      </section>
     </div>
   </div>
+</section>
 
-  <!-- Calculator modal -->
-  <div id="calcOverlay" class="overlay">
-    <div class="modal">
-      <div class="modalHeader">
-        <span>Calculator</span>
-        <div class="actions"><button id="calcClose" class="btn">Close</button></div>
-      </div>
-      <div class="modalBody">
-        <iframe id="calcFrame" title="Calculator" src="about:blank"></iframe>
-      </div>
+<!-- SUPPLIERS VIEW -->
+<div id="suppliersView" class="hidden">
+  <div class="wrap" style="padding-top:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+      <div style="font-weight:700;font-size:16px">Leveranciers</div>
+      <button id="newSupplierBtn" class="btn primary" type="button">+ Leverancier toevoegen</button>
+    </div>
+    <input id="supplierSearch" placeholder="Zoeken op naam, mail, contactpersoon‚Ä¶" style="width:100%;margin-bottom:14px" />
+    <div id="supplierGrid" class="supGrid">
+      <div class="muted" style="font-size:13px">Laden‚Ä¶</div>
     </div>
   </div>
+</div>
 
-  <script>
-    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwxY1CyySY3QDVzP5bNQnHxmBpKlbAB2NHQKbkCpKSjVhCav-sEjYdr8ZnvZq5ZfvVDYA/exec";
-    const CALCULATOR_URL = "https://surf-center.github.io/calculator/";
-    const PAGE_SIZE = 20;
-    const CACHE_KEY = "sc_products_cache";
+<!-- SUPPLIER EDIT MODAL -->
+<div id="supplierModal" class="overlay hidden">
+  <div class="card" style="max-width:540px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="font-weight:700" id="supplierModalTitle">Nieuwe leverancier</div>
+      <button id="supplierModalClose" class="btn" type="button">Sluiten</button>
+    </div>
+    <div class="grid2">
+      <div><label style="margin-top:0">Naam *</label><input id="sup_name" placeholder="Leveranciersnaam" /></div>
+      <div><label style="margin-top:0">Merk / label</label><input id="sup_brand" placeholder="bijv. Fanatic, North‚Ä¶" /></div>
+    </div>
+    <div class="grid2">
+      <div><label>E-mail garanties *</label><input id="sup_email" type="email" placeholder="garantie@leverancier.com" /></div>
+      <div><label>E-mail algemeen</label><input id="sup_emailGeneral" type="email" placeholder="info@leverancier.com" /></div>
+    </div>
+    <div class="grid2">
+      <div><label>Contactpersoon</label><input id="sup_contact" placeholder="Naam contactpersoon" /></div>
+      <div><label>Telefoon</label><input id="sup_phone" placeholder="+31 ‚Ä¶" /></div>
+    </div>
+    <div class="grid2">
+      <div><label>Website</label><input id="sup_website" type="url" placeholder="https://‚Ä¶" /></div>
+      <div><label>Land</label><input id="sup_country" placeholder="Nederland" /></div>
+    </div>
+    <label>Garantieportaal / RMA-link</label>
+    <input id="sup_rmaLink" type="url" placeholder="https://‚Ä¶ (leveranciersportaal voor garanties)" />
+    <label>Garantievoorwaarden / termijn</label>
+    <input id="sup_warranty" placeholder="bijv. 2 jaar fabrieksgarantie, binnen 14 dagen melden" />
+    <label>Adres</label>
+    <input id="sup_address" placeholder="Straat, postcode, stad" />
+    <label>Notities</label>
+    <textarea id="sup_notes" rows="3" placeholder="Interne notities over deze leverancier‚Ä¶"></textarea>
+    <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
+      <button id="sup_deleteBtn" class="btn small hidden" type="button" style="color:var(--bad);border-color:rgba(220,38,38,.25)">Verwijderen</button>
+      <div class="row" style="gap:8px;margin-left:auto">
+        <button id="sup_saveBtn" class="btn primary" type="button">Opslaan</button>
+      </div>
+    </div>
+    <div class="hint" id="sup_msg"></div>
+  </div>
+</div>
 
-    const WAREHOUSE_KEYS = [
-      "msi_F4_qty","msi_NP7_qty","msi_apm_qty","msi_boards-and-more_qty",
-      "msi_coros_qty","msi_foxsports_qty","msi_h20_qty","msi_kubus_qty",
-      "msi_neilpryde_qty","msi_newsports_qty","msi_patrik_qty","msi_point7_qty",
-      "msi_ride_engine_qty","msi_slingshot_qty","msi_unifiber_qty","msi_weone_qty","msi_wip_qty"
-    ];
-    const WAREHOUSE_LABELS = {
-      "msi_F4_qty":"F4","msi_NP7_qty":"NP7","msi_apm_qty":"APM",
-      "msi_boards-and-more_qty":"Boards & More","msi_coros_qty":"Coros",
-      "msi_foxsports_qty":"Foxsports","msi_h20_qty":"H2O","msi_kubus_qty":"Kubus",
-      "msi_neilpryde_qty":"Neil Pryde","msi_newsports_qty":"Newsports",
-      "msi_patrik_qty":"Patrik","msi_point7_qty":"Point-7",
-      "msi_ride_engine_qty":"Ride Engine","msi_slingshot_qty":"Slingshot",
-      "msi_unifiber_qty":"Unifiber","msi_weone_qty":"WeOne","msi_wip_qty":"WIP"
-    };
+<!-- NEW CASE MODAL -->
+<div id="newCaseModal" class="overlay hidden">
+  <div class="card" style="max-width:560px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="font-weight:700">Nieuwe garantie / reparatie</div>
+      <button id="newCaseClose" class="btn" type="button">Sluiten</button>
+    </div>
+    <div class="grid2">
+      <div><label style="margin-top:0">Klant</label><input id="nc_customer" /></div>
+      <div><label style="margin-top:0">E-mail klant</label><input id="nc_mail" type="email" /></div>
+    </div>
+    <label>Leverancier</label><select id="nc_supplier"></select>
+    <label>Product</label><input id="nc_product" placeholder="Merk / model / artikelnummer" />
+    <label>Aankoopdatum</label><input id="nc_purchaseDate" type="date" />
+    <div class="grid2">
+      <div><label style="margin-top:0">Factuurnummer</label><input id="nc_invoiceNumber" /></div>
+      <div><label style="margin-top:0">Factuurlink (URL)</label><input id="nc_invoiceLink" type="url" placeholder="https://‚Ä¶" /></div>
+    </div>
+    <label>Klacht / omschrijving</label><textarea id="nc_complaint" rows="4" placeholder="Beschrijf het probleem‚Ä¶"></textarea>
+    <label>Foto-links (√©√©n per regel, PostImage of andere URL)</label>
+    <textarea id="nc_photos" rows="4" placeholder="https://i.postimg.cc/‚Ä¶&#10;https://i.postimg.cc/‚Ä¶"></textarea>
+    <div class="row" style="margin-top:12px;justify-content:flex-end">
+      <button id="createBtn" class="btn primary" type="button">Toevoegen</button>
+    </div>
+    <div class="hint" id="createMsg"></div>
+  </div>
+</div>
 
-    function jsonp(url){
-      return new Promise((resolve,reject)=>{
-        const s=document.createElement("script");
-        const cb="cb_"+Math.random().toString(36).slice(2);
-        const t=setTimeout(()=>{cleanup();reject(new Error("Timeout"));},15000);
-        window[cb]=d=>{cleanup();resolve(d);};
-        function cleanup(){clearTimeout(t);delete window[cb];s.remove();}
-        s.onerror=()=>{cleanup();reject(new Error("Failed to load script"));};
-        s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
-        document.body.appendChild(s);
-      });
+<!-- MAIL PICKER -->
+<div id="mailPicker" class="hidden" style="position:fixed;inset:0;background:rgba(15,23,42,.35);display:grid;place-items:center;padding:18px;z-index:9999">
+  <div class="card" style="max-width:420px;width:100%">
+    <div style="font-weight:700;font-size:14px">Kies mailapp</div>
+    <div class="row" style="margin-top:12px;justify-content:center">
+      <button id="pickGmail" class="btn" type="button">Gmail</button>
+      <button id="pickApple" class="btn" type="button">Apple Mail</button>
+      <button id="pickCancel" class="btn primary" type="button">Annuleren</button>
+    </div>
+    <div class="hint" id="pickHint"></div>
+  </div>
+</div>
+
+<script>
+// --- CONFIG -------------------------------------------------------------------
+const API_BASE = "https://script.google.com/macros/s/AKfycbxMDioUnR2djbs_qKZgQUtXd543ZlTfgpN8hfakvnRifbWdmeDBa7iS_CUeNpdk-g4i2A/exec";
+const MASTER_NAME = "Jasper";
+
+// Status definitions
+const STATUSES = [
+  { key:"new",      label:"Nieuw",           cls:"s-new"      },
+  { key:"sent",     label:"Verzonden",        cls:"s-sent"     },
+  { key:"inrepair", label:"In behandeling",   cls:"s-inrepair" },
+  { key:"done",     label:"Afgerond",         cls:"s-done"     },
+  { key:"rejected", label:"Afgewezen",        cls:"s-rejected" },
+];
+
+const $ = id => document.getElementById(id);
+let supplierKey="", loginType="", supplier="";
+let cases=[], selected=null, suppliersList=[], suppliersMailMap={};
+let supplierTemplates=[], customerTemplates=[];
+let lastFocusedField=null, pendingMail=null;
+
+// --- UTILS --------------------------------------------------------------------
+function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
+function normalizeKey(k){return String(k||"").trim().toLowerCase().replace(/\s+/g," ");}
+function getAny(obj,keys){if(!obj)return "";const map={};for(const k of Object.keys(obj)) map[normalizeKey(k)]=k;for(const want of keys){const hit=map[normalizeKey(want)];if(hit!==undefined){const v=obj[hit];if(v!==undefined&&v!==null&&String(v).trim()!=="") return String(v).trim();}}return "";}
+function isTruthy(v){const s=String(v||"").trim().toUpperCase();return s==="TRUE"||s==="YES"||s==="1";}
+function isMaster(){return loginType==="master";}
+function isSupplier(){return loginType==="supplier";}
+function firstNameFrom(full){const s=String(full||"").trim();return s?s.split(/\s+/)[0]:"";}
+
+function jsonp(url){return new Promise((resolve,reject)=>{const cb="cb_"+Math.random().toString(36).slice(2);const s=document.createElement("script");window[cb]=(data)=>{try{delete window[cb]}catch(_){}s.remove();resolve(data);};s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;s.onerror=()=>{try{delete window[cb]}catch(_){}s.remove();reject(new Error("JSONP failed"));};document.head.appendChild(s);});}
+function api(qs){return jsonp(`${API_BASE}?${qs}`);}
+
+function parsePhotoLinks(val){
+  return String(val||"").split(/[\n,]+/).map(s=>s.trim()).filter(s=>s.startsWith("http"));
+}
+
+function statusInfo(key){return STATUSES.find(x=>x.key===String(key||"").toLowerCase())||STATUSES[0];}
+
+// --- TOGGLES ------------------------------------------------------------------
+function setupToggle(tid, bid, pid, onOpen){
+  const t=$(tid),b=$(bid),p=$(pid);if(!t||!b||!p)return;
+  t.addEventListener("click",()=>{const hidden=b.classList.toggle("hidden");p.textContent=hidden?"+":"‚Äì";if(!hidden&&onOpen) onOpen();});
+}
+
+// --- TOKEN MAP ----------------------------------------------------------------
+function tokenMap(){
+  if(!selected) return {};
+  const photos=parsePhotoLinks(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
+  return {
+    "{{Klant}}":          firstNameFrom(getAny(selected,["Customer","Klant"])),
+    "{{KlantVolledig}}":  getAny(selected,["Customer","Klant"]),
+    "{{Leverancier}}":    getAny(selected,["Supplier","Leverancier"]),
+    "{{Product}}":        getAny(selected,["Product"]),
+    "{{Klacht}}":         getAny(selected,["Complaint","Klacht"]),
+    "{{Zaaknummer}}":     getAny(selected,["CaseNumber","Case Number","Zaaknummer"]),
+    "{{Aankoopdatum}}":   getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
+    "{{Factuurnummer}}":  getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
+    "{{FactuurLink}}":    getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]),
+    "{{LeveranciersRef}}":getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
+    "{{FotoLinks}}":      photos.join("\n"),
+  };
+}
+function applyTokens(txt){
+  let out=String(txt||"");
+  const m=tokenMap();
+  for(const k of Object.keys(m)) out=out.split(k).join(String(m[k]||""));
+  return out;
+}
+
+// --- TOKEN BUTTONS ------------------------------------------------------------
+document.addEventListener("focusin",e=>{const el=e.target;if(["INPUT","TEXTAREA"].includes(el?.tagName)) lastFocusedField=el;});
+function bindTokenButtons(){
+  document.querySelectorAll("button[data-token]").forEach(btn=>btn.addEventListener("click",()=>{
+    const target=lastFocusedField||$("tplBodyText");
+    if(!target) return;
+    const s=target.selectionStart??target.value.length, e2=target.selectionEnd??s;
+    target.value=target.value.slice(0,s)+btn.getAttribute("data-token")+target.value.slice(e2);
+    const pos=s+btn.getAttribute("data-token").length;
+    target.setSelectionRange(pos,pos); target.focus();
+  }));
+}
+
+// --- STATUS SETUP -------------------------------------------------------------
+function buildStatusSelect(){
+  $("statusSelect").innerHTML="";
+  STATUSES.forEach(s=>{const o=document.createElement("option");o.value=s.key;o.textContent=s.label;$("statusSelect").appendChild(o);});
+}
+function renderStatusBadge(key){
+  const s=statusInfo(key);
+  $("statusBadge").className=`statusPill ${s.cls}`;
+  $("statusText").textContent=s.label;
+  $("statusSelect").value=s.key;
+}
+
+// --- PHOTO DISPLAY ------------------------------------------------------------
+function renderPhotos(photosRaw){
+  const links=parsePhotoLinks(photosRaw);
+  $("photoGrid").innerHTML="";
+  $("photoLinkList").innerHTML="";
+  if(!links.length){$("noPhotos").classList.remove("hidden");return;}
+  $("noPhotos").classList.add("hidden");
+  links.forEach((url,i)=>{
+    const isImage=/\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(url)||url.includes("postimg")||url.includes("imgur");
+    if(isImage){
+      const a=document.createElement("a");
+      a.href=url; a.target="_blank"; a.rel="noopener noreferrer"; a.className="photoThumb";
+      const img=document.createElement("img"); img.src=url; img.alt=`Foto ${i+1}`;
+      img.onerror=()=>{a.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:11px;color:var(--muted);padding:4px;text-align:center">Foto ${i+1}</div>`;};
+      a.appendChild(img); $("photoGrid").appendChild(a);
+    } else {
+      const row=document.createElement("div");
+      row.innerHTML=`<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" class="linkBtn">üîó Link ${i+1}</a>`;
+      $("photoLinkList").appendChild(row);
     }
+  });
+}
 
-    function fmtPrice(v){
-      if(v===null||v===undefined||v==="") return "";
-      const n=Number(String(v).replace(",","."));
-      return Number.isFinite(n) ? "EUR "+n.toFixed(2) : String(v);
-    }
+// --- PHOTO EDIT ---------------------------------------------------------------
+function buildPhotoInputs(photosRaw){
+  const links=parsePhotoLinks(photosRaw);
+  $("photoInputsWrap").innerHTML="";
+  const toShow=links.length?links:[""];
+  toShow.forEach(url=>addPhotoInput(url));
+}
+function addPhotoInput(val){
+  const row=document.createElement("div");
+  row.className="photoInputRow";
+  row.style.marginBottom="6px";
+  row.innerHTML=`<input type="url" placeholder="https://i.postimg.cc/‚Ä¶" value="${escapeHTML(val||"")}" /><button class="btn small" type="button" style="flex-shrink:0;color:var(--bad)" onclick="this.closest('.photoInputRow').remove()">‚úï</button>`;
+  $("photoInputsWrap").appendChild(row);
+}
+$("addPhotoBtn").addEventListener("click",()=>addPhotoInput(""));
+$("savePhotosBtn").addEventListener("click",async()=>{
+  if(!selected) return;
+  const links=[...$("photoInputsWrap").querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean);
+  $("photoSaveMsg").textContent="Opslaan‚Ä¶";
+  const data=await api(`action=update_photos&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Photos=${encodeURIComponent(links.join("\n"))}`).catch(()=>null);
+  if(!data?.ok){$("photoSaveMsg").innerHTML=`<span style="color:var(--bad)">Mislukt.</span>`;return;}
+  $("photoSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  await loadCases();
+});
 
-    const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+// --- INVOICE DISPLAY ----------------------------------------------------------
+function renderInvoice(num, link){
+  const wrap=$("d_invoiceDisplay");
+  if(!num&&!link){wrap.textContent="‚Äî";return;}
+  let html="";
+  if(num) html+=`<span style="font-weight:700;font-size:13px">${escapeHTML(num)}</span>`;
+  if(link) html+=`${num?" ":""}<a href="${escapeHTML(link)}" target="_blank" rel="noopener noreferrer" class="linkBtn">üìÑ Factuur openen</a>`;
+  wrap.innerHTML=html;
+}
 
-    function toNum(x){
-      if(x===null||x===undefined||x==="") return null;
-      const n=Number(String(x).replace(",",".").trim());
-      return Number.isFinite(n)?n:null;
-    }
+// --- OPEN ROW -----------------------------------------------------------------
+async function openRow(rowId){
+  selected=cases.find(x=>Number(x.rowId)===rowId);
+  if(!selected) return;
 
-    function ownStock(r){ return toNum(r.msi_surfcenter_qty)??0; }
-    function warehouseStock(r){ return WAREHOUSE_KEYS.reduce((s,k)=>s+(toNum(r[k])??0),0); }
-    function warehouseBreakdown(r){ return WAREHOUSE_KEYS.map(k=>({label:WAREHOUSE_LABELS[k]||k,qty:toNum(r[k])??0})).filter(x=>x.qty>0); }
-    function stockStatus(r){ if(ownStock(r)>0)return"green"; if(warehouseStock(r)>0)return"orange"; return"red"; }
-    function statusRank(s){ return s==="green"?2:s==="orange"?1:0; }
-    function dotClass(s){ return s==="green"?"dotGreen":s==="orange"?"dotOrange":"dotRed"; }
+  $("d_customer").textContent=getAny(selected,["Customer","Klant"])||"‚Äî";
+  $("d_customerMail").textContent=isSupplier()?"":getAny(selected,["MailCustomer","Mail Customer","Email"])||"";
+  $("d_supplier").textContent=getAny(selected,["Supplier","Leverancier"])||"‚Äî";
+  $("d_product").textContent=getAny(selected,["Product"])||"‚Äî";
+  $("d_purchaseDate").textContent=getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])||"‚Äî";
+  $("d_caseNumber").textContent=getAny(selected,["CaseNumber","Case Number","Zaaknummer"])||"‚Äî";
+  renderInvoice(getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]));
+  $("d_complaint").textContent=getAny(selected,["Complaint","Klacht"])||"‚Äî";
+  renderPhotos(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
+  buildPhotoInputs(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
+  $("notesField").value=getAny(selected,["Notes","Notities"])||"";
+  $("supplierRef").value=getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||"";
+  renderStatusBadge(getAny(selected,["Status"])||"new");
 
-    function sortRows(a,b){
-      const sa=stockStatus(a),sb=stockStatus(b);
-      const r=statusRank(sb)-statusRank(sa); if(r!==0)return r;
-      const aO=ownStock(a),bO=ownStock(b),aW=warehouseStock(a),bW=warehouseStock(b);
-      const aV=sa==="green"?aO:sa==="orange"?aW:0, bV=sb==="green"?bO:sb==="orange"?bW:0;
-      if(bV!==aV)return bV-aV;
-      if((aO+aW)!==(bO+bW))return(bO+bW)-(aO+aW);
-      return String(a.name||"").localeCompare(String(b.name||""));
-    }
+  $("noSelection").classList.add("hidden");
+  $("form").classList.remove("hidden");
+  $("mailCustomerSection").classList.toggle("hidden",isSupplier());
+  await loadMailLog();
+}
 
-    // ---- DOM refs ----
-    const loginView=document.getElementById("loginView"),appView=document.getElementById("appView");
-    const loginKey=document.getElementById("loginKey"),loginBtn=document.getElementById("loginBtn"),loginErr=document.getElementById("loginErr");
-    const accountBtn=document.getElementById("accountBtn"),logoutBtn=document.getElementById("logoutBtn");
-    const searchInput=document.getElementById("searchInput");
-    const filterCategory=document.getElementById("filterCategory"),filterSupplier=document.getElementById("filterSupplier");
-    const clearFiltersBtn=document.getElementById("clearFiltersBtn"),activeFiltersEl=document.getElementById("activeFilters");
-    const tbody=document.getElementById("tbody"),mobileProducts=document.getElementById("mobileProducts");
-    const meta=document.getElementById("meta"),err=document.getElementById("err");
-    const cartBtn=document.getElementById("cartBtn"),cartBar=document.getElementById("cartBar");
-    const cartBarBtn=document.getElementById("cartBarBtn"),cartBarBadge=document.getElementById("cartBarBadge");
-    const cartOverlay=document.getElementById("cartOverlay"),cartClose=document.getElementById("cartClose");
-    const cartListEl=document.getElementById("cartList"),cartErr=document.getElementById("cartErr"),cartTick=document.getElementById("cartTick");
-    const waBtn=document.getElementById("waBtn");
-    const custName=document.getElementById("custName"),phone=document.getElementById("phone"),mail=document.getElementById("mail"),note1=document.getElementById("note1");
-    const accountOverlay=document.getElementById("accountOverlay"),accountClose=document.getElementById("accountClose");
-    const accountTitle=document.getElementById("accountTitle"),accountSub=document.getElementById("accountSub");
-    const accountOrdersTbody=document.getElementById("accountOrdersTbody"),accountErr=document.getElementById("accountErr"),mobileLeads=document.getElementById("mobileLeads");
-    const calcOverlay=document.getElementById("calcOverlay"),calcClose=document.getElementById("calcClose"),calcFrame=document.getElementById("calcFrame");
+// --- SAVE NOTES ---------------------------------------------------------------
+$("saveNotesBtn").addEventListener("click",async()=>{
+  if(!selected) return;
+  $("notesSaveMsg").textContent="Opslaan‚Ä¶";
+  const data=await api(`action=update_notes&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Notes=${encodeURIComponent($("notesField").value.trim())}`).catch(()=>null);
+  if(!data?.ok){$("notesSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
+  $("notesSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  await loadCases();
+});
 
-    let currentKey="",currentUserName="",isAdmin=false;
-    let allRows=[],expanded=new Set(),mobileExpanded=new Set(),cart=[];
-    let visibleCount=PAGE_SIZE;
+// --- SAVE REF -----------------------------------------------------------------
+$("saveRefBtn").addEventListener("click",async()=>{
+  if(!selected) return;
+  $("refSaveMsg").textContent="Opslaan‚Ä¶";
+  const data=await api(`action=update_ref&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&SupplierRef=${encodeURIComponent($("supplierRef").value.trim())}`).catch(()=>null);
+  if(!data?.ok){$("refSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
+  $("refSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  await loadCases();
+});
 
-    // ---- Filters ----
-    function getFilters(){ return { q:searchInput.value.trim().toLowerCase(), category:filterCategory.value, supplier:filterSupplier.value }; }
-    function filtersActive(){ const f=getFilters(); return f.q||f.category||f.supplier; }
+// --- SAVE STATUS --------------------------------------------------------------
+$("statusSaveBtn").addEventListener("click",async()=>{
+  if(!selected) return;
+  const newStatus=$("statusSelect").value;
+  const data=await api(`action=update_status&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Status=${encodeURIComponent(newStatus)}`).catch(()=>null);
+  if(!data?.ok){$("msg").innerHTML='<span style="color:var(--bad)">Status opslaan mislukt.</span>';return;}
+  $("msg").innerHTML='<span style="color:var(--ok)">Status opgeslagen ‚úì</span>';
+  await loadCases();
+});
 
-    function matchesFilters(r,f){
-      if(f.q){ const tokens=f.q.split(/\s+/).filter(Boolean); const hay=((r.name||"")+" "+(r.ean_code||"")).toLowerCase(); if(!tokens.every(t=>hay.includes(t)))return false; }
-      if(f.category&&(r._attribute_set||"")!==f.category)return false;
-      if(f.supplier&&(r.manufacturer||"")!==f.supplier)return false;
-      return true;
-    }
+// --- COMPLETED TOGGLE ---------------------------------------------------------
+async function setCompleted(rowId, val){
+  return api(`action=complete&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(rowId)}&Completed=${encodeURIComponent(val?"TRUE":"FALSE")}`).catch(()=>null);
+}
 
-    function populateDropdowns(){
-      const cats=[...new Set(allRows.map(r=>r._attribute_set||"").filter(Boolean))].sort();
-      const sups=[...new Set(allRows.map(r=>r.manufacturer||"").filter(Boolean))].sort();
-      filterCategory.innerHTML=`<option value="">All categories</option>`+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
-      filterSupplier.innerHTML=`<option value="">All brands</option>`+sups.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
-      filterCategory.disabled=false; filterSupplier.disabled=false;
-    }
+// --- TEMPLATES ---------------------------------------------------------------
+function langFlag(lang){const l=String(lang||"").toLowerCase();if(l==="nl")return"üá≥üá±";if(l==="de")return"üá©üá™";if(l==="fr")return"üá´üá∑";if(l==="en")return"üá¨üáß";return"";}
+function findTpl(arr,lang){const l=String(lang||"").toLowerCase();return arr.find(x=>String(x.language||"").toLowerCase()===l&&String(x.label||"").toUpperCase()==="DEFAULT")||arr.find(x=>String(x.language||"").toLowerCase()===l)||null;}
 
-    function updateActiveFilters(){
-      const f=getFilters();
-      activeFiltersEl.innerHTML="";
-      [f.category&&{label:f.category,clear:()=>{filterCategory.value="";onFilterChange();}},
-       f.supplier&&{label:f.supplier,clear:()=>{filterSupplier.value="";onFilterChange();}}]
-      .filter(Boolean).forEach(chip=>{
-        const el=document.createElement("div"); el.className="filterChip";
-        el.innerHTML=`<span>${esc(chip.label)}</span><button>x</button>`;
-        el.querySelector("button").onclick=chip.clear; activeFiltersEl.appendChild(el);
-      });
-      clearFiltersBtn.style.display=filtersActive()?"":"none";
-    }
+function renderTemplateList(wrapId, list, sendFn, editFn){
+  const wrap=$(wrapId); wrap.innerHTML="";
+  if(!list.length){wrap.innerHTML='<div class="muted" style="font-size:13px">Geen templates.</div>';return;}
+  const sorted=list.slice().sort((a,b)=>String(a.label||"").localeCompare(String(b.label||"")));
+  sorted.forEach(t=>{
+    const row=document.createElement("div");row.className="savedTemplateRow";
+    row.innerHTML=`<div class="savedLeft"><div class="flag">${langFlag(t.language)}</div><div style="min-width:0"><div class="tplName">${escapeHTML(t.label||"")}</div><div class="tplMeta">${escapeHTML(t.subject||"")}</div></div></div><div class="row" style="gap:8px;flex-wrap:nowrap"><button class="btn openBtn" data-edit="${escapeHTML(t.id)}">Bewerken</button><button class="btn openBtn primary" data-send="${escapeHTML(t.id)}">Verzenden</button></div>`;
+    wrap.appendChild(row);
+    row.querySelector(`[data-send]`).addEventListener("click",()=>sendFn(t));
+    row.querySelector(`[data-edit]`).addEventListener("click",()=>editFn(t));
+  });
+}
 
-    // Debounce: only re-render 200ms after last keystroke
-    let _searchTimer=null;
-    function onFilterChange(reset){
-      updateActiveFilters();
-      if(reset!==false) visibleCount=PAGE_SIZE;
-      clearTimeout(_searchTimer);
-      _searchTimer=setTimeout(renderProducts, 200);
-    }
+async function loadTemplates(){
+  const s=await api(`action=warranty_supplier_templates&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
+  supplierTemplates=s?.ok&&Array.isArray(s.templates)?s.templates:[];
+  const c=await api(`action=warranty_customer_templates&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
+  customerTemplates=c?.ok&&Array.isArray(c.templates)?c.templates:[];
+  renderTemplateList("supplierTemplatesList", supplierTemplates, sendSupplierTemplate, editTpl);
+}
 
-    searchInput.addEventListener("input",()=>onFilterChange(true));
-    filterCategory.addEventListener("change",()=>onFilterChange(true));
-    filterSupplier.addEventListener("change",()=>onFilterChange(true));
-    clearFiltersBtn.onclick=()=>{ searchInput.value=""; filterCategory.value=""; filterSupplier.value=""; onFilterChange(true); };
+function editTpl(tpl){
+  $("addTplBody").classList.remove("hidden");$("addTplPlus").textContent="‚Äì";
+  $("tplLang").value=(tpl.language||"en").toLowerCase();
+  $("tplLabel").value=tpl.label||"";
+  $("tplSubject").value=tpl.subject||"";
+  $("tplBodyText").value=tpl.body||"";
+  $("tplSave").dataset.editId=String(tpl.id||"");
+  $("tplSave").textContent="Bijwerken";
+}
+function resetTplEditor(){
+  $("tplLang").value="nl";$("tplLabel").value="";$("tplSubject").value="";$("tplBodyText").value="";
+  $("tplSaveMsg").textContent="";delete $("tplSave").dataset.editId;$("tplSave").textContent="Opslaan";
+}
+$("tplCancel").addEventListener("click",resetTplEditor);
+$("tplSave").addEventListener("click",async()=>{
+  const id=$("tplSave").dataset.editId||"";
+  const lang=$("tplLang").value, label=$("tplLabel").value.trim(), subj=$("tplSubject").value.trim(), body=$("tplBodyText").value.trim();
+  if(!label||!subj||!body){$("tplSaveMsg").innerHTML='<span style="color:var(--warn)">Vul alle velden in.</span>';return;}
+  $("tplSaveMsg").textContent="Opslaan‚Ä¶";
+  const data=await api(`action=warranty_supplier_template_upsert&supplierKey=${encodeURIComponent(supplierKey)}`+(id?`&id=${encodeURIComponent(id)}`:"")+"&language="+encodeURIComponent(lang)+"&label="+encodeURIComponent(label)+"&subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body)).catch(()=>null);
+  if(!data?.ok){$("tplSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
+  $("tplSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  resetTplEditor();
+  await loadTemplates();
+});
 
-    // ---- Cart ----
-    function setCartBadge(){ const n=String(cart.length); document.getElementById("cartBadge").textContent=n; cartBarBadge.textContent=n; }
-    function addToCart(item){ if(cart.some(x=>x.ean===item.ean))return; cart.push({ean:item.ean,product:item.name,retailPrice:item.retailPrice}); setCartBadge(); }
-    function removeFromCart(ean){ cart=cart.filter(x=>x.ean!==ean); setCartBadge(); renderCart(); }
-    function renderCart(){
-      if(!cart.length){ cartListEl.innerHTML=`<div class="cartRow"><div class="small">No items.</div></div>`; return; }
-      cartListEl.innerHTML=cart.map(it=>`<div class="cartRow"><div class="left"><div style="font-weight:500;">${esc(it.product||"")}</div></div><div><button class="btn" data-remove="${esc(it.ean)}">Remove</button></div></div>`).join("");
-      cartListEl.querySelectorAll("button[data-remove]").forEach(b=>b.addEventListener("click",()=>removeFromCart(b.getAttribute("data-remove"))));
-    }
+// --- MAIL ---------------------------------------------------------------------
+function openMailPicker(payload){pendingMail=payload;$("pickHint").textContent=payload.cc?`CC: ${payload.cc}`:"";$("mailPicker").classList.remove("hidden");}
+function closeMailPicker(){pendingMail=null;$("mailPicker").classList.add("hidden");}
+function openGmail(to,cc,subject,body){let u="https://mail.google.com/mail/?view=cm&fs=1"+`&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;if(cc) u+=`&cc=${encodeURIComponent(cc)}`;window.open(u,"_blank","noopener,noreferrer");}
+function openApple(to,cc,subject,body){let u="mailto:"+encodeURIComponent(to)+`?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;if(cc) u+=`&cc=${encodeURIComponent(cc)}`;window.location.href=u;}
+$("pickGmail").addEventListener("click",()=>{if(!pendingMail)return;openGmail(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);const cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
+$("pickApple").addEventListener("click",()=>{if(!pendingMail)return;openApple(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);const cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
+$("pickCancel").addEventListener("click",closeMailPicker);
+$("mailPicker").addEventListener("click",e=>{if(e.target===$("mailPicker")) closeMailPicker();});
 
-    // ---- Auth ----
-    function showLogin(){ loginView.style.display="block"; appView.style.display="none"; cartBtn.style.display="none"; cartBar.style.display="none"; loginErr.textContent=""; loginKey.value=""; loginKey.focus(); }
-    function showApp(){ loginView.style.display="none"; appView.style.display="block"; cartBtn.style.display=""; cartBar.style.display=""; searchInput.disabled=false; filterCategory.disabled=false; filterSupplier.disabled=false; }
-    function logout(){ localStorage.removeItem("employeeKey"); currentKey=""; showLogin(); }
-    logoutBtn.onclick=logout;
+async function logMail(payload){
+  if(!selected) return;
+  await api(`action=warranty_log_mail&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(String(selected.rowId))}&To=${encodeURIComponent(payload.to||"")}&Kind=${encodeURIComponent(payload.kind||"")}&Language=${encodeURIComponent(payload.language||"")}&Template=${encodeURIComponent(payload.template||"")}&Subject=${encodeURIComponent(payload.subject||"")}`).catch(()=>null);
+}
 
-    // ---- Cart modal ----
-    const LEAD_CACHE="sc_lead_form";
-    function saveLeadForm(){ localStorage.setItem(LEAD_CACHE,JSON.stringify({name:custName.value,phone:phone.value,mail:mail.value,note:note1.value})); }
-    function restoreLeadForm(){ try{ const d=JSON.parse(localStorage.getItem(LEAD_CACHE)||"{}"); if(d.name)custName.value=d.name; if(d.phone)phone.value=d.phone; if(d.mail)mail.value=d.mail; if(d.note)note1.value=d.note; }catch(e){} }
+function supplierMailAddress(){
+  const supName=getAny(selected,["Supplier","Leverancier"])||"";
+  return suppliersMailMap[String(supName).toLowerCase()]||getAny(selected,["MailSupplier","Mail Supplier"])||"";
+}
+function customerMailAddress(){return getAny(selected,["MailCustomer","Mail Customer","Email"])||"";}
 
-    let _autoSaveTimer=null;
-    function scheduleAutoSave(){
-      saveLeadForm();
-      clearTimeout(_autoSaveTimer);
-      const name=custName.value.trim(),p=phone.value.trim(),m=mail.value.trim(),n1=note1.value.trim();
-      if(!name||((!p)&&(!m))||!cart.length) return;
-      _autoSaveTimer=setTimeout(async()=>{
-        try{
-          const payload={name,phoneNumber:p,mail:m,note1:n1,items:cart};
-          const url=`${APPS_SCRIPT_WEBAPP_URL}?action=submitLead&key=${encodeURIComponent(currentKey)}&payload=${encodeURIComponent(JSON.stringify(payload))}`;
-          await jsonp(url);
-        }catch(e){}
-      },3000);
-    }
-    [custName,phone,mail,note1].forEach(el=>el.addEventListener("input",scheduleAutoSave));
+async function sendSupplierTemplate(tpl){
+  const to=supplierMailAddress(); if(!to){$("tplSendMsg").innerHTML='<span style="color:var(--warn)">Geen leveranciers-e-mail gevonden.</span>';return;}
+  const subject=applyTokens(tpl.subject||""), body=applyTokens(tpl.body||"");
+  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
+    await logMail({to,kind:"supplier",language:String(tpl.language||"").toLowerCase(),template:tpl.label||"",subject});
+    $("tplSendMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+    await loadMailLog();
+  }});
+}
 
-    function openCart(){ cartErr.textContent=""; cartTick.style.display="none"; restoreLeadForm(); renderCart(); cartOverlay.classList.add("active"); }
-    function closeCart(){ cartOverlay.classList.remove("active"); }
-    cartBtn.onclick=openCart; cartBarBtn.onclick=openCart; cartClose.onclick=closeCart;
-    cartOverlay.addEventListener("click",e=>{ if(e.target===cartOverlay)closeCart(); });
+async function mailSupplier(lang,btn){
+  if(!selected) return;
+  if(btn){const row=btn.closest(".flagRow");row?.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
+  const to=supplierMailAddress();
+  if(!to){$("mailSupplierMsg").innerHTML='<span style="color:var(--warn)">Geen leveranciers-e-mail gevonden.</span>';return;}
+  const tpl=findTpl(supplierTemplates,lang)||{subject:"",body:""};
+  const subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
+  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
+    await logMail({to,kind:"supplier",language:lang,template:`Leverancier ${lang.toUpperCase()}`,subject});
+    $("mailSupplierMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+    await loadMailLog();
+  }});
+}
 
-    waBtn.onclick=async()=>{
-      const name=custName.value.trim(),p=phone.value.trim(),m=mail.value.trim(),n1=note1.value.trim();
-      if(!name){cartErr.textContent="Name is required.";return;}
-      if(!p&&!m){cartErr.textContent="Phone number or email is required.";return;}
-      if(!cart.length){cartErr.textContent="No items added.";return;}
-      cartErr.textContent="";
-      // Save to spreadsheet
-      const payload={name,phoneNumber:p,mail:m,note1:n1,items:cart};
-      const url2=`${APPS_SCRIPT_WEBAPP_URL}?action=submitLead&key=${encodeURIComponent(currentKey)}&payload=${encodeURIComponent(JSON.stringify(payload))}`;
-      try{ await jsonp(url2); }catch(e){}
-      // Open WhatsApp
-      let msg="*New lead - Surf Center*\n\n";
-      if(name) msg+=`*Name:* ${name}\n`;
-      if(p)    msg+=`*Phone:* ${p}\n`;
-      if(m)    msg+=`*Email:* ${m}\n`;
-      if(cart.length){ msg+=`\n*Products:*\n`; cart.forEach(it=>{ msg+=`- ${it.product}\n`; }); }
-      if(n1) msg+=`\n*Note:* ${n1}`;
-      const url=`https://wa.me/31683599751?text=${encodeURIComponent(msg.trim())}`;
-      window.open(url,"_blank");
-      cart=[]; setCartBadge(); renderCart();
-      custName.value=""; phone.value=""; mail.value=""; note1.value="";
-      localStorage.removeItem(LEAD_CACHE);
-      cartOverlay.classList.remove("active");
-    };
+async function mailCustomer(lang,btn){
+  if(!selected) return;
+  if(btn){const row=btn.closest(".flagRow");row?.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
+  const to=customerMailAddress();
+  if(!to){$("mailCustomerMsg").innerHTML='<span style="color:var(--warn)">Geen klant-e-mail gevonden.</span>';return;}
+  const tpl=findTpl(customerTemplates,lang)||{subject:"",body:""};
+  const subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
+  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
+    await logMail({to,kind:"customer",language:lang,template:`Klant ${lang.toUpperCase()}`,subject});
+    $("mailCustomerMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+    await loadMailLog();
+  }});
+}
 
-    // ---- Calculator modal ----
-    function openCalculatorForRow(r){
-      const retail=Number(String(r.retailPrice??"").replace(",","."));
-      const purchase=Number(String(r.purchasePrice??"").replace(",","."));
-      const params=new URLSearchParams();
-      if(Number.isFinite(purchase))params.set("p",purchase.toFixed(2));
-      if(Number.isFinite(retail))params.set("s",retail.toFixed(2));
-      calcFrame.src=params.toString()?`${CALCULATOR_URL}?${params}`:CALCULATOR_URL;
-      calcOverlay.classList.add("active");
-    }
-    function closeCalculator(){ calcOverlay.classList.remove("active"); calcFrame.src="about:blank"; }
-    calcClose.onclick=closeCalculator;
-    calcOverlay.addEventListener("click",e=>{ if(e.target===calcOverlay)closeCalculator(); });
+$("ms_en").addEventListener("click",e=>mailSupplier("en",e.currentTarget));
+$("ms_nl").addEventListener("click",e=>mailSupplier("nl",e.currentTarget));
+$("mc_en").addEventListener("click",e=>mailCustomer("en",e.currentTarget));
+$("mc_nl").addEventListener("click",e=>mailCustomer("nl",e.currentTarget));
+$("mc_de").addEventListener("click",e=>mailCustomer("de",e.currentTarget));
+$("mc_fr").addEventListener("click",e=>mailCustomer("fr",e.currentTarget));
 
-    // ---- Account modal ----
-    function openAccount(){ accountErr.textContent=""; accountOverlay.classList.add("active"); accountTitle.textContent=currentUserName||"Account"; accountSub.textContent=isAdmin?"Surfcenter: all leads":"Your leads"; loadAccountOrders(); }
-    function closeAccountFn(){ accountOverlay.classList.remove("active"); }
-    accountBtn.onclick=openAccount; accountClose.onclick=closeAccountFn;
-    accountOverlay.addEventListener("click",e=>{ if(e.target===accountOverlay)closeAccountFn(); });
+// --- MAIL LOG -----------------------------------------------------------------
+function formatDT(ts){const s=String(ts||"").trim();const m=s.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);return m?{date:m[1],time:m[2]}:{date:s,time:""};}
+async function loadMailLog(){
+  if(!selected) return;
+  $("mailLogList").textContent="Laden‚Ä¶";
+  const data=await api(`action=warranty_mail_log&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(String(selected.rowId))}`).catch(()=>null);
+  if(!data?.ok){$("mailLogList").textContent="Niet beschikbaar.";return;}
+  const rows=Array.isArray(data.rows)?data.rows:[];
+  if(!rows.length){$("mailLogList").textContent="Geen log.";return;}
+  const wrap=document.createElement("div");wrap.style.cssText="display:flex;flex-direction:column;gap:8px";
+  rows.forEach(r=>{const dt=formatDT(r.Timestamp||"");const el=document.createElement("div");el.className="savedTemplateRow";el.innerHTML=`<div style="width:100%"><div class="mailLogRow"><div class="mailLogDate">${escapeHTML(dt.date)}</div><div class="mailLogTime">${escapeHTML(dt.time)}</div></div><div class="tplMeta" style="margin-top:6px">${escapeHTML(r.Template||"-")} ¬∑ ${escapeHTML(r.Subject||"-")}</div></div>`;wrap.appendChild(el);});
+  $("mailLogList").innerHTML="";$("mailLogList").appendChild(wrap);
+}
 
-    async function loadAccountOrders(){
-      accountErr.textContent=""; accountOrdersTbody.innerHTML=`<tr><td colspan="6" class="small">Loading...</td></tr>`; mobileLeads.innerHTML="";
-      const scope=isAdmin?"all":"mine";
-      try{
-        const res=await jsonp(`${APPS_SCRIPT_WEBAPP_URL}?action=orders&scope=${scope}&key=${encodeURIComponent(currentKey)}`);
-        if(!res||!res.ok)throw new Error(res?.error||"Could not load leads");
-        const orders=Array.isArray(res.orders)?res.orders:[];
-        if(!orders.length){ accountOrdersTbody.innerHTML=`<tr><td colspan="6" class="small">No leads.</td></tr>`; mobileLeads.innerHTML=`<div class="small">No leads.</div>`; return; }
-        accountOrdersTbody.innerHTML=orders.map(o=>`<tr><td>${esc(o.name||"")}</td><td>${esc(o.phoneNumber||"")}</td><td>${esc(o.mail||"")}</td><td>${esc(o.product||"")}</td><td>${esc(fmtPrice(o.retailPrice))}</td><td>${esc(o.note1||o.note||"")}</td></tr>`).join("");
-        mobileLeads.innerHTML=orders.map((o,i)=>{const id=`lead_${i}`;return`<div class="pCard" data-lead="${id}"><div class="pRow"><div class="pName" style="font-weight:700;">${esc(o.name||"Lead")}</div><div class="pActions"><button class="btn pToggle" data-toggle-lead="${id}">+</button></div></div><div class="pDetails" id="${id}"><div class="kv"><div class="k">Phone</div><div class="v">${esc(o.phoneNumber||"-")}</div><div class="k">Mail</div><div class="v">${esc(o.mail||"-")}</div><div class="k">Product</div><div class="v">${esc(o.product||"")}</div><div class="k">Retail</div><div class="v">${esc(fmtPrice(o.retailPrice))}</div><div class="k">Note</div><div class="v">${esc(o.note1||o.note||"-")}</div></div></div></div>`;}).join("");
-        mobileLeads.querySelectorAll("button[data-toggle-lead]").forEach(btn=>btn.addEventListener("click",()=>{const id=btn.getAttribute("data-toggle-lead");const d=document.getElementById(id);const open=d.classList.toggle("open");btn.textContent=open?"-":"+";}));
-      }catch(e){ accountErr.textContent=e.message; accountOrdersTbody.innerHTML=`<tr><td colspan="6" class="small">Error.</td></tr>`; mobileLeads.innerHTML=`<div class="small">Error.</div>`; }
-    }
+// --- LOAD CASES ---------------------------------------------------------------
+async function loadCases(){
+  selected=null;
+  $("form").classList.add("hidden");
+  $("noSelection").classList.remove("hidden");
+  $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>Laden‚Ä¶</td></tr>";
+  $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>Laden‚Ä¶</td></tr>";
+  let url=`${API_BASE}?action=warranty_orders&supplierKey=${encodeURIComponent(supplierKey)}`;
+  if(isMaster()) url+=`&supplier=${encodeURIComponent(MASTER_NAME)}`;
+  if(isSupplier()) url+=`&supplier=${encodeURIComponent(supplier)}`;
+  const data=await jsonp(url).catch(()=>null);
+  if(!data?.ok){
+    const err=escapeHTML(data?.error||"Fout");
+    $("tbodyOpen").innerHTML=`<tr><td colspan="4" class='muted'>${err}</td></tr>`;
+    $("tbodyCompleted").innerHTML=`<tr><td colspan="4" class='muted'>${err}</td></tr>`;
+    return;
+  }
+  cases=(data.orders||[]).slice().sort((a,b)=>Number(b.rowId||0)-Number(a.rowId||0));
+  renderCases();
+}
 
-    // ---- Products ----
-    function applyData(res, fromCache){
-      isAdmin=!!res.isAdmin;
-      currentUserName=(res.user&&res.user.name)?res.user.name:"";
-      accountBtn.textContent=currentUserName||"Account";
-      allRows=Array.isArray(res.rows)?res.rows:[];
-      expanded.clear(); mobileExpanded.clear(); visibleCount=PAGE_SIZE;
-      meta.textContent=`${allRows.length} items`+(fromCache?" (cached)":"");
-      searchInput.disabled=false;
-      populateDropdowns(); updateActiveFilters(); renderProducts();
-    }
+function renderCases(){
+  const q=($("historySearch").value||"").trim().toLowerCase();
+  const match=o=>!q||[getAny(o,["Customer","Klant"]),getAny(o,["Product"]),getAny(o,["Supplier","Leverancier"]),getAny(o,["MailCustomer","Mail Customer"])].join(" ").toLowerCase().includes(q);
+  const openList=cases.filter(o=>!isTruthy(o.Completed)).filter(match);
+  const doneList=cases.filter(o=>isTruthy(o.Completed)).filter(match);
 
-    const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
-
-    async function loadProducts(){
-      err.textContent="";
-      const cached=localStorage.getItem(CACHE_KEY);
-      let hasCache=false;
-      let cacheIsFresh=false;
-      if(cached){
-        try{
-          const c=JSON.parse(cached);
-          if(c.key===currentKey){
-            applyData(c.res,true);
-            hasCache=true;
-            if(c.ts && (Date.now()-c.ts)<CACHE_TTL_MS) cacheIsFresh=true;
-          }
-        }catch(e){}
-      }
-      if(!hasCache){
-        meta.textContent="Loading...";
-        tbody.innerHTML=`<tr><td colspan="5" class="small">Loading...</td></tr>`;
-        mobileProducts.innerHTML=`<div class="small">Loading...</div>`;
-      }
-      if(cacheIsFresh) return; // skip fetch, cache is recent enough
-      try{
-        const res=await jsonp(`${APPS_SCRIPT_WEBAPP_URL}?action=data&key=${encodeURIComponent(currentKey)}`);
-        if(!res||!res.ok)throw new Error(res?.error||"Could not load data");
-        localStorage.setItem(CACHE_KEY,JSON.stringify({key:currentKey,res,ts:Date.now()}));
-        applyData(res,false);
-      }catch(e){
-        if(!hasCache){
-          err.textContent="Error loading products: "+e.message;
-          meta.textContent="";
-          tbody.innerHTML=`<tr><td colspan="5" class="small">Error loading.</td></tr>`;
-          mobileProducts.innerHTML=`<div class="small">Error loading.</div>`;
-        }
-      }
-    }
-
-    // ---- Render ----
-    function renderProducts(){
-      const f=getFilters();
-      const allFiltered=[...allRows.filter(r=>matchesFilters(r,f))].sort(sortRows);
-      const total=allFiltered.length;
-      const rows=allFiltered.slice(0,visibleCount);
-
-      meta.textContent=(f.category||f.supplier||f.q)?`${total} of ${allRows.length} items`:`${allRows.length} items`;
-
-      // Desktop
-      tbody.innerHTML="";
-      if(!rows.length){
-        tbody.innerHTML=`<tr><td colspan="5" class="small">No results.</td></tr>`;
-      } else {
-        rows.forEach((r,i)=>{
-          const id=`${r.ean_code}__${i}`,own=ownStock(r),wh=warehouseStock(r),tot=own+wh,dc=dotClass(stockStatus(r));
-          const tr=document.createElement("tr");
-          const tdP=document.createElement("td"); tdP.innerHTML=`<span class="stockDot ${dc}"></span>${esc(r.name||"")}`;
-          tr.appendChild(tdP);
-          [String(own),String(wh),String(tot)].forEach(v=>tr.appendChild(Object.assign(document.createElement("td"),{textContent:v})));
-          const tdA=document.createElement("td"); tdA.className="tdActions";
-          const wrap=document.createElement("div"); wrap.className="actionWrap";
-          const iBtn=document.createElement("button"); iBtn.className="btn"; iBtn.textContent=expanded.has(id)?"Close":"Info";
-          iBtn.onclick=()=>{ expanded.has(id)?expanded.delete(id):expanded.add(id); renderProducts(); };
-          const cBtn=document.createElement("button"); cBtn.className="btnCalc"; cBtn.title="Calculator"; cBtn.textContent="%"; cBtn.onclick=()=>openCalculatorForRow(r);
-          const aBtn=document.createElement("button"); aBtn.className="btn btnPrimary"; aBtn.textContent="Add"; aBtn.onclick=()=>addToCart({ean:r.ean_code,name:r.name,retailPrice:r.retailPrice});
-          wrap.appendChild(iBtn); wrap.appendChild(cBtn); wrap.appendChild(aBtn); tdA.appendChild(wrap); tr.appendChild(tdA); tbody.appendChild(tr);
-
-          if(expanded.has(id)){
-            const bd=warehouseBreakdown(r);
-            const whD=bd.length?`<div class="whBreakdown">${bd.map(x=>`<div class="whLine">${esc(x.label)}: ${x.qty}</div>`).join("")}</div>`:"";
-            const tr2=document.createElement("tr"); tr2.className="detailsRow";
-            const td=document.createElement("td"); td.colSpan=5;
-            td.innerHTML=`<div class="kv" style="grid-template-columns:130px 1fr;"><div class="k">EAN</div><div class="v">${esc(r.ean_code||"")}</div><div class="k">Brand</div><div class="v">${esc(r.manufacturer||"")}</div><div class="k">Category</div><div class="v">${esc(r._attribute_set||"")}</div>${r.season?`<div class="k">Season</div><div class="v">${esc(r.season)}</div>`:""}<div class="k">Stock</div><div class="v">${own}</div><div class="k">Warehouse</div><div class="v">${whD}</div></div>`;
-            tr2.appendChild(td); tbody.appendChild(tr2);
-          }
-        });
-
-        if(total>visibleCount){
-          const tr=document.createElement("tr");
-          const td=document.createElement("td"); td.colSpan=5;
-          td.innerHTML=`<div class="showMoreWrap"><button class="showMoreBtn">Show more (${total-visibleCount} remaining)</button></div>`;
-          td.querySelector("button").onclick=()=>{ visibleCount+=PAGE_SIZE; renderProducts(); };
-          tr.appendChild(td); tbody.appendChild(tr);
-        }
-      }
-
-      // Mobile
-      if(!rows.length){ mobileProducts.innerHTML=`<div class="small">No results.</div>`; return; }
-
-      mobileProducts.innerHTML=rows.map((r,i)=>{
-        const id=`m_${r.ean_code}__${i}`,open=mobileExpanded.has(id);
-        const own=ownStock(r),wh=warehouseStock(r),tot=own+wh,dc=dotClass(stockStatus(r));
-        const bd=warehouseBreakdown(r);
-        const whD=bd.map(x=>`<div class="whLine">${esc(x.label)}: ${x.qty}</div>`).join("");
-        return`<div class="pCard" data-id="${id}"><div class="pRow" data-toggle="${id}"><div class="pName"><span class="stockDot ${dc}"></span>${esc(r.name||"")}</div><div class="pActions"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" style="flex-shrink:0;transition:transform .2s;${open?"transform:rotate(180deg)":""}"><polyline points="6 9 12 15 18 9"/></svg><button class="pIconBtn pIconBtnPrimary" data-add="${id}" title="Add"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div><div class="pDetails ${open?"open":""}" id="${id}"><div style="display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;"><div style="flex:1;padding:10px 12px;text-align:center;border-right:1px solid var(--border);"><div style="font-size:11px;color:#9ca3af;margin-bottom:2px;">Surfcenter</div><div style="font-weight:700;font-size:18px;">${own}</div></div><div style="flex:1;padding:10px 12px;text-align:center;border-right:1px solid var(--border);"><div style="font-size:11px;color:#9ca3af;margin-bottom:2px;">Warehouse</div><div style="font-weight:700;font-size:18px;">${wh}</div></div><div style="flex:1;padding:10px 12px;text-align:center;"><div style="font-size:11px;color:#9ca3af;margin-bottom:2px;">Total</div><div style="font-weight:700;font-size:18px;">${tot}</div></div></div>${whD?`<div style="margin-bottom:10px;"><div class="whBreakdown">${whD}</div></div>`:""}<div class="kv" style="margin-bottom:8px;">${r.manufacturer?`<div class="k">Brand</div><div class="v">${esc(r.manufacturer)}</div>`:""}<div class="k">Category</div><div class="v">${esc(r._attribute_set||"-")}</div>${r.season?`<div class="k">Season</div><div class="v">${esc(r.season)}</div>`:""}<div class="k">EAN</div><div class="v">${esc(r.ean_code||"-")}</div></div></div></div>`;
-      }).join("");
-
-      if(total>visibleCount){
-        mobileProducts.innerHTML+=`<div class="showMoreWrap"><button class="showMoreBtn">Show more (${total-visibleCount} remaining)</button></div>`;
-        mobileProducts.querySelector(".showMoreBtn").onclick=()=>{ visibleCount+=PAGE_SIZE; renderProducts(); };
-      }
-
-      mobileProducts.querySelectorAll("[data-toggle]").forEach(row=>row.addEventListener("click",e=>{
-        if(e.target.closest("[data-add]")||e.target.closest("[data-calc]")) return;
-        const id=row.getAttribute("data-toggle");
-        mobileExpanded.has(id)?mobileExpanded.delete(id):mobileExpanded.add(id);
-        renderProducts();
-      }));
-      mobileProducts.querySelectorAll("button[data-add]").forEach(btn=>btn.addEventListener("click",()=>{
-        const parent=btn.closest(".pCard"); const pid=parent.getAttribute("data-id");
-        const idx=rows.findIndex((_,i)=>`m_${rows[i].ean_code}__${i}`===pid);
-        const r=rows[idx]; if(r)addToCart({ean:r.ean_code,name:r.name,retailPrice:r.retailPrice});
-      }));
-      mobileProducts.querySelectorAll("button[data-calc]").forEach(btn=>btn.addEventListener("click",()=>{
-        const parent=btn.closest(".pCard"); const pid=parent.getAttribute("data-id");
-        const idx=rows.findIndex((_,i)=>`m_${rows[i].ean_code}__${i}`===pid);
-        const r=rows[idx]; if(r)openCalculatorForRow(r);
-      }));
-    }
-
-    // ---- Login ----
-    loginBtn.onclick=async()=>{
-      loginErr.textContent=""; const key=loginKey.value.trim();
-      if(!key){loginErr.textContent="Please enter a key.";return;}
-      loginBtn.disabled=true; loginBtn.textContent="Login...";
-      try{
-        const res=await jsonp(`${APPS_SCRIPT_WEBAPP_URL}?action=data&key=${encodeURIComponent(key)}`);
-        if(!res||!res.ok)throw new Error(res?.error||"Login failed");
-        localStorage.setItem("employeeKey",key); currentKey=key;
-        showApp(); setCartBadge();
-        localStorage.setItem(CACHE_KEY,JSON.stringify({key,res,ts:Date.now()}));
-        applyData(res,false);
-      }catch(e){ loginErr.textContent=e.message; }
-      finally{ loginBtn.disabled=false; loginBtn.textContent="Login"; }
-    };
-
-    // ---- Auto-login ----
-    document.addEventListener("DOMContentLoaded",()=>{
-      const stored=(localStorage.getItem("employeeKey")||"").trim();
-      if(!stored){showLogin();return;}
-      currentKey=stored; showApp(); setCartBadge();
-      loadProducts();
+  function draw(target, list){
+    target.innerHTML="";
+    if(!list.length){target.innerHTML='<tr><td colspan="4" class="muted">Geen zaken gevonden.</td></tr>';return;}
+    list.forEach(o=>{
+      const tr=document.createElement("tr");
+      const statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
+      const si=statusInfo(statusKey);
+      const product=getAny(o,["Product"])||"";
+      tr.innerHTML=`<td><div style="font-weight:700;overflow-wrap:break-word;word-break:break-word">${escapeHTML(getAny(o,["Customer","Klant"]))}</div>${product?`<div class="smallLine">${escapeHTML(product)}</div>`:""}</td><td class="statusCell"><div class="statusWrap"><span class="statusPill ${si.cls}"><span class="dot"></span>${escapeHTML(si.label)}</span></div></td><td><div class="actionsCell"><button class="btn openBtn" data-open="${escapeHTML(o.rowId)}">Openen</button></div></td><td class="completedCell">${isTruthy(o.Completed)?'<span class="checkPill yes">‚úì</span>':'<span class="checkPill">‚Äî</span>'}</td>`;
+      target.appendChild(tr);
     });
-  </script>
+  }
+  draw($("tbodyOpen"),openList);
+  draw($("tbodyCompleted"),doneList);
+  document.querySelectorAll("button[data-open]").forEach(btn=>btn.addEventListener("click",()=>openRow(Number(btn.dataset.open))));
+}
+
+// --- CREATE CASE --------------------------------------------------------------
+$("newCaseBtn").addEventListener("click",()=>{$("createMsg").textContent="";$("newCaseModal").classList.remove("hidden");});
+$("newCaseClose").addEventListener("click",()=>$("newCaseModal").classList.add("hidden"));
+$("newCaseModal").addEventListener("click",e=>{if(e.target===$("newCaseModal")) $("newCaseModal").classList.add("hidden");});
+$("createBtn").addEventListener("click",async()=>{
+  const Customer=$("nc_customer").value.trim();
+  const MailCustomer=$("nc_mail").value.trim();
+  const Supplier=$("nc_supplier").value;
+  const Product=$("nc_product").value.trim();
+  const PurchaseDate=$("nc_purchaseDate").value;
+  const InvoiceNumber=$("nc_invoiceNumber").value.trim();
+  const InvoiceLink=$("nc_invoiceLink").value.trim();
+  const Complaint=$("nc_complaint").value.trim();
+  const Photos=$("nc_photos").value.trim();
+  if(!Customer||!Supplier||!Product){$("createMsg").innerHTML='<span style="color:var(--warn)">Klant, leverancier en product zijn verplicht.</span>';return;}
+  $("createBtn").disabled=true;$("createMsg").textContent="Toevoegen‚Ä¶";
+  const data=await api(`action=warranty_create&supplierKey=${encodeURIComponent(supplierKey)}&Customer=${encodeURIComponent(Customer)}&MailCustomer=${encodeURIComponent(MailCustomer)}&Supplier=${encodeURIComponent(Supplier)}&Product=${encodeURIComponent(Product)}&PurchaseDate=${encodeURIComponent(PurchaseDate)}&InvoiceNumber=${encodeURIComponent(InvoiceNumber)}&InvoiceLink=${encodeURIComponent(InvoiceLink)}&Complaint=${encodeURIComponent(Complaint)}&Photos=${encodeURIComponent(Photos)}`).catch(()=>null);
+  $("createBtn").disabled=false;
+  if(!data?.ok){$("createMsg").innerHTML=`<span style='color:var(--bad)'>Mislukt: ${escapeHTML(data?.error||"Onbekend")}</span>`;return;}
+  $("createMsg").innerHTML='<span style="color:var(--ok)">Toegevoegd ‚úì</span>';
+  $("newCaseModal").classList.add("hidden");
+  await loadCases();
+});
+
+// --- SUPPLIERS ----------------------------------------------------------------
+async function loadSuppliers(){
+  const data=await api(`action=warranty_suppliers&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
+  const list=data?.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
+  suppliersMailMap=data?.ok&&typeof data.mailMap==="object"?data.mailMap:{};
+  $("nc_supplier").innerHTML="";
+  // suppliers is een array van objecten met Name, Email etc.
+  list.forEach(s=>{const name=typeof s==="object"?s.Name:s;const o=document.createElement("option");o.value=name;o.textContent=name;$("nc_supplier").appendChild(o);});
+}
+
+// --- VIEW SWITCH -------------------------------------------------------------
+let currentView = "cases"; // "cases" | "suppliers"
+function setView(v){
+  currentView=v;
+  const isCases=v==="cases";
+  $("portalView").classList.toggle("hidden",!isCases);
+  $("suppliersView").classList.toggle("hidden",isCases);
+  $("viewCasesBtn").classList.toggle("active",isCases);
+  $("viewSuppliersBtn").classList.toggle("active",!isCases);
+  $("newCaseBtn").classList.toggle("hidden",!isCases||!isMaster());
+  if(!isCases) renderSupplierGrid();
+}
+$("viewCasesBtn").addEventListener("click",()=>setView("cases"));
+$("viewSuppliersBtn").addEventListener("click",()=>setView("suppliers"));
+
+// --- SUPPLIERS CRUD -----------------------------------------------------------
+let suppliersData=[]; // full list from backend
+let editingSupplierId=null;
+
+async function loadSuppliersData(){
+  const data=await api(`action=warranty_suppliers&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
+  suppliersData=data?.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
+  renderSupplierGrid();
+}
+
+function renderSupplierGrid(){
+  const q=($("supplierSearch").value||"").trim().toLowerCase();
+  const list=suppliersData.filter(s=>!q||[s.Name,s.Brand,s.Email,s.EmailGeneral,s.Contact,s.Country].join(" ").toLowerCase().includes(q));
+  const grid=$("supplierGrid");
+  grid.innerHTML="";
+  if(!list.length){grid.innerHTML='<div class="muted" style="font-size:13px">Geen leveranciers gevonden.</div>';return;}
+  list.forEach(s=>{
+    const card=document.createElement("div");
+    card.className="supCard";
+    const emailHref=s.Email?`<a href="mailto:${escapeHTML(s.Email)}" class="linkBtn" style="font-size:11px">‚úâ ${escapeHTML(s.Email)}</a>`:"";
+    const emailGenHref=s.EmailGeneral&&s.EmailGeneral!==s.Email?`<a href="mailto:${escapeHTML(s.EmailGeneral)}" class="linkBtn" style="font-size:11px">‚úâ ${escapeHTML(s.EmailGeneral)}</a>`:"";
+    const rmaHref=s.RmaLink?`<a href="${escapeHTML(s.RmaLink)}" target="_blank" rel="noopener" class="linkBtn" style="font-size:11px">üîó Garantieportaal</a>`:"";
+    const webHref=s.Website?`<a href="${escapeHTML(s.Website)}" target="_blank" rel="noopener" class="linkBtn" style="font-size:11px">üåê Website</a>`:"";
+    const phonePart=s.Phone?`<span>üìû ${escapeHTML(s.Phone)}</span>`:"";
+    const countryPart=s.Country?`<span>üìç ${escapeHTML(s.Country)}</span>`:"";
+    const contactPart=s.Contact?`<span>üë§ ${escapeHTML(s.Contact)}</span>`:"";
+    const warrantyPart=s.Warranty?`<div class="supMeta" style="margin-top:2px">üõ° ${escapeHTML(s.Warranty)}</div>`:"";
+    const notesPart=s.Notes?`<div style="font-size:12px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:8px;white-space:pre-wrap">${escapeHTML(s.Notes)}</div>`:"";
+    card.innerHTML=`
+      <div>
+        <div class="supName">${escapeHTML(s.Name||"‚Äî")}</div>
+        ${s.Brand?`<div style="font-size:12px;color:var(--muted);font-weight:500">${escapeHTML(s.Brand)}</div>`:""}
+      </div>
+      <div class="supMeta">${contactPart}${phonePart}${countryPart}</div>
+      ${warrantyPart}
+      <div class="supActions">${emailHref}${emailGenHref}${rmaHref}${webHref}</div>
+      ${notesPart}
+      <div class="supActions" style="margin-top:6px;border-top:1px solid var(--border);padding-top:8px">
+        <button class="btn small" data-sup-edit="${escapeHTML(String(s.id||""))}">Bewerken</button>
+      </div>`;
+    card.querySelector("[data-sup-edit]").addEventListener("click",()=>openSupplierModal(s));
+    grid.appendChild(card);
+  });
+}
+
+$("supplierSearch").addEventListener("input",renderSupplierGrid);
+
+function openSupplierModal(sup){
+  editingSupplierId=sup?String(sup.id||""):null;
+  $("supplierModalTitle").textContent=sup?"Leverancier bewerken":"Nieuwe leverancier";
+  $("sup_name").value=sup?.Name||"";
+  $("sup_brand").value=sup?.Brand||"";
+  $("sup_email").value=sup?.Email||"";
+  $("sup_emailGeneral").value=sup?.EmailGeneral||"";
+  $("sup_contact").value=sup?.Contact||"";
+  $("sup_phone").value=sup?.Phone||"";
+  $("sup_website").value=sup?.Website||"";
+  $("sup_country").value=sup?.Country||"";
+  $("sup_rmaLink").value=sup?.RmaLink||"";
+  $("sup_warranty").value=sup?.Warranty||"";
+  $("sup_address").value=sup?.Address||"";
+  $("sup_notes").value=sup?.Notes||"";
+  $("sup_msg").textContent="";
+  $("sup_deleteBtn").classList.toggle("hidden",!sup);
+  $("supplierModal").classList.remove("hidden");
+}
+
+$("newSupplierBtn").addEventListener("click",()=>openSupplierModal(null));
+$("supplierModalClose").addEventListener("click",()=>$("supplierModal").classList.add("hidden"));
+$("supplierModal").addEventListener("click",e=>{if(e.target===$("supplierModal")) $("supplierModal").classList.add("hidden");});
+
+$("sup_saveBtn").addEventListener("click",async()=>{
+  const name=$("sup_name").value.trim();
+  const email=$("sup_email").value.trim();
+  if(!name||!email){$("sup_msg").innerHTML='<span style="color:var(--warn)">Naam en e-mail zijn verplicht.</span>';return;}
+  $("sup_saveBtn").disabled=true; $("sup_msg").textContent="Opslaan‚Ä¶";
+  const qs=`action=warranty_supplier_upsert&supplierKey=${encodeURIComponent(supplierKey)}`
+    +(editingSupplierId?`&id=${encodeURIComponent(editingSupplierId)}`:"")
+    +`&Name=${encodeURIComponent(name)}`
+    +`&Brand=${encodeURIComponent($("sup_brand").value.trim())}`
+    +`&Email=${encodeURIComponent(email)}`
+    +`&EmailGeneral=${encodeURIComponent($("sup_emailGeneral").value.trim())}`
+    +`&Contact=${encodeURIComponent($("sup_contact").value.trim())}`
+    +`&Phone=${encodeURIComponent($("sup_phone").value.trim())}`
+    +`&Website=${encodeURIComponent($("sup_website").value.trim())}`
+    +`&Country=${encodeURIComponent($("sup_country").value.trim())}`
+    +`&RmaLink=${encodeURIComponent($("sup_rmaLink").value.trim())}`
+    +`&Warranty=${encodeURIComponent($("sup_warranty").value.trim())}`
+    +`&Address=${encodeURIComponent($("sup_address").value.trim())}`
+    +`&Notes=${encodeURIComponent($("sup_notes").value.trim())}`;
+  const data=await api(qs).catch(()=>null);
+  $("sup_saveBtn").disabled=false;
+  if(!data?.ok){$("sup_msg").innerHTML=`<span style="color:var(--bad)">Mislukt: ${escapeHTML(data?.error||"")}</span>`;return;}
+  $("sup_msg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  $("supplierModal").classList.add("hidden");
+  await loadSuppliersData();
+  // also refresh dropdown in new-case modal
+  await loadSuppliers();
+});
+
+$("sup_deleteBtn").addEventListener("click",async()=>{
+  if(!editingSupplierId||!confirm("Leverancier verwijderen?")) return;
+  const data=await api(`action=warranty_supplier_delete&supplierKey=${encodeURIComponent(supplierKey)}&id=${encodeURIComponent(editingSupplierId)}`).catch(()=>null);
+  if(!data?.ok){$("sup_msg").innerHTML='<span style="color:var(--bad)">Verwijderen mislukt.</span>';return;}
+  $("supplierModal").classList.add("hidden");
+  await loadSuppliersData();
+  await loadSuppliers();
+});
+
+// --- LOGIN / LOGOUT -----------------------------------------------------------
+async function doLogin(withKey){
+  const key=(withKey??$("keyInput").value).trim();
+  if(!key){$("loginMsg").innerHTML='<span style="color:var(--warn)">Voer een wachtwoord in.</span>';return;}
+  $("loginBtn").disabled=true;$("loginMsg").textContent="Controleren‚Ä¶";
+  try{
+    const data=await jsonp(`${API_BASE}?action=auth&supplierKey=${encodeURIComponent(key)}`);
+    if(!data?.ok){$("loginMsg").innerHTML='<span style="color:var(--bad)">Ongeldig wachtwoord.</span>';return;}
+    supplierKey=key;
+    supplier=String(data.supplier||"").trim();
+    loginType=String(data.loginType||"").trim().toLowerCase();
+    sessionStorage.setItem("wgk",supplierKey);
+    sessionStorage.setItem("wgs",supplier);
+    sessionStorage.setItem("wgl",loginType);
+    showPortal();
+    await init_afterLogin();
+  }catch(err){
+    console.error(err);
+    $("loginMsg").innerHTML='<span style="color:var(--bad)">Server niet bereikbaar.</span>';
+  }finally{$("loginBtn").disabled=false;}
+}
+
+function logout(){
+  supplierKey="";supplier="";loginType="";cases=[];selected=null;
+  suppliersList=[];suppliersMailMap={};supplierTemplates=[];customerTemplates=[];
+  sessionStorage.clear();
+  $("portalView").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+  $("loginMsg").textContent="";$("keyInput").value="";
+}
+
+async function init_afterLogin(){
+  $("loginView").classList.add("hidden");
+  $("portalView").classList.remove("hidden");
+  $("suppliersView").classList.add("hidden");
+  $("viewSwitch").classList.toggle("hidden",!isMaster());
+  $("newCaseBtn").classList.toggle("hidden",!isMaster());
+  if(isMaster()){
+    await loadSuppliers();
+    await loadSuppliersData();
+  }
+  await loadTemplates();
+  await loadCases();
+}
+
+// --- EVENTS -------------------------------------------------------------------
+$("loginBtn").addEventListener("click",()=>doLogin());
+$("keyInput").addEventListener("keydown",e=>{if(e.key==="Enter") doLogin();});
+$("logoutBtn").addEventListener("click",logout);
+$("historySearch").addEventListener("input",renderCases);
+setupToggle("photoEditToggle","photoEditBody","photoEditPlus");
+setupToggle("templatesToggle","templatesBody","templatesPlus");
+setupToggle("addTplToggle","addTplBody","addTplPlus",resetTplEditor);
+setupToggle("mailLogToggle","mailLogBody","mailLogPlus");
+setupToggle("completedToggle","completedBody","completedPlus");
+
+// --- BOOT ---------------------------------------------------------------------
+(function boot(){
+  buildStatusSelect();
+  bindTokenButtons();
+  const k=sessionStorage.getItem("wgk")||"";
+  const s=sessionStorage.getItem("wgs")||"";
+  const l=sessionStorage.getItem("wgl")||"";
+  if(k){
+    supplierKey=k;supplier=s;loginType=l;
+    init_afterLogin();
+  } else {
+    $("loginView").classList.remove("hidden");
+  }
+})();
+</script>
 </body>
 </html>
+
