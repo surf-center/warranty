@@ -12,63 +12,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#ffffff;
-      --card:#ffffff;
-      --text:#171717;
-      --muted:#6b7280;
-      --border:#e5e7eb;
-      --primary:#1f2024;
-      --primary2:#111214;
-      --ok:#16a34a;
-      --warn:#d97706;
-      --bad:#dc2626;
-      --info:#2563eb;
-      --soft:#f8fafc;
-      --pill:#ececec;
-      --pillText:#4b5563;
-      --pillActive:#1f2024;
+      --bg:#ffffff;--card:#ffffff;--text:#171717;--muted:#6b7280;--border:#e5e7eb;
+      --primary:#1f2024;--primary2:#111214;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;
+      --info:#2563eb;--soft:#f8fafc;--pill:#ececec;--pillText:#4b5563;--pillActive:#1f2024;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
-    body{
-      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      font-weight:500;
-      background:linear-gradient(180deg,#ffffff 0%,#f7f7f8 100%);
-      color:var(--text);
-      min-height:100vh;
-    }
+    body{font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-weight:500;background:linear-gradient(180deg,#ffffff 0%,#f7f7f8 100%);color:var(--text);min-height:100vh;}
     .wrap{max-width:1180px;margin:0 auto;padding:26px 16px}
     .hidden{display:none !important}
     .muted{color:var(--muted)}
     .center{min-height:100vh;display:grid;place-items:center;padding:18px}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .divider{height:1px;background:var(--border);margin:12px 0}
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      box-shadow:0 10px 22px rgba(2,6,23,.06);
-    }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:0 10px 22px rgba(2,6,23,.06);}
     header{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
     .brand{display:flex;align-items:center;gap:12px;min-height:42px}
     .brand img{height:42px;max-width:220px;object-fit:contain;display:block}
     label{display:block;color:var(--muted);font-size:12px;margin:10px 0 6px;font-weight:500}
-    input,select,textarea{
-      width:100%;border:1px solid var(--border);background:#fff;color:var(--text);
-      padding:11px 13px;border-radius:12px;outline:none;
-      font-family:inherit;font-weight:500;font-size:14px;
-    }
+    input,select,textarea{width:100%;border:1px solid var(--border);background:#fff;color:var(--text);padding:11px 13px;border-radius:12px;outline:none;font-family:inherit;font-weight:500;font-size:14px;}
     textarea{resize:vertical}
     input:focus,select:focus,textarea:focus{border-color:rgba(15,23,42,.18);box-shadow:0 0 0 4px rgba(15,23,42,.06)}
     select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:none}
-    .btn{
-      border:1px solid var(--border);background:#fff;color:var(--text);
-      padding:10px 14px;border-radius:14px;cursor:pointer;white-space:nowrap;
-      transition:transform .05s ease,box-shadow .15s ease,background .15s ease;
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      font-family:inherit;font-weight:700;font-size:13px;
-    }
+    .btn{border:1px solid var(--border);background:#fff;color:var(--text);padding:10px 14px;border-radius:14px;cursor:pointer;white-space:nowrap;transition:transform .05s ease,box-shadow .15s ease,background .15s ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;font-size:13px;}
     .btn:active{transform:translateY(1px)}
     .btn.primary{background:linear-gradient(180deg,var(--primary),var(--primary2));border-color:transparent;color:#fff;box-shadow:0 8px 16px rgba(15,23,42,.16)}
     .btn:disabled{opacity:.55;cursor:not-allowed}
@@ -130,8 +96,6 @@
     .savedLeft{min-width:0;display:flex;gap:10px;align-items:flex-start}
     .tplName{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}
     .tplMeta{color:var(--muted);font-size:12px;overflow-wrap:anywhere;word-break:break-word;max-width:360px;font-weight:500}
-
-    /* Photo grid */
     .photoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin-top:8px}
     .photoThumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);aspect-ratio:1;display:block;background:var(--soft)}
     .photoThumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -139,25 +103,17 @@
     .photoAdd{display:flex;flex-direction:column;gap:10px;margin-top:10px}
     .photoInputRow{display:flex;gap:8px;align-items:center}
     .photoInputRow input{flex:1}
-
-    /* Status select */
     .statusSelectWrap{position:relative}
     .statusSelectWrap select{padding-right:32px}
-
-    /* Invoice link */
     .invoiceLink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--info);text-decoration:none;padding:6px 10px;border:1px solid rgba(37,99,235,.2);border-radius:10px;background:rgba(37,99,235,.04)}
     .invoiceLink:hover{background:rgba(37,99,235,.09)}
-
     .mailLogRow{display:flex;justify-content:space-between;gap:16px;align-items:center;width:100%}
     .mailLogDate{font-size:13px;font-weight:700;color:var(--text)}
     .mailLogTime{font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap}
-
     .kvGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:6px}
     .kvGridItem{min-width:0}
     .linkBtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--info);background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.18);border-radius:8px;padding:4px 9px;text-decoration:none;white-space:nowrap}
     .linkBtn:hover{background:rgba(37,99,235,.12)}
-
-    /* Supplier cards */
     .supGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
     .supCard{border:1px solid var(--border);border-radius:16px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:8px}
     .supCard:hover{border-color:rgba(15,23,42,.2);box-shadow:0 6px 16px rgba(15,23,42,.07)}
@@ -199,48 +155,41 @@
           <span style="font-weight:700;font-size:16px;line-height:1">+</span>
           <span>Nieuwe zaak</span>
         </button>
-        <button id="logoutBtn" class="btn icon" type="button" title="Uitloggen">‚èª</button>
+        <button id="logoutBtn" class="btn icon" type="button" title="Uitloggen">&#x23FB;</button>
       </div>
     </header>
 
     <div class="two">
-      <!-- LEFT: detail panel -->
+      <!-- LEFT -->
       <section class="card colStretch">
         <div id="noSelection" class="hint">Open een zaak uit de tabel.</div>
         <div id="form" class="hidden" style="flex:1;display:flex;flex-direction:column;gap:0">
-
-          <!-- Top: customer + status badge -->
           <div class="kvRow">
             <div class="kvBlock" style="flex:1;min-width:0">
               <div class="kvLabel">Klant</div>
-              <div class="kvValue" id="d_customer">‚Äî</div>
+              <div class="kvValue" id="d_customer">-</div>
               <div class="smallLine" id="d_customerMail"></div>
-
               <div style="margin-top:10px">
                 <div class="kvLabel">Leverancier</div>
-                <div class="kvValue" id="d_supplier">‚Äî</div>
+                <div class="kvValue" id="d_supplier">-</div>
               </div>
-
               <div style="margin-top:10px">
                 <div class="kvLabel">Product</div>
-                <div class="kvValueSmall" id="d_product">‚Äî</div>
+                <div class="kvValueSmall" id="d_product">-</div>
               </div>
-
               <div class="kvGrid" style="margin-top:10px">
                 <div class="kvGridItem">
                   <div class="kvLabel">Aankoopdatum</div>
-                  <div class="kvValueSmall" id="d_purchaseDate">‚Äî</div>
+                  <div class="kvValueSmall" id="d_purchaseDate">-</div>
                 </div>
                 <div class="kvGridItem">
                   <div class="kvLabel">Zaaknummer</div>
-                  <div class="kvValueSmall" id="d_caseNumber">‚Äî</div>
+                  <div class="kvValueSmall" id="d_caseNumber">-</div>
                 </div>
               </div>
-
-              <!-- Invoice -->
               <div style="margin-top:10px" id="d_invoiceBlock">
                 <div class="kvLabel">Aankoopfactuur</div>
-                <div id="d_invoiceDisplay">‚Äî</div>
+                <div id="d_invoiceDisplay">-</div>
               </div>
             </div>
             <div class="kvBlock" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
@@ -250,12 +199,10 @@
             </div>
           </div>
 
-          <!-- Complaint -->
           <div class="divider"></div>
           <div class="kvLabel" style="margin-top:0">Klacht / omschrijving</div>
-          <div id="d_complaint" style="font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:50px">‚Äî</div>
+          <div id="d_complaint" style="font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:50px">-</div>
 
-          <!-- Photos -->
           <div style="margin-top:12px">
             <div class="sectionTitle">Foto's</div>
             <div id="photoGrid" class="photoGrid"></div>
@@ -263,7 +210,6 @@
             <div id="photoLinkList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
           </div>
 
-          <!-- Add/edit photos -->
           <div style="margin-top:10px">
             <div class="toggleRow" id="photoEditToggle"><div class="sectionTitle">Foto-links bewerken</div><div class="plusSym" id="photoEditPlus">+</div></div>
             <div id="photoEditBody" class="hidden" style="margin-top:10px">
@@ -276,16 +222,14 @@
             </div>
           </div>
 
-          <!-- Notes field -->
           <div class="divider"></div>
           <div class="sectionTitle">Notities</div>
-          <textarea id="notesField" rows="3" placeholder="Interne notities‚Ä¶" style="margin-top:6px"></textarea>
+          <textarea id="notesField" rows="3" placeholder="Interne notities..." style="margin-top:6px"></textarea>
           <div class="row" style="margin-top:8px;justify-content:flex-end">
             <button id="saveNotesBtn" class="btn primary small" type="button">Notities opslaan</button>
           </div>
           <div class="hint" id="notesSaveMsg"></div>
 
-          <!-- Supplier reference -->
           <div class="divider"></div>
           <div class="sectionTitle">Leveranciers referentie</div>
           <input id="supplierRef" placeholder="RMA / zaaknummer leverancier" style="margin-top:6px" />
@@ -294,12 +238,11 @@
           </div>
           <div class="hint" id="refSaveMsg"></div>
 
-          <!-- Mail section -->
           <div class="divider"></div>
           <div class="sectionTitle" style="margin-bottom:8px">Mail leverancier</div>
           <div class="flagRow" id="supplierMailFlags">
-            <button class="btn mailFlagBtn" id="ms_en" type="button"><span class="flag">üá¨üáß</span></button>
-            <button class="btn mailFlagBtn" id="ms_nl" type="button"><span class="flag">üá≥üá±</span></button>
+            <button class="btn mailFlagBtn" id="ms_en" type="button"><span class="flag">&#x1F1EC;&#x1F1E7;</span></button>
+            <button class="btn mailFlagBtn" id="ms_nl" type="button"><span class="flag">&#x1F1F3;&#x1F1F1;</span></button>
           </div>
           <div class="hint" id="mailSupplierMsg"></div>
 
@@ -307,15 +250,14 @@
             <div class="divider"></div>
             <div class="sectionTitle" style="margin-bottom:8px">Mail klant</div>
             <div class="flagRow" id="customerMailFlags">
-              <button class="btn mailFlagBtn" id="mc_en" type="button"><span class="flag">üá¨üáß</span></button>
-              <button class="btn mailFlagBtn" id="mc_nl" type="button"><span class="flag">üá≥üá±</span></button>
-              <button class="btn mailFlagBtn" id="mc_de" type="button"><span class="flag">üá©üá™</span></button>
-              <button class="btn mailFlagBtn" id="mc_fr" type="button"><span class="flag">üá´üá∑</span></button>
+              <button class="btn mailFlagBtn" id="mc_en" type="button"><span class="flag">&#x1F1EC;&#x1F1E7;</span></button>
+              <button class="btn mailFlagBtn" id="mc_nl" type="button"><span class="flag">&#x1F1F3;&#x1F1F1;</span></button>
+              <button class="btn mailFlagBtn" id="mc_de" type="button"><span class="flag">&#x1F1E9;&#x1F1EA;</span></button>
+              <button class="btn mailFlagBtn" id="mc_fr" type="button"><span class="flag">&#x1F1EB;&#x1F1F7;</span></button>
             </div>
             <div class="hint" id="mailCustomerMsg"></div>
           </div>
 
-          <!-- Templates -->
           <div id="templatesWrap" style="margin-top:10px">
             <div class="divider"></div>
             <div class="toggleRow" id="templatesToggle"><div class="sectionTitle">Mail templates</div><div class="plusSym" id="templatesPlus">+</div></div>
@@ -358,7 +300,6 @@
             </div>
           </div>
 
-          <!-- Mail log -->
           <div class="divider"></div>
           <div class="toggleRow" id="mailLogToggle"><div class="sectionTitle">Mail log</div><div class="plusSym" id="mailLogPlus">+</div></div>
           <div id="mailLogBody" class="hidden" style="margin-top:10px">
@@ -369,9 +310,9 @@
         </div>
       </section>
 
-      <!-- RIGHT: table -->
+      <!-- RIGHT -->
       <section class="card colStretch">
-        <input id="historySearch" placeholder="Zoeken‚Ä¶" style="width:100%;margin-bottom:12px" />
+        <input id="historySearch" placeholder="Zoeken..." style="width:100%;margin-bottom:12px" />
         <table class="table">
           <thead>
             <tr>
@@ -381,7 +322,7 @@
               <th class="completedCell">Klaar</th>
             </tr>
           </thead>
-          <tbody id="tbodyOpen"><tr><td colspan="4" class="muted">Laden‚Ä¶</td></tr></tbody>
+          <tbody id="tbodyOpen"><tr><td colspan="4" class="muted">Laden...</td></tr></tbody>
         </table>
         <div id="completedWrap" style="margin-top:12px">
           <div class="divider"></div>
@@ -412,14 +353,14 @@
       <div style="font-weight:700;font-size:16px">Leveranciers</div>
       <button id="newSupplierBtn" class="btn primary" type="button">+ Leverancier toevoegen</button>
     </div>
-    <input id="supplierSearch" placeholder="Zoeken op naam, mail, contactpersoon‚Ä¶" style="width:100%;margin-bottom:14px" />
+    <input id="supplierSearch" placeholder="Zoeken op naam, mail, contactpersoon..." style="width:100%;margin-bottom:14px" />
     <div id="supplierGrid" class="supGrid">
-      <div class="muted" style="font-size:13px">Laden‚Ä¶</div>
+      <div class="muted" style="font-size:13px">Laden...</div>
     </div>
   </div>
 </div>
 
-<!-- SUPPLIER EDIT MODAL -->
+<!-- SUPPLIER MODAL -->
 <div id="supplierModal" class="overlay hidden">
   <div class="card" style="max-width:540px;width:100%;max-height:90vh;overflow-y:auto">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
@@ -428,7 +369,7 @@
     </div>
     <div class="grid2">
       <div><label style="margin-top:0">Naam *</label><input id="sup_name" placeholder="Leveranciersnaam" /></div>
-      <div><label style="margin-top:0">Merk / label</label><input id="sup_brand" placeholder="bijv. Fanatic, North‚Ä¶" /></div>
+      <div><label style="margin-top:0">Merk / label</label><input id="sup_brand" placeholder="bijv. Fanatic, North..." /></div>
     </div>
     <div class="grid2">
       <div><label>E-mail garanties *</label><input id="sup_email" type="email" placeholder="garantie@leverancier.com" /></div>
@@ -436,20 +377,20 @@
     </div>
     <div class="grid2">
       <div><label>Contactpersoon</label><input id="sup_contact" placeholder="Naam contactpersoon" /></div>
-      <div><label>Telefoon</label><input id="sup_phone" placeholder="+31 ‚Ä¶" /></div>
+      <div><label>Telefoon</label><input id="sup_phone" placeholder="+31 ..." /></div>
     </div>
     <div class="grid2">
-      <div><label>Website</label><input id="sup_website" type="url" placeholder="https://‚Ä¶" /></div>
+      <div><label>Website</label><input id="sup_website" type="url" placeholder="https://..." /></div>
       <div><label>Land</label><input id="sup_country" placeholder="Nederland" /></div>
     </div>
     <label>Garantieportaal / RMA-link</label>
-    <input id="sup_rmaLink" type="url" placeholder="https://‚Ä¶ (leveranciersportaal voor garanties)" />
+    <input id="sup_rmaLink" type="url" placeholder="https://..." />
     <label>Garantievoorwaarden / termijn</label>
-    <input id="sup_warranty" placeholder="bijv. 2 jaar fabrieksgarantie, binnen 14 dagen melden" />
+    <input id="sup_warranty" placeholder="bijv. 2 jaar fabrieksgarantie" />
     <label>Adres</label>
     <input id="sup_address" placeholder="Straat, postcode, stad" />
     <label>Notities</label>
-    <textarea id="sup_notes" rows="3" placeholder="Interne notities over deze leverancier‚Ä¶"></textarea>
+    <textarea id="sup_notes" rows="3" placeholder="Interne notities..."></textarea>
     <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
       <button id="sup_deleteBtn" class="btn small hidden" type="button" style="color:var(--bad);border-color:rgba(220,38,38,.25)">Verwijderen</button>
       <div class="row" style="gap:8px;margin-left:auto">
@@ -476,11 +417,11 @@
     <label>Aankoopdatum</label><input id="nc_purchaseDate" type="date" />
     <div class="grid2">
       <div><label style="margin-top:0">Factuurnummer</label><input id="nc_invoiceNumber" /></div>
-      <div><label style="margin-top:0">Factuurlink (URL)</label><input id="nc_invoiceLink" type="url" placeholder="https://‚Ä¶" /></div>
+      <div><label style="margin-top:0">Factuurlink (URL)</label><input id="nc_invoiceLink" type="url" placeholder="https://..." /></div>
     </div>
-    <label>Klacht / omschrijving</label><textarea id="nc_complaint" rows="4" placeholder="Beschrijf het probleem‚Ä¶"></textarea>
-    <label>Foto-links (√©√©n per regel, PostImage of andere URL)</label>
-    <textarea id="nc_photos" rows="4" placeholder="https://i.postimg.cc/‚Ä¶&#10;https://i.postimg.cc/‚Ä¶"></textarea>
+    <label>Klacht / omschrijving</label><textarea id="nc_complaint" rows="4" placeholder="Beschrijf het probleem..."></textarea>
+    <label>Foto-links (een per regel)</label>
+    <textarea id="nc_photos" rows="4" placeholder="https://i.postimg.cc/..."></textarea>
     <div class="row" style="margin-top:12px;justify-content:flex-end">
       <button id="createBtn" class="btn primary" type="button">Toevoegen</button>
     </div>
@@ -502,17 +443,15 @@
 </div>
 
 <script>
-// --- CONFIG -------------------------------------------------------------------
 const API_BASE = "https://script.google.com/macros/s/AKfycbxMDioUnR2djbs_qKZgQUtXd543ZlTfgpN8hfakvnRifbWdmeDBa7iS_CUeNpdk-g4i2A/exec";
 const MASTER_NAME = "Jasper";
 
-// Status definitions
 const STATUSES = [
-  { key:"new",      label:"Nieuw",           cls:"s-new"      },
-  { key:"sent",     label:"Verzonden",        cls:"s-sent"     },
-  { key:"inrepair", label:"In behandeling",   cls:"s-inrepair" },
-  { key:"done",     label:"Afgerond",         cls:"s-done"     },
-  { key:"rejected", label:"Afgewezen",        cls:"s-rejected" },
+  { key:"new",      label:"Nieuw",          cls:"s-new"      },
+  { key:"sent",     label:"Verzonden",       cls:"s-sent"     },
+  { key:"inrepair", label:"In behandeling",  cls:"s-inrepair" },
+  { key:"done",     label:"Afgerond",        cls:"s-done"     },
+  { key:"rejected", label:"Afgewezen",       cls:"s-rejected" },
 ];
 
 const $ = id => document.getElementById(id);
@@ -521,7 +460,6 @@ let cases=[], selected=null, suppliersList=[], suppliersMailMap={};
 let supplierTemplates=[], customerTemplates=[];
 let lastFocusedField=null, pendingMail=null;
 
-// --- UTILS --------------------------------------------------------------------
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
 function normalizeKey(k){return String(k||"").trim().toLowerCase().replace(/\s+/g," ");}
 function getAny(obj,keys){if(!obj)return "";const map={};for(const k of Object.keys(obj)) map[normalizeKey(k)]=k;for(const want of keys){const hit=map[normalizeKey(want)];if(hit!==undefined){const v=obj[hit];if(v!==undefined&&v!==null&&String(v).trim()!=="") return String(v).trim();}}return "";}
@@ -530,216 +468,214 @@ function isMaster(){return loginType==="master";}
 function isSupplier(){return loginType==="supplier";}
 function firstNameFrom(full){const s=String(full||"").trim();return s?s.split(/\s+/)[0]:"";}
 
-function jsonp(url){return new Promise((resolve,reject)=>{const cb="cb_"+Math.random().toString(36).slice(2);const s=document.createElement("script");window[cb]=(data)=>{try{delete window[cb]}catch(_){}s.remove();resolve(data);};s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;s.onerror=()=>{try{delete window[cb]}catch(_){}s.remove();reject(new Error("JSONP failed"));};document.head.appendChild(s);});}
-function api(qs){return jsonp(`${API_BASE}?${qs}`);}
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb="cb_"+Math.random().toString(36).slice(2);
+    const s=document.createElement("script");
+    window[cb]=function(data){try{delete window[cb]}catch(_){}s.remove();resolve(data);};
+    s.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
+    s.onerror=function(){try{delete window[cb]}catch(_){}s.remove();reject(new Error("JSONP failed"));};
+    document.head.appendChild(s);
+  });
+}
+function api(qs){return jsonp(API_BASE+"?"+qs);}
 
 function parsePhotoLinks(val){
   return String(val||"").split(/[\n,]+/).map(s=>s.trim()).filter(s=>s.startsWith("http"));
 }
-
 function statusInfo(key){return STATUSES.find(x=>x.key===String(key||"").toLowerCase())||STATUSES[0];}
 
-// --- TOGGLES ------------------------------------------------------------------
-function setupToggle(tid, bid, pid, onOpen){
+function setupToggle(tid,bid,pid,onOpen){
   const t=$(tid),b=$(bid),p=$(pid);if(!t||!b||!p)return;
-  t.addEventListener("click",()=>{const hidden=b.classList.toggle("hidden");p.textContent=hidden?"+":"‚Äì";if(!hidden&&onOpen) onOpen();});
+  t.addEventListener("click",function(){var hidden=b.classList.toggle("hidden");p.textContent=hidden?"+":"-";if(!hidden&&onOpen) onOpen();});
 }
 
-// --- TOKEN MAP ----------------------------------------------------------------
 function tokenMap(){
   if(!selected) return {};
   const photos=parsePhotoLinks(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   return {
-    "{{Klant}}":          firstNameFrom(getAny(selected,["Customer","Klant"])),
-    "{{KlantVolledig}}":  getAny(selected,["Customer","Klant"]),
-    "{{Leverancier}}":    getAny(selected,["Supplier","Leverancier"]),
-    "{{Product}}":        getAny(selected,["Product"]),
-    "{{Klacht}}":         getAny(selected,["Complaint","Klacht"]),
-    "{{Zaaknummer}}":     getAny(selected,["CaseNumber","Case Number","Zaaknummer"]),
-    "{{Aankoopdatum}}":   getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
-    "{{Factuurnummer}}":  getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
-    "{{FactuurLink}}":    getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]),
-    "{{LeveranciersRef}}":getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
-    "{{FotoLinks}}":      photos.join("\n"),
+    "{{Klant}}":           firstNameFrom(getAny(selected,["Customer","Klant"])),
+    "{{KlantVolledig}}":   getAny(selected,["Customer","Klant"]),
+    "{{Leverancier}}":     getAny(selected,["Supplier","Leverancier"]),
+    "{{Product}}":         getAny(selected,["Product"]),
+    "{{Klacht}}":          getAny(selected,["Complaint","Klacht"]),
+    "{{Zaaknummer}}":      getAny(selected,["CaseNumber","Case Number","Zaaknummer"]),
+    "{{Aankoopdatum}}":    getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
+    "{{Factuurnummer}}":   getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
+    "{{FactuurLink}}":     getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]),
+    "{{LeveranciersRef}}": getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
+    "{{FotoLinks}}":       photos.join("\n"),
   };
 }
 function applyTokens(txt){
-  let out=String(txt||"");
-  const m=tokenMap();
-  for(const k of Object.keys(m)) out=out.split(k).join(String(m[k]||""));
+  var out=String(txt||"");
+  var m=tokenMap();
+  for(var k of Object.keys(m)) out=out.split(k).join(String(m[k]||""));
   return out;
 }
 
-// --- TOKEN BUTTONS ------------------------------------------------------------
-document.addEventListener("focusin",e=>{const el=e.target;if(["INPUT","TEXTAREA"].includes(el?.tagName)) lastFocusedField=el;});
+document.addEventListener("focusin",function(e){var el=e.target;if(el&&(el.tagName==="INPUT"||el.tagName==="TEXTAREA")) lastFocusedField=el;});
 function bindTokenButtons(){
-  document.querySelectorAll("button[data-token]").forEach(btn=>btn.addEventListener("click",()=>{
-    const target=lastFocusedField||$("tplBodyText");
-    if(!target) return;
-    const s=target.selectionStart??target.value.length, e2=target.selectionEnd??s;
-    target.value=target.value.slice(0,s)+btn.getAttribute("data-token")+target.value.slice(e2);
-    const pos=s+btn.getAttribute("data-token").length;
-    target.setSelectionRange(pos,pos); target.focus();
-  }));
+  document.querySelectorAll("button[data-token]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var target=lastFocusedField||$("tplBodyText");
+      if(!target) return;
+      var s=target.selectionStart!=null?target.selectionStart:target.value.length;
+      var e2=target.selectionEnd!=null?target.selectionEnd:s;
+      var tok=btn.getAttribute("data-token");
+      target.value=target.value.slice(0,s)+tok+target.value.slice(e2);
+      var pos=s+tok.length;
+      target.setSelectionRange(pos,pos); target.focus();
+    });
+  });
 }
 
-// --- STATUS SETUP -------------------------------------------------------------
 function buildStatusSelect(){
   $("statusSelect").innerHTML="";
-  STATUSES.forEach(s=>{const o=document.createElement("option");o.value=s.key;o.textContent=s.label;$("statusSelect").appendChild(o);});
+  STATUSES.forEach(function(s){var o=document.createElement("option");o.value=s.key;o.textContent=s.label;$("statusSelect").appendChild(o);});
 }
 function renderStatusBadge(key){
-  const s=statusInfo(key);
-  $("statusBadge").className=`statusPill ${s.cls}`;
+  var s=statusInfo(key);
+  $("statusBadge").className="statusPill "+s.cls;
   $("statusText").textContent=s.label;
   $("statusSelect").value=s.key;
 }
 
-// --- PHOTO DISPLAY ------------------------------------------------------------
 function renderPhotos(photosRaw){
-  const links=parsePhotoLinks(photosRaw);
+  var links=parsePhotoLinks(photosRaw);
   $("photoGrid").innerHTML="";
   $("photoLinkList").innerHTML="";
   if(!links.length){$("noPhotos").classList.remove("hidden");return;}
   $("noPhotos").classList.add("hidden");
-  links.forEach((url,i)=>{
-    const isImage=/\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(url)||url.includes("postimg")||url.includes("imgur");
+  links.forEach(function(url,i){
+    var isImage=/\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(url)||url.includes("postimg")||url.includes("imgur");
     if(isImage){
-      const a=document.createElement("a");
+      var a=document.createElement("a");
       a.href=url; a.target="_blank"; a.rel="noopener noreferrer"; a.className="photoThumb";
-      const img=document.createElement("img"); img.src=url; img.alt=`Foto ${i+1}`;
-      img.onerror=()=>{a.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:11px;color:var(--muted);padding:4px;text-align:center">Foto ${i+1}</div>`;};
+      var img=document.createElement("img"); img.src=url; img.alt="Foto "+(i+1);
+      img.onerror=function(){a.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100%;font-size:11px;color:var(--muted);padding:4px;text-align:center'>Foto "+(i+1)+"</div>";};
       a.appendChild(img); $("photoGrid").appendChild(a);
     } else {
-      const row=document.createElement("div");
-      row.innerHTML=`<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" class="linkBtn">üîó Link ${i+1}</a>`;
+      var row=document.createElement("div");
+      row.innerHTML="<a href='"+escapeHTML(url)+"' target='_blank' rel='noopener noreferrer' class='linkBtn'>Link "+(i+1)+"</a>";
       $("photoLinkList").appendChild(row);
     }
   });
 }
 
-// --- PHOTO EDIT ---------------------------------------------------------------
 function buildPhotoInputs(photosRaw){
-  const links=parsePhotoLinks(photosRaw);
+  var links=parsePhotoLinks(photosRaw);
   $("photoInputsWrap").innerHTML="";
-  const toShow=links.length?links:[""];
-  toShow.forEach(url=>addPhotoInput(url));
+  var toShow=links.length?links:[""];
+  toShow.forEach(function(url){addPhotoInput(url);});
 }
 function addPhotoInput(val){
-  const row=document.createElement("div");
+  var row=document.createElement("div");
   row.className="photoInputRow";
   row.style.marginBottom="6px";
-  row.innerHTML=`<input type="url" placeholder="https://i.postimg.cc/‚Ä¶" value="${escapeHTML(val||"")}" /><button class="btn small" type="button" style="flex-shrink:0;color:var(--bad)" onclick="this.closest('.photoInputRow').remove()">‚úï</button>`;
+  var inp=document.createElement("input");
+  inp.type="url"; inp.placeholder="https://i.postimg.cc/..."; inp.value=val||"";
+  var btn=document.createElement("button");
+  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="X";
+  btn.onclick=function(){row.remove();};
+  row.appendChild(inp); row.appendChild(btn);
   $("photoInputsWrap").appendChild(row);
 }
-$("addPhotoBtn").addEventListener("click",()=>addPhotoInput(""));
-$("savePhotosBtn").addEventListener("click",async()=>{
+$("addPhotoBtn").addEventListener("click",function(){addPhotoInput("");});
+$("savePhotosBtn").addEventListener("click",async function(){
   if(!selected) return;
-  const links=[...$("photoInputsWrap").querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean);
-  $("photoSaveMsg").textContent="Opslaan‚Ä¶";
-  const data=await api(`action=update_photos&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Photos=${encodeURIComponent(links.join("\n"))}`).catch(()=>null);
-  if(!data?.ok){$("photoSaveMsg").innerHTML=`<span style="color:var(--bad)">Mislukt.</span>`;return;}
-  $("photoSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  var links=[...$("photoInputsWrap").querySelectorAll("input")].map(function(i){return i.value.trim();}).filter(Boolean);
+  $("photoSaveMsg").textContent="Opslaan...";
+  var data=await api("action=update_photos&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(selected.rowId)+"&Photos="+encodeURIComponent(links.join("\n"))).catch(function(){return null;});
+  if(!data||!data.ok){$("photoSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
+  $("photoSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   await loadCases();
 });
 
-// --- INVOICE DISPLAY ----------------------------------------------------------
-function renderInvoice(num, link){
-  const wrap=$("d_invoiceDisplay");
-  if(!num&&!link){wrap.textContent="‚Äî";return;}
-  let html="";
-  if(num) html+=`<span style="font-weight:700;font-size:13px">${escapeHTML(num)}</span>`;
-  if(link) html+=`${num?" ":""}<a href="${escapeHTML(link)}" target="_blank" rel="noopener noreferrer" class="linkBtn">üìÑ Factuur openen</a>`;
+function renderInvoice(num,link){
+  var wrap=$("d_invoiceDisplay");
+  if(!num&&!link){wrap.textContent="-";return;}
+  var html="";
+  if(num) html+="<span style='font-weight:700;font-size:13px'>"+escapeHTML(num)+"</span>";
+  if(link) html+=(num?" ":'')+"<a href='"+escapeHTML(link)+"' target='_blank' rel='noopener noreferrer' class='linkBtn'>Factuur openen</a>";
   wrap.innerHTML=html;
 }
 
-// --- OPEN ROW -----------------------------------------------------------------
 async function openRow(rowId){
-  selected=cases.find(x=>Number(x.rowId)===rowId);
+  selected=cases.find(function(x){return Number(x.rowId)===rowId;});
   if(!selected) return;
-
-  $("d_customer").textContent=getAny(selected,["Customer","Klant"])||"‚Äî";
+  $("d_customer").textContent=getAny(selected,["Customer","Klant"])||"-";
   $("d_customerMail").textContent=isSupplier()?"":getAny(selected,["MailCustomer","Mail Customer","Email"])||"";
-  $("d_supplier").textContent=getAny(selected,["Supplier","Leverancier"])||"‚Äî";
-  $("d_product").textContent=getAny(selected,["Product"])||"‚Äî";
-  $("d_purchaseDate").textContent=getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])||"‚Äî";
-  $("d_caseNumber").textContent=getAny(selected,["CaseNumber","Case Number","Zaaknummer"])||"‚Äî";
+  $("d_supplier").textContent=getAny(selected,["Supplier","Leverancier"])||"-";
+  $("d_product").textContent=getAny(selected,["Product"])||"-";
+  $("d_purchaseDate").textContent=getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])||"-";
+  $("d_caseNumber").textContent=getAny(selected,["CaseNumber","Case Number","Zaaknummer"])||"-";
   renderInvoice(getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]));
-  $("d_complaint").textContent=getAny(selected,["Complaint","Klacht"])||"‚Äî";
+  $("d_complaint").textContent=getAny(selected,["Complaint","Klacht"])||"-";
   renderPhotos(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   buildPhotoInputs(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   $("notesField").value=getAny(selected,["Notes","Notities"])||"";
   $("supplierRef").value=getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||"";
   renderStatusBadge(getAny(selected,["Status"])||"new");
-
   $("noSelection").classList.add("hidden");
   $("form").classList.remove("hidden");
   $("mailCustomerSection").classList.toggle("hidden",isSupplier());
   await loadMailLog();
 }
 
-// --- SAVE NOTES ---------------------------------------------------------------
-$("saveNotesBtn").addEventListener("click",async()=>{
+$("saveNotesBtn").addEventListener("click",async function(){
   if(!selected) return;
-  $("notesSaveMsg").textContent="Opslaan‚Ä¶";
-  const data=await api(`action=update_notes&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Notes=${encodeURIComponent($("notesField").value.trim())}`).catch(()=>null);
-  if(!data?.ok){$("notesSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
-  $("notesSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  $("notesSaveMsg").textContent="Opslaan...";
+  var data=await api("action=update_notes&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(selected.rowId)+"&Notes="+encodeURIComponent($("notesField").value.trim())).catch(function(){return null;});
+  if(!data||!data.ok){$("notesSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
+  $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   await loadCases();
 });
 
-// --- SAVE REF -----------------------------------------------------------------
-$("saveRefBtn").addEventListener("click",async()=>{
+$("saveRefBtn").addEventListener("click",async function(){
   if(!selected) return;
-  $("refSaveMsg").textContent="Opslaan‚Ä¶";
-  const data=await api(`action=update_ref&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&SupplierRef=${encodeURIComponent($("supplierRef").value.trim())}`).catch(()=>null);
-  if(!data?.ok){$("refSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
-  $("refSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  $("refSaveMsg").textContent="Opslaan...";
+  var data=await api("action=update_ref&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(selected.rowId)+"&SupplierRef="+encodeURIComponent($("supplierRef").value.trim())).catch(function(){return null;});
+  if(!data||!data.ok){$("refSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
+  $("refSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   await loadCases();
 });
 
-// --- SAVE STATUS --------------------------------------------------------------
-$("statusSaveBtn").addEventListener("click",async()=>{
+$("statusSaveBtn").addEventListener("click",async function(){
   if(!selected) return;
-  const newStatus=$("statusSelect").value;
-  const data=await api(`action=update_status&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(selected.rowId)}&Status=${encodeURIComponent(newStatus)}`).catch(()=>null);
-  if(!data?.ok){$("msg").innerHTML='<span style="color:var(--bad)">Status opslaan mislukt.</span>';return;}
-  $("msg").innerHTML='<span style="color:var(--ok)">Status opgeslagen ‚úì</span>';
+  var newStatus=$("statusSelect").value;
+  var data=await api("action=update_status&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(selected.rowId)+"&Status="+encodeURIComponent(newStatus)).catch(function(){return null;});
+  if(!data||!data.ok){$("msg").innerHTML="<span style='color:var(--bad)'>Status opslaan mislukt.</span>";return;}
+  $("msg").innerHTML="<span style='color:var(--ok)'>Status opgeslagen</span>";
   await loadCases();
 });
 
-// --- COMPLETED TOGGLE ---------------------------------------------------------
-async function setCompleted(rowId, val){
-  return api(`action=complete&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(rowId)}&Completed=${encodeURIComponent(val?"TRUE":"FALSE")}`).catch(()=>null);
-}
+function langFlag(lang){var l=String(lang||"").toLowerCase();if(l==="nl")return"&#x1F1F3;&#x1F1F1;";if(l==="de")return"&#x1F1E9;&#x1F1EA;";if(l==="fr")return"&#x1F1EB;&#x1F1F7;";return"&#x1F1EC;&#x1F1E7;";}
+function findTpl(arr,lang){var l=String(lang||"").toLowerCase();return arr.find(function(x){return String(x.language||"").toLowerCase()===l&&String(x.label||"").toUpperCase()==="DEFAULT";})||arr.find(function(x){return String(x.language||"").toLowerCase()===l;})||null;}
 
-// --- TEMPLATES ---------------------------------------------------------------
-function langFlag(lang){const l=String(lang||"").toLowerCase();if(l==="nl")return"üá≥üá±";if(l==="de")return"üá©üá™";if(l==="fr")return"üá´üá∑";if(l==="en")return"üá¨üáß";return"";}
-function findTpl(arr,lang){const l=String(lang||"").toLowerCase();return arr.find(x=>String(x.language||"").toLowerCase()===l&&String(x.label||"").toUpperCase()==="DEFAULT")||arr.find(x=>String(x.language||"").toLowerCase()===l)||null;}
-
-function renderTemplateList(wrapId, list, sendFn, editFn){
-  const wrap=$(wrapId); wrap.innerHTML="";
-  if(!list.length){wrap.innerHTML='<div class="muted" style="font-size:13px">Geen templates.</div>';return;}
-  const sorted=list.slice().sort((a,b)=>String(a.label||"").localeCompare(String(b.label||"")));
-  sorted.forEach(t=>{
-    const row=document.createElement("div");row.className="savedTemplateRow";
-    row.innerHTML=`<div class="savedLeft"><div class="flag">${langFlag(t.language)}</div><div style="min-width:0"><div class="tplName">${escapeHTML(t.label||"")}</div><div class="tplMeta">${escapeHTML(t.subject||"")}</div></div></div><div class="row" style="gap:8px;flex-wrap:nowrap"><button class="btn openBtn" data-edit="${escapeHTML(t.id)}">Bewerken</button><button class="btn openBtn primary" data-send="${escapeHTML(t.id)}">Verzenden</button></div>`;
+function renderTemplateList(wrapId,list,sendFn,editFn){
+  var wrap=$(wrapId); wrap.innerHTML="";
+  if(!list.length){wrap.innerHTML="<div class='muted' style='font-size:13px'>Geen templates.</div>";return;}
+  var sorted=list.slice().sort(function(a,b){return String(a.label||"").localeCompare(String(b.label||""));});
+  sorted.forEach(function(t){
+    var row=document.createElement("div"); row.className="savedTemplateRow";
+    row.innerHTML="<div class='savedLeft'><div class='flag'>"+langFlag(t.language)+"</div><div style='min-width:0'><div class='tplName'>"+escapeHTML(t.label||"")+"</div><div class='tplMeta'>"+escapeHTML(t.subject||"")+"</div></div></div><div class='row' style='gap:8px;flex-wrap:nowrap'><button class='btn openBtn' data-edit='"+escapeHTML(String(t.id))+"'>Bewerken</button><button class='btn openBtn primary' data-send='"+escapeHTML(String(t.id))+"'>Verzenden</button></div>";
     wrap.appendChild(row);
-    row.querySelector(`[data-send]`).addEventListener("click",()=>sendFn(t));
-    row.querySelector(`[data-edit]`).addEventListener("click",()=>editFn(t));
+    row.querySelector("[data-send]").addEventListener("click",function(){sendFn(t);});
+    row.querySelector("[data-edit]").addEventListener("click",function(){editFn(t);});
   });
 }
 
 async function loadTemplates(){
-  const s=await api(`action=warranty_supplier_templates&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
-  supplierTemplates=s?.ok&&Array.isArray(s.templates)?s.templates:[];
-  const c=await api(`action=warranty_customer_templates&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
-  customerTemplates=c?.ok&&Array.isArray(c.templates)?c.templates:[];
-  renderTemplateList("supplierTemplatesList", supplierTemplates, sendSupplierTemplate, editTpl);
+  var s=await api("action=warranty_supplier_templates&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
+  supplierTemplates=s&&s.ok&&Array.isArray(s.templates)?s.templates:[];
+  var c=await api("action=warranty_customer_templates&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
+  customerTemplates=c&&c.ok&&Array.isArray(c.templates)?c.templates:[];
+  renderTemplateList("supplierTemplatesList",supplierTemplates,sendSupplierTemplate,editTpl);
 }
 
 function editTpl(tpl){
-  $("addTplBody").classList.remove("hidden");$("addTplPlus").textContent="‚Äì";
+  $("addTplBody").classList.remove("hidden"); $("addTplPlus").textContent="-";
   $("tplLang").value=(tpl.language||"en").toLowerCase();
   $("tplLabel").value=tpl.label||"";
   $("tplSubject").value=tpl.subject||"";
@@ -748,185 +684,185 @@ function editTpl(tpl){
   $("tplSave").textContent="Bijwerken";
 }
 function resetTplEditor(){
-  $("tplLang").value="nl";$("tplLabel").value="";$("tplSubject").value="";$("tplBodyText").value="";
-  $("tplSaveMsg").textContent="";delete $("tplSave").dataset.editId;$("tplSave").textContent="Opslaan";
+  $("tplLang").value="nl"; $("tplLabel").value=""; $("tplSubject").value=""; $("tplBodyText").value="";
+  $("tplSaveMsg").textContent=""; delete $("tplSave").dataset.editId; $("tplSave").textContent="Opslaan";
 }
 $("tplCancel").addEventListener("click",resetTplEditor);
-$("tplSave").addEventListener("click",async()=>{
-  const id=$("tplSave").dataset.editId||"";
-  const lang=$("tplLang").value, label=$("tplLabel").value.trim(), subj=$("tplSubject").value.trim(), body=$("tplBodyText").value.trim();
-  if(!label||!subj||!body){$("tplSaveMsg").innerHTML='<span style="color:var(--warn)">Vul alle velden in.</span>';return;}
-  $("tplSaveMsg").textContent="Opslaan‚Ä¶";
-  const data=await api(`action=warranty_supplier_template_upsert&supplierKey=${encodeURIComponent(supplierKey)}`+(id?`&id=${encodeURIComponent(id)}`:"")+"&language="+encodeURIComponent(lang)+"&label="+encodeURIComponent(label)+"&subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body)).catch(()=>null);
-  if(!data?.ok){$("tplSaveMsg").innerHTML='<span style="color:var(--bad)">Mislukt.</span>';return;}
-  $("tplSaveMsg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+$("tplSave").addEventListener("click",async function(){
+  var id=$("tplSave").dataset.editId||"";
+  var lang=$("tplLang").value, label=$("tplLabel").value.trim(), subj=$("tplSubject").value.trim(), body=$("tplBodyText").value.trim();
+  if(!label||!subj||!body){$("tplSaveMsg").innerHTML="<span style='color:var(--warn)'>Vul alle velden in.</span>";return;}
+  $("tplSaveMsg").textContent="Opslaan...";
+  var qs="action=warranty_supplier_template_upsert&supplierKey="+encodeURIComponent(supplierKey)+(id?"&id="+encodeURIComponent(id):"")+"&language="+encodeURIComponent(lang)+"&label="+encodeURIComponent(label)+"&subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+  var data=await api(qs).catch(function(){return null;});
+  if(!data||!data.ok){$("tplSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
+  $("tplSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   resetTplEditor();
   await loadTemplates();
 });
 
-// --- MAIL ---------------------------------------------------------------------
-function openMailPicker(payload){pendingMail=payload;$("pickHint").textContent=payload.cc?`CC: ${payload.cc}`:"";$("mailPicker").classList.remove("hidden");}
+function openMailPicker(payload){pendingMail=payload;$("pickHint").textContent=payload.cc?"CC: "+payload.cc:"";$("mailPicker").classList.remove("hidden");}
 function closeMailPicker(){pendingMail=null;$("mailPicker").classList.add("hidden");}
-function openGmail(to,cc,subject,body){let u="https://mail.google.com/mail/?view=cm&fs=1"+`&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;if(cc) u+=`&cc=${encodeURIComponent(cc)}`;window.open(u,"_blank","noopener,noreferrer");}
-function openApple(to,cc,subject,body){let u="mailto:"+encodeURIComponent(to)+`?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;if(cc) u+=`&cc=${encodeURIComponent(cc)}`;window.location.href=u;}
-$("pickGmail").addEventListener("click",()=>{if(!pendingMail)return;openGmail(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);const cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
-$("pickApple").addEventListener("click",()=>{if(!pendingMail)return;openApple(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);const cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
+function openGmail(to,cc,subject,body){var u="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(to)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);if(cc) u+="&cc="+encodeURIComponent(cc);window.open(u,"_blank","noopener,noreferrer");}
+function openApple(to,cc,subject,body){var u="mailto:"+encodeURIComponent(to)+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);if(cc) u+="&cc="+encodeURIComponent(cc);window.location.href=u;}
+$("pickGmail").addEventListener("click",function(){if(!pendingMail)return;openGmail(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);var cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
+$("pickApple").addEventListener("click",function(){if(!pendingMail)return;openApple(pendingMail.to,pendingMail.cc||"",pendingMail.subject,pendingMail.body);var cb=pendingMail.afterOpen;closeMailPicker();if(cb) cb();});
 $("pickCancel").addEventListener("click",closeMailPicker);
-$("mailPicker").addEventListener("click",e=>{if(e.target===$("mailPicker")) closeMailPicker();});
+$("mailPicker").addEventListener("click",function(e){if(e.target===$("mailPicker")) closeMailPicker();});
 
 async function logMail(payload){
   if(!selected) return;
-  await api(`action=warranty_log_mail&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(String(selected.rowId))}&To=${encodeURIComponent(payload.to||"")}&Kind=${encodeURIComponent(payload.kind||"")}&Language=${encodeURIComponent(payload.language||"")}&Template=${encodeURIComponent(payload.template||"")}&Subject=${encodeURIComponent(payload.subject||"")}`).catch(()=>null);
+  await api("action=warranty_log_mail&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(String(selected.rowId))+"&To="+encodeURIComponent(payload.to||"")+"&Kind="+encodeURIComponent(payload.kind||"")+"&Language="+encodeURIComponent(payload.language||"")+"&Template="+encodeURIComponent(payload.template||"")+"&Subject="+encodeURIComponent(payload.subject||"")).catch(function(){});
 }
 
 function supplierMailAddress(){
-  const supName=getAny(selected,["Supplier","Leverancier"])||"";
+  var supName=getAny(selected,["Supplier","Leverancier"])||"";
   return suppliersMailMap[String(supName).toLowerCase()]||getAny(selected,["MailSupplier","Mail Supplier"])||"";
 }
 function customerMailAddress(){return getAny(selected,["MailCustomer","Mail Customer","Email"])||"";}
 
 async function sendSupplierTemplate(tpl){
-  const to=supplierMailAddress(); if(!to){$("tplSendMsg").innerHTML='<span style="color:var(--warn)">Geen leveranciers-e-mail gevonden.</span>';return;}
-  const subject=applyTokens(tpl.subject||""), body=applyTokens(tpl.body||"");
-  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
-    await logMail({to,kind:"supplier",language:String(tpl.language||"").toLowerCase(),template:tpl.label||"",subject});
-    $("tplSendMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+  var to=supplierMailAddress();
+  if(!to){$("tplSendMsg").innerHTML="<span style='color:var(--warn)'>Geen leveranciers-e-mail gevonden.</span>";return;}
+  var subject=applyTokens(tpl.subject||""), body=applyTokens(tpl.body||"");
+  openMailPicker({to:to,cc:"",subject:subject,body:body,afterOpen:async function(){
+    await logMail({to:to,kind:"supplier",language:String(tpl.language||"").toLowerCase(),template:tpl.label||"",subject:subject});
+    $("tplSendMsg").innerHTML="<span style='color:var(--ok)'>Mail geopend</span>";
     await loadMailLog();
   }});
 }
 
 async function mailSupplier(lang,btn){
   if(!selected) return;
-  if(btn){const row=btn.closest(".flagRow");row?.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
-  const to=supplierMailAddress();
-  if(!to){$("mailSupplierMsg").innerHTML='<span style="color:var(--warn)">Geen leveranciers-e-mail gevonden.</span>';return;}
-  const tpl=findTpl(supplierTemplates,lang)||{subject:"",body:""};
-  const subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
-  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
-    await logMail({to,kind:"supplier",language:lang,template:`Leverancier ${lang.toUpperCase()}`,subject});
-    $("mailSupplierMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+  if(btn){btn.closest(".flagRow").querySelectorAll(".btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");}
+  var to=supplierMailAddress();
+  if(!to){$("mailSupplierMsg").innerHTML="<span style='color:var(--warn)'>Geen leveranciers-e-mail gevonden.</span>";return;}
+  var tpl=findTpl(supplierTemplates,lang)||{subject:"",body:""};
+  var subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
+  openMailPicker({to:to,cc:"",subject:subject,body:body,afterOpen:async function(){
+    await logMail({to:to,kind:"supplier",language:lang,template:"Leverancier "+lang.toUpperCase(),subject:subject});
+    $("mailSupplierMsg").innerHTML="<span style='color:var(--ok)'>Mail geopend</span>";
     await loadMailLog();
   }});
 }
 
 async function mailCustomer(lang,btn){
   if(!selected) return;
-  if(btn){const row=btn.closest(".flagRow");row?.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");}
-  const to=customerMailAddress();
-  if(!to){$("mailCustomerMsg").innerHTML='<span style="color:var(--warn)">Geen klant-e-mail gevonden.</span>';return;}
-  const tpl=findTpl(customerTemplates,lang)||{subject:"",body:""};
-  const subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
-  openMailPicker({to,cc:"",subject,body,afterOpen:async()=>{
-    await logMail({to,kind:"customer",language:lang,template:`Klant ${lang.toUpperCase()}`,subject});
-    $("mailCustomerMsg").innerHTML='<span style="color:var(--ok)">Mail geopend ‚úì</span>';
+  if(btn){btn.closest(".flagRow").querySelectorAll(".btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");}
+  var to=customerMailAddress();
+  if(!to){$("mailCustomerMsg").innerHTML="<span style='color:var(--warn)'>Geen klant-e-mail gevonden.</span>";return;}
+  var tpl=findTpl(customerTemplates,lang)||{subject:"",body:""};
+  var subject=applyTokens(tpl.subject), body=applyTokens(tpl.body);
+  openMailPicker({to:to,cc:"",subject:subject,body:body,afterOpen:async function(){
+    await logMail({to:to,kind:"customer",language:lang,template:"Klant "+lang.toUpperCase(),subject:subject});
+    $("mailCustomerMsg").innerHTML="<span style='color:var(--ok)'>Mail geopend</span>";
     await loadMailLog();
   }});
 }
 
-$("ms_en").addEventListener("click",e=>mailSupplier("en",e.currentTarget));
-$("ms_nl").addEventListener("click",e=>mailSupplier("nl",e.currentTarget));
-$("mc_en").addEventListener("click",e=>mailCustomer("en",e.currentTarget));
-$("mc_nl").addEventListener("click",e=>mailCustomer("nl",e.currentTarget));
-$("mc_de").addEventListener("click",e=>mailCustomer("de",e.currentTarget));
-$("mc_fr").addEventListener("click",e=>mailCustomer("fr",e.currentTarget));
+$("ms_en").addEventListener("click",function(e){mailSupplier("en",e.currentTarget);});
+$("ms_nl").addEventListener("click",function(e){mailSupplier("nl",e.currentTarget);});
+$("mc_en").addEventListener("click",function(e){mailCustomer("en",e.currentTarget);});
+$("mc_nl").addEventListener("click",function(e){mailCustomer("nl",e.currentTarget);});
+$("mc_de").addEventListener("click",function(e){mailCustomer("de",e.currentTarget);});
+$("mc_fr").addEventListener("click",function(e){mailCustomer("fr",e.currentTarget);});
 
-// --- MAIL LOG -----------------------------------------------------------------
-function formatDT(ts){const s=String(ts||"").trim();const m=s.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);return m?{date:m[1],time:m[2]}:{date:s,time:""};}
+function formatDT(ts){var s=String(ts||"").trim();var m=s.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);return m?{date:m[1],time:m[2]}:{date:s,time:""};}
 async function loadMailLog(){
   if(!selected) return;
-  $("mailLogList").textContent="Laden‚Ä¶";
-  const data=await api(`action=warranty_mail_log&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(String(selected.rowId))}`).catch(()=>null);
-  if(!data?.ok){$("mailLogList").textContent="Niet beschikbaar.";return;}
-  const rows=Array.isArray(data.rows)?data.rows:[];
+  $("mailLogList").textContent="Laden...";
+  var data=await api("action=warranty_mail_log&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(String(selected.rowId))).catch(function(){return null;});
+  if(!data||!data.ok){$("mailLogList").textContent="Niet beschikbaar.";return;}
+  var rows=Array.isArray(data.rows)?data.rows:[];
   if(!rows.length){$("mailLogList").textContent="Geen log.";return;}
-  const wrap=document.createElement("div");wrap.style.cssText="display:flex;flex-direction:column;gap:8px";
-  rows.forEach(r=>{const dt=formatDT(r.Timestamp||"");const el=document.createElement("div");el.className="savedTemplateRow";el.innerHTML=`<div style="width:100%"><div class="mailLogRow"><div class="mailLogDate">${escapeHTML(dt.date)}</div><div class="mailLogTime">${escapeHTML(dt.time)}</div></div><div class="tplMeta" style="margin-top:6px">${escapeHTML(r.Template||"-")} ¬∑ ${escapeHTML(r.Subject||"-")}</div></div>`;wrap.appendChild(el);});
-  $("mailLogList").innerHTML="";$("mailLogList").appendChild(wrap);
+  var wrap=document.createElement("div"); wrap.style.cssText="display:flex;flex-direction:column;gap:8px";
+  rows.forEach(function(r){
+    var dt=formatDT(r.Timestamp||"");
+    var el=document.createElement("div"); el.className="savedTemplateRow";
+    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" - "+escapeHTML(r.Subject||"-")+"</div></div>";
+    wrap.appendChild(el);
+  });
+  $("mailLogList").innerHTML=""; $("mailLogList").appendChild(wrap);
 }
 
-// --- LOAD CASES ---------------------------------------------------------------
 async function loadCases(){
   selected=null;
   $("form").classList.add("hidden");
   $("noSelection").classList.remove("hidden");
-  $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>Laden‚Ä¶</td></tr>";
-  $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>Laden‚Ä¶</td></tr>";
-  let url=`${API_BASE}?action=warranty_orders&supplierKey=${encodeURIComponent(supplierKey)}`;
-  if(isMaster()) url+=`&supplier=${encodeURIComponent(MASTER_NAME)}`;
-  if(isSupplier()) url+=`&supplier=${encodeURIComponent(supplier)}`;
-  const data=await jsonp(url).catch(()=>null);
-  if(!data?.ok){
-    const err=escapeHTML(data?.error||"Fout");
-    $("tbodyOpen").innerHTML=`<tr><td colspan="4" class='muted'>${err}</td></tr>`;
-    $("tbodyCompleted").innerHTML=`<tr><td colspan="4" class='muted'>${err}</td></tr>`;
+  $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>Laden...</td></tr>";
+  $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>Laden...</td></tr>";
+  var url=API_BASE+"?action=warranty_orders&supplierKey="+encodeURIComponent(supplierKey);
+  var data=await jsonp(url).catch(function(){return null;});
+  if(!data||!data.ok){
+    var err=escapeHTML(data&&data.error?data.error:"Fout");
+    $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>"+err+"</td></tr>";
+    $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>"+err+"</td></tr>";
     return;
   }
-  cases=(data.orders||[]).slice().sort((a,b)=>Number(b.rowId||0)-Number(a.rowId||0));
+  cases=(data.orders||[]).slice().sort(function(a,b){return Number(b.rowId||0)-Number(a.rowId||0);});
   renderCases();
 }
 
 function renderCases(){
-  const q=($("historySearch").value||"").trim().toLowerCase();
-  const match=o=>!q||[getAny(o,["Customer","Klant"]),getAny(o,["Product"]),getAny(o,["Supplier","Leverancier"]),getAny(o,["MailCustomer","Mail Customer"])].join(" ").toLowerCase().includes(q);
-  const openList=cases.filter(o=>!isTruthy(o.Completed)).filter(match);
-  const doneList=cases.filter(o=>isTruthy(o.Completed)).filter(match);
-
-  function draw(target, list){
+  var q=($("historySearch").value||"").trim().toLowerCase();
+  function match(o){return !q||[getAny(o,["Customer","Klant"]),getAny(o,["Product"]),getAny(o,["Supplier","Leverancier"]),getAny(o,["MailCustomer","Mail Customer"])].join(" ").toLowerCase().includes(q);}
+  var openList=cases.filter(function(o){return !isTruthy(o.Completed);}).filter(match);
+  var doneList=cases.filter(function(o){return isTruthy(o.Completed);}).filter(match);
+  function draw(target,list){
     target.innerHTML="";
-    if(!list.length){target.innerHTML='<tr><td colspan="4" class="muted">Geen zaken gevonden.</td></tr>';return;}
-    list.forEach(o=>{
-      const tr=document.createElement("tr");
-      const statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
-      const si=statusInfo(statusKey);
-      const product=getAny(o,["Product"])||"";
-      tr.innerHTML=`<td><div style="font-weight:700;overflow-wrap:break-word;word-break:break-word">${escapeHTML(getAny(o,["Customer","Klant"]))}</div>${product?`<div class="smallLine">${escapeHTML(product)}</div>`:""}</td><td class="statusCell"><div class="statusWrap"><span class="statusPill ${si.cls}"><span class="dot"></span>${escapeHTML(si.label)}</span></div></td><td><div class="actionsCell"><button class="btn openBtn" data-open="${escapeHTML(o.rowId)}">Openen</button></div></td><td class="completedCell">${isTruthy(o.Completed)?'<span class="checkPill yes">‚úì</span>':'<span class="checkPill">‚Äî</span>'}</td>`;
+    if(!list.length){target.innerHTML="<tr><td colspan='4' class='muted'>Geen zaken gevonden.</td></tr>";return;}
+    list.forEach(function(o){
+      var tr=document.createElement("tr");
+      var statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
+      var si=statusInfo(statusKey);
+      var product=getAny(o,["Product"])||"";
+      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>V</span>":"<span class='checkPill'>-</span>")+"</td>";
       target.appendChild(tr);
     });
   }
   draw($("tbodyOpen"),openList);
   draw($("tbodyCompleted"),doneList);
-  document.querySelectorAll("button[data-open]").forEach(btn=>btn.addEventListener("click",()=>openRow(Number(btn.dataset.open))));
+  document.querySelectorAll("button[data-open]").forEach(function(btn){
+    btn.addEventListener("click",function(){openRow(Number(btn.dataset.open));});
+  });
 }
 
-// --- CREATE CASE --------------------------------------------------------------
-$("newCaseBtn").addEventListener("click",()=>{$("createMsg").textContent="";$("newCaseModal").classList.remove("hidden");});
-$("newCaseClose").addEventListener("click",()=>$("newCaseModal").classList.add("hidden"));
-$("newCaseModal").addEventListener("click",e=>{if(e.target===$("newCaseModal")) $("newCaseModal").classList.add("hidden");});
-$("createBtn").addEventListener("click",async()=>{
-  const Customer=$("nc_customer").value.trim();
-  const MailCustomer=$("nc_mail").value.trim();
-  const Supplier=$("nc_supplier").value;
-  const Product=$("nc_product").value.trim();
-  const PurchaseDate=$("nc_purchaseDate").value;
-  const InvoiceNumber=$("nc_invoiceNumber").value.trim();
-  const InvoiceLink=$("nc_invoiceLink").value.trim();
-  const Complaint=$("nc_complaint").value.trim();
-  const Photos=$("nc_photos").value.trim();
-  if(!Customer||!Supplier||!Product){$("createMsg").innerHTML='<span style="color:var(--warn)">Klant, leverancier en product zijn verplicht.</span>';return;}
-  $("createBtn").disabled=true;$("createMsg").textContent="Toevoegen‚Ä¶";
-  const data=await api(`action=warranty_create&supplierKey=${encodeURIComponent(supplierKey)}&Customer=${encodeURIComponent(Customer)}&MailCustomer=${encodeURIComponent(MailCustomer)}&Supplier=${encodeURIComponent(Supplier)}&Product=${encodeURIComponent(Product)}&PurchaseDate=${encodeURIComponent(PurchaseDate)}&InvoiceNumber=${encodeURIComponent(InvoiceNumber)}&InvoiceLink=${encodeURIComponent(InvoiceLink)}&Complaint=${encodeURIComponent(Complaint)}&Photos=${encodeURIComponent(Photos)}`).catch(()=>null);
+$("newCaseBtn").addEventListener("click",function(){$("createMsg").textContent="";$("newCaseModal").classList.remove("hidden");});
+$("newCaseClose").addEventListener("click",function(){$("newCaseModal").classList.add("hidden");});
+$("newCaseModal").addEventListener("click",function(e){if(e.target===$("newCaseModal")) $("newCaseModal").classList.add("hidden");});
+$("createBtn").addEventListener("click",async function(){
+  var Customer=$("nc_customer").value.trim();
+  var MailCustomer=$("nc_mail").value.trim();
+  var Supplier=$("nc_supplier").value;
+  var Product=$("nc_product").value.trim();
+  var PurchaseDate=$("nc_purchaseDate").value;
+  var InvoiceNumber=$("nc_invoiceNumber").value.trim();
+  var InvoiceLink=$("nc_invoiceLink").value.trim();
+  var Complaint=$("nc_complaint").value.trim();
+  var Photos=$("nc_photos").value.trim();
+  if(!Customer||!Supplier||!Product){$("createMsg").innerHTML="<span style='color:var(--warn)'>Klant, leverancier en product zijn verplicht.</span>";return;}
+  $("createBtn").disabled=true; $("createMsg").textContent="Toevoegen...";
+  var qs="action=warranty_create&supplierKey="+encodeURIComponent(supplierKey)+"&Customer="+encodeURIComponent(Customer)+"&MailCustomer="+encodeURIComponent(MailCustomer)+"&Supplier="+encodeURIComponent(Supplier)+"&Product="+encodeURIComponent(Product)+"&PurchaseDate="+encodeURIComponent(PurchaseDate)+"&InvoiceNumber="+encodeURIComponent(InvoiceNumber)+"&InvoiceLink="+encodeURIComponent(InvoiceLink)+"&Complaint="+encodeURIComponent(Complaint)+"&Photos="+encodeURIComponent(Photos);
+  var data=await api(qs).catch(function(){return null;});
   $("createBtn").disabled=false;
-  if(!data?.ok){$("createMsg").innerHTML=`<span style='color:var(--bad)'>Mislukt: ${escapeHTML(data?.error||"Onbekend")}</span>`;return;}
-  $("createMsg").innerHTML='<span style="color:var(--ok)">Toegevoegd ‚úì</span>';
+  if(!data||!data.ok){$("createMsg").innerHTML="<span style='color:var(--bad)'>Mislukt: "+escapeHTML(data&&data.error?data.error:"Onbekend")+"</span>";return;}
+  $("createMsg").innerHTML="<span style='color:var(--ok)'>Toegevoegd</span>";
   $("newCaseModal").classList.add("hidden");
   await loadCases();
 });
 
-// --- SUPPLIERS ----------------------------------------------------------------
 async function loadSuppliers(){
-  const data=await api(`action=warranty_suppliers&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
-  const list=data?.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
-  suppliersMailMap=data?.ok&&typeof data.mailMap==="object"?data.mailMap:{};
+  var data=await api("action=warranty_suppliers&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
+  var list=data&&data.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
+  suppliersMailMap=data&&data.ok&&typeof data.mailMap==="object"?data.mailMap:{};
   $("nc_supplier").innerHTML="";
-  // suppliers is een array van objecten met Name, Email etc.
-  list.forEach(s=>{const name=typeof s==="object"?s.Name:s;const o=document.createElement("option");o.value=name;o.textContent=name;$("nc_supplier").appendChild(o);});
+  list.forEach(function(s){var name=typeof s==="object"?s.Name:s;var o=document.createElement("option");o.value=name;o.textContent=name;$("nc_supplier").appendChild(o);});
 }
 
-// --- VIEW SWITCH -------------------------------------------------------------
-let currentView = "cases"; // "cases" | "suppliers"
+var currentView="cases";
 function setView(v){
   currentView=v;
-  const isCases=v==="cases";
+  var isCases=v==="cases";
   $("portalView").classList.toggle("hidden",!isCases);
   $("suppliersView").classList.toggle("hidden",isCases);
   $("viewCasesBtn").classList.toggle("active",isCases);
@@ -934,50 +870,37 @@ function setView(v){
   $("newCaseBtn").classList.toggle("hidden",!isCases||!isMaster());
   if(!isCases) renderSupplierGrid();
 }
-$("viewCasesBtn").addEventListener("click",()=>setView("cases"));
-$("viewSuppliersBtn").addEventListener("click",()=>setView("suppliers"));
+$("viewCasesBtn").addEventListener("click",function(){setView("cases");});
+$("viewSuppliersBtn").addEventListener("click",function(){setView("suppliers");});
 
-// --- SUPPLIERS CRUD -----------------------------------------------------------
-let suppliersData=[]; // full list from backend
-let editingSupplierId=null;
+var suppliersData=[];
+var editingSupplierId=null;
 
 async function loadSuppliersData(){
-  const data=await api(`action=warranty_suppliers&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
-  suppliersData=data?.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
+  var data=await api("action=warranty_suppliers&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
+  suppliersData=data&&data.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
   renderSupplierGrid();
 }
 
 function renderSupplierGrid(){
-  const q=($("supplierSearch").value||"").trim().toLowerCase();
-  const list=suppliersData.filter(s=>!q||[s.Name,s.Brand,s.Email,s.EmailGeneral,s.Contact,s.Country].join(" ").toLowerCase().includes(q));
-  const grid=$("supplierGrid");
+  var q=($("supplierSearch").value||"").trim().toLowerCase();
+  var list=suppliersData.filter(function(s){return !q||[s.Name,s.Brand,s.Email,s.EmailGeneral,s.Contact,s.Country].join(" ").toLowerCase().includes(q);});
+  var grid=$("supplierGrid");
   grid.innerHTML="";
-  if(!list.length){grid.innerHTML='<div class="muted" style="font-size:13px">Geen leveranciers gevonden.</div>';return;}
-  list.forEach(s=>{
-    const card=document.createElement("div");
-    card.className="supCard";
-    const emailHref=s.Email?`<a href="mailto:${escapeHTML(s.Email)}" class="linkBtn" style="font-size:11px">‚úâ ${escapeHTML(s.Email)}</a>`:"";
-    const emailGenHref=s.EmailGeneral&&s.EmailGeneral!==s.Email?`<a href="mailto:${escapeHTML(s.EmailGeneral)}" class="linkBtn" style="font-size:11px">‚úâ ${escapeHTML(s.EmailGeneral)}</a>`:"";
-    const rmaHref=s.RmaLink?`<a href="${escapeHTML(s.RmaLink)}" target="_blank" rel="noopener" class="linkBtn" style="font-size:11px">üîó Garantieportaal</a>`:"";
-    const webHref=s.Website?`<a href="${escapeHTML(s.Website)}" target="_blank" rel="noopener" class="linkBtn" style="font-size:11px">üåê Website</a>`:"";
-    const phonePart=s.Phone?`<span>üìû ${escapeHTML(s.Phone)}</span>`:"";
-    const countryPart=s.Country?`<span>üìç ${escapeHTML(s.Country)}</span>`:"";
-    const contactPart=s.Contact?`<span>üë§ ${escapeHTML(s.Contact)}</span>`:"";
-    const warrantyPart=s.Warranty?`<div class="supMeta" style="margin-top:2px">üõ° ${escapeHTML(s.Warranty)}</div>`:"";
-    const notesPart=s.Notes?`<div style="font-size:12px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:8px;white-space:pre-wrap">${escapeHTML(s.Notes)}</div>`:"";
-    card.innerHTML=`
-      <div>
-        <div class="supName">${escapeHTML(s.Name||"‚Äî")}</div>
-        ${s.Brand?`<div style="font-size:12px;color:var(--muted);font-weight:500">${escapeHTML(s.Brand)}</div>`:""}
-      </div>
-      <div class="supMeta">${contactPart}${phonePart}${countryPart}</div>
-      ${warrantyPart}
-      <div class="supActions">${emailHref}${emailGenHref}${rmaHref}${webHref}</div>
-      ${notesPart}
-      <div class="supActions" style="margin-top:6px;border-top:1px solid var(--border);padding-top:8px">
-        <button class="btn small" data-sup-edit="${escapeHTML(String(s.id||""))}">Bewerken</button>
-      </div>`;
-    card.querySelector("[data-sup-edit]").addEventListener("click",()=>openSupplierModal(s));
+  if(!list.length){grid.innerHTML="<div class='muted' style='font-size:13px'>Geen leveranciers gevonden.</div>";return;}
+  list.forEach(function(s){
+    var card=document.createElement("div"); card.className="supCard";
+    var emailHref=s.Email?"<a href='mailto:"+escapeHTML(s.Email)+"' class='linkBtn' style='font-size:11px'>"+escapeHTML(s.Email)+"</a>":"";
+    var emailGenHref=s.EmailGeneral&&s.EmailGeneral!==s.Email?"<a href='mailto:"+escapeHTML(s.EmailGeneral)+"' class='linkBtn' style='font-size:11px'>"+escapeHTML(s.EmailGeneral)+"</a>":"";
+    var rmaHref=s.RmaLink?"<a href='"+escapeHTML(s.RmaLink)+"' target='_blank' rel='noopener' class='linkBtn' style='font-size:11px'>Garantieportaal</a>":"";
+    var webHref=s.Website?"<a href='"+escapeHTML(s.Website)+"' target='_blank' rel='noopener' class='linkBtn' style='font-size:11px'>Website</a>":"";
+    var phonePart=s.Phone?"<span>"+escapeHTML(s.Phone)+"</span>":"";
+    var countryPart=s.Country?"<span>"+escapeHTML(s.Country)+"</span>":"";
+    var contactPart=s.Contact?"<span>"+escapeHTML(s.Contact)+"</span>":"";
+    var warrantyPart=s.Warranty?"<div class='supMeta' style='margin-top:2px'>"+escapeHTML(s.Warranty)+"</div>":"";
+    var notesPart=s.Notes?"<div style='font-size:12px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:8px;white-space:pre-wrap'>"+escapeHTML(s.Notes)+"</div>":"";
+    card.innerHTML="<div><div class='supName'>"+escapeHTML(s.Name||"-")+"</div>"+(s.Brand?"<div style='font-size:12px;color:var(--muted);font-weight:500'>"+escapeHTML(s.Brand)+"</div>":"")+"</div><div class='supMeta'>"+contactPart+phonePart+countryPart+"</div>"+warrantyPart+"<div class='supActions'>"+emailHref+emailGenHref+rmaHref+webHref+"</div>"+notesPart+"<div class='supActions' style='margin-top:6px;border-top:1px solid var(--border);padding-top:8px'><button class='btn small' data-sup-edit='"+escapeHTML(String(s.id||""))+"'>Bewerken</button></div>";
+    card.querySelector("[data-sup-edit]").addEventListener("click",function(){openSupplierModal(s);});
     grid.appendChild(card);
   });
 }
@@ -987,85 +910,70 @@ $("supplierSearch").addEventListener("input",renderSupplierGrid);
 function openSupplierModal(sup){
   editingSupplierId=sup?String(sup.id||""):null;
   $("supplierModalTitle").textContent=sup?"Leverancier bewerken":"Nieuwe leverancier";
-  $("sup_name").value=sup?.Name||"";
-  $("sup_brand").value=sup?.Brand||"";
-  $("sup_email").value=sup?.Email||"";
-  $("sup_emailGeneral").value=sup?.EmailGeneral||"";
-  $("sup_contact").value=sup?.Contact||"";
-  $("sup_phone").value=sup?.Phone||"";
-  $("sup_website").value=sup?.Website||"";
-  $("sup_country").value=sup?.Country||"";
-  $("sup_rmaLink").value=sup?.RmaLink||"";
-  $("sup_warranty").value=sup?.Warranty||"";
-  $("sup_address").value=sup?.Address||"";
-  $("sup_notes").value=sup?.Notes||"";
+  $("sup_name").value=sup&&sup.Name?sup.Name:"";
+  $("sup_brand").value=sup&&sup.Brand?sup.Brand:"";
+  $("sup_email").value=sup&&sup.Email?sup.Email:"";
+  $("sup_emailGeneral").value=sup&&sup.EmailGeneral?sup.EmailGeneral:"";
+  $("sup_contact").value=sup&&sup.Contact?sup.Contact:"";
+  $("sup_phone").value=sup&&sup.Phone?sup.Phone:"";
+  $("sup_website").value=sup&&sup.Website?sup.Website:"";
+  $("sup_country").value=sup&&sup.Country?sup.Country:"";
+  $("sup_rmaLink").value=sup&&sup.RmaLink?sup.RmaLink:"";
+  $("sup_warranty").value=sup&&sup.Warranty?sup.Warranty:"";
+  $("sup_address").value=sup&&sup.Address?sup.Address:"";
+  $("sup_notes").value=sup&&sup.Notes?sup.Notes:"";
   $("sup_msg").textContent="";
   $("sup_deleteBtn").classList.toggle("hidden",!sup);
   $("supplierModal").classList.remove("hidden");
 }
 
-$("newSupplierBtn").addEventListener("click",()=>openSupplierModal(null));
-$("supplierModalClose").addEventListener("click",()=>$("supplierModal").classList.add("hidden"));
-$("supplierModal").addEventListener("click",e=>{if(e.target===$("supplierModal")) $("supplierModal").classList.add("hidden");});
+$("newSupplierBtn").addEventListener("click",function(){openSupplierModal(null);});
+$("supplierModalClose").addEventListener("click",function(){$("supplierModal").classList.add("hidden");});
+$("supplierModal").addEventListener("click",function(e){if(e.target===$("supplierModal")) $("supplierModal").classList.add("hidden");});
 
-$("sup_saveBtn").addEventListener("click",async()=>{
-  const name=$("sup_name").value.trim();
-  const email=$("sup_email").value.trim();
-  if(!name||!email){$("sup_msg").innerHTML='<span style="color:var(--warn)">Naam en e-mail zijn verplicht.</span>';return;}
-  $("sup_saveBtn").disabled=true; $("sup_msg").textContent="Opslaan‚Ä¶";
-  const qs=`action=warranty_supplier_upsert&supplierKey=${encodeURIComponent(supplierKey)}`
-    +(editingSupplierId?`&id=${encodeURIComponent(editingSupplierId)}`:"")
-    +`&Name=${encodeURIComponent(name)}`
-    +`&Brand=${encodeURIComponent($("sup_brand").value.trim())}`
-    +`&Email=${encodeURIComponent(email)}`
-    +`&EmailGeneral=${encodeURIComponent($("sup_emailGeneral").value.trim())}`
-    +`&Contact=${encodeURIComponent($("sup_contact").value.trim())}`
-    +`&Phone=${encodeURIComponent($("sup_phone").value.trim())}`
-    +`&Website=${encodeURIComponent($("sup_website").value.trim())}`
-    +`&Country=${encodeURIComponent($("sup_country").value.trim())}`
-    +`&RmaLink=${encodeURIComponent($("sup_rmaLink").value.trim())}`
-    +`&Warranty=${encodeURIComponent($("sup_warranty").value.trim())}`
-    +`&Address=${encodeURIComponent($("sup_address").value.trim())}`
-    +`&Notes=${encodeURIComponent($("sup_notes").value.trim())}`;
-  const data=await api(qs).catch(()=>null);
+$("sup_saveBtn").addEventListener("click",async function(){
+  var name=$("sup_name").value.trim();
+  var email=$("sup_email").value.trim();
+  if(!name||!email){$("sup_msg").innerHTML="<span style='color:var(--warn)'>Naam en e-mail zijn verplicht.</span>";return;}
+  $("sup_saveBtn").disabled=true; $("sup_msg").textContent="Opslaan...";
+  var qs="action=warranty_supplier_upsert&supplierKey="+encodeURIComponent(supplierKey)+(editingSupplierId?"&id="+encodeURIComponent(editingSupplierId):"")+"&Name="+encodeURIComponent(name)+"&Brand="+encodeURIComponent($("sup_brand").value.trim())+"&Email="+encodeURIComponent(email)+"&EmailGeneral="+encodeURIComponent($("sup_emailGeneral").value.trim())+"&Contact="+encodeURIComponent($("sup_contact").value.trim())+"&Phone="+encodeURIComponent($("sup_phone").value.trim())+"&Website="+encodeURIComponent($("sup_website").value.trim())+"&Country="+encodeURIComponent($("sup_country").value.trim())+"&RmaLink="+encodeURIComponent($("sup_rmaLink").value.trim())+"&Warranty="+encodeURIComponent($("sup_warranty").value.trim())+"&Address="+encodeURIComponent($("sup_address").value.trim())+"&Notes="+encodeURIComponent($("sup_notes").value.trim());
+  var data=await api(qs).catch(function(){return null;});
   $("sup_saveBtn").disabled=false;
-  if(!data?.ok){$("sup_msg").innerHTML=`<span style="color:var(--bad)">Mislukt: ${escapeHTML(data?.error||"")}</span>`;return;}
-  $("sup_msg").innerHTML='<span style="color:var(--ok)">Opgeslagen ‚úì</span>';
+  if(!data||!data.ok){$("sup_msg").innerHTML="<span style='color:var(--bad)'>Mislukt: "+escapeHTML(data&&data.error?data.error:"")+"</span>";return;}
+  $("sup_msg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   $("supplierModal").classList.add("hidden");
   await loadSuppliersData();
-  // also refresh dropdown in new-case modal
   await loadSuppliers();
 });
 
-$("sup_deleteBtn").addEventListener("click",async()=>{
+$("sup_deleteBtn").addEventListener("click",async function(){
   if(!editingSupplierId||!confirm("Leverancier verwijderen?")) return;
-  const data=await api(`action=warranty_supplier_delete&supplierKey=${encodeURIComponent(supplierKey)}&id=${encodeURIComponent(editingSupplierId)}`).catch(()=>null);
-  if(!data?.ok){$("sup_msg").innerHTML='<span style="color:var(--bad)">Verwijderen mislukt.</span>';return;}
+  var data=await api("action=warranty_supplier_delete&supplierKey="+encodeURIComponent(supplierKey)+"&id="+encodeURIComponent(editingSupplierId)).catch(function(){return null;});
+  if(!data||!data.ok){$("sup_msg").innerHTML="<span style='color:var(--bad)'>Verwijderen mislukt.</span>";return;}
   $("supplierModal").classList.add("hidden");
   await loadSuppliersData();
   await loadSuppliers();
 });
 
-// --- LOGIN / LOGOUT -----------------------------------------------------------
 async function doLogin(withKey){
-  const key=(withKey??$("keyInput").value).trim();
-  if(!key){$("loginMsg").innerHTML='<span style="color:var(--warn)">Voer een wachtwoord in.</span>';return;}
-  $("loginBtn").disabled=true;$("loginMsg").textContent="Controleren‚Ä¶";
+  var key=(withKey!=null?withKey:$("keyInput").value).trim();
+  if(!key){$("loginMsg").innerHTML="<span style='color:var(--warn)'>Voer een wachtwoord in.</span>";return;}
+  $("loginBtn").disabled=true; $("loginMsg").textContent="Controleren...";
   try{
-    const data=await jsonp(`${API_BASE}?action=auth&supplierKey=${encodeURIComponent(key)}`);
-    if(!data?.ok){$("loginMsg").innerHTML='<span style="color:var(--bad)">Ongeldig wachtwoord.</span>';return;}
+    var data=await jsonp(API_BASE+"?action=auth&supplierKey="+encodeURIComponent(key));
+    if(!data||!data.ok){$("loginMsg").innerHTML="<span style='color:var(--bad)'>Ongeldig wachtwoord.</span>";$("loginBtn").disabled=false;return;}
     supplierKey=key;
     supplier=String(data.supplier||"").trim();
     loginType=String(data.loginType||"").trim().toLowerCase();
     sessionStorage.setItem("wgk",supplierKey);
     sessionStorage.setItem("wgs",supplier);
     sessionStorage.setItem("wgl",loginType);
-    showPortal();
     await init_afterLogin();
   }catch(err){
     console.error(err);
-    $("loginMsg").innerHTML='<span style="color:var(--bad)">Server niet bereikbaar.</span>';
-  }finally{$("loginBtn").disabled=false;}
+    $("loginMsg").innerHTML="<span style='color:var(--bad)'>Server niet bereikbaar.</span>";
+  }
+  $("loginBtn").disabled=false;
 }
 
 function logout(){
@@ -1074,7 +982,7 @@ function logout(){
   sessionStorage.clear();
   $("portalView").classList.add("hidden");
   $("loginView").classList.remove("hidden");
-  $("loginMsg").textContent="";$("keyInput").value="";
+  $("loginMsg").textContent=""; $("keyInput").value="";
 }
 
 async function init_afterLogin(){
@@ -1091,9 +999,8 @@ async function init_afterLogin(){
   await loadCases();
 }
 
-// --- EVENTS -------------------------------------------------------------------
-$("loginBtn").addEventListener("click",()=>doLogin());
-$("keyInput").addEventListener("keydown",e=>{if(e.key==="Enter") doLogin();});
+$("loginBtn").addEventListener("click",function(){doLogin();});
+$("keyInput").addEventListener("keydown",function(e){if(e.key==="Enter") doLogin();});
 $("logoutBtn").addEventListener("click",logout);
 $("historySearch").addEventListener("input",renderCases);
 setupToggle("photoEditToggle","photoEditBody","photoEditPlus");
@@ -1102,19 +1009,14 @@ setupToggle("addTplToggle","addTplBody","addTplPlus",resetTplEditor);
 setupToggle("mailLogToggle","mailLogBody","mailLogPlus");
 setupToggle("completedToggle","completedBody","completedPlus");
 
-// --- BOOT ---------------------------------------------------------------------
 (function boot(){
   buildStatusSelect();
   bindTokenButtons();
-  const k=sessionStorage.getItem("wgk")||"";
-  const s=sessionStorage.getItem("wgs")||"";
-  const l=sessionStorage.getItem("wgl")||"";
-  if(k){
-    supplierKey=k;supplier=s;loginType=l;
-    init_afterLogin();
-  } else {
-    $("loginView").classList.remove("hidden");
-  }
+  var k=sessionStorage.getItem("wgk")||"";
+  var s=sessionStorage.getItem("wgs")||"";
+  var l=sessionStorage.getItem("wgl")||"";
+  if(k){supplierKey=k;supplier=s;loginType=l;init_afterLogin();}
+  else{$("loginView").classList.remove("hidden");}
 })();
 </script>
 </body>
