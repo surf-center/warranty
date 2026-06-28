@@ -502,8 +502,8 @@
 </div>
 
 <script>
-// ‚îÄ‚îÄ‚îÄ CONFIG ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
-const API_BASE = "https://script.google.com/macros/s/AKfycbwgk3GiKGY5skXjREWnyDvO8u_4I2EK8vB6zjoFsnPLz4XAdAtCJOnKs78w67dvW6CNRQ/exec";
+// --- CONFIG -------------------------------------------------------------------
+const API_BASE = "https://script.google.com/macros/s/AKfycbxMDioUnR2djbs_qKZgQUtXd543ZlTfgpN8hfakvnRifbWdmeDBa7iS_CUeNpdk-g4i2A/exec";
 const MASTER_NAME = "Jasper";
 
 // Status definitions
@@ -521,7 +521,7 @@ let cases=[], selected=null, suppliersList=[], suppliersMailMap={};
 let supplierTemplates=[], customerTemplates=[];
 let lastFocusedField=null, pendingMail=null;
 
-// ‚îÄ‚îÄ‚îÄ UTILS ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- UTILS --------------------------------------------------------------------
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
 function normalizeKey(k){return String(k||"").trim().toLowerCase().replace(/\s+/g," ");}
 function getAny(obj,keys){if(!obj)return "";const map={};for(const k of Object.keys(obj)) map[normalizeKey(k)]=k;for(const want of keys){const hit=map[normalizeKey(want)];if(hit!==undefined){const v=obj[hit];if(v!==undefined&&v!==null&&String(v).trim()!=="") return String(v).trim();}}return "";}
@@ -539,13 +539,13 @@ function parsePhotoLinks(val){
 
 function statusInfo(key){return STATUSES.find(x=>x.key===String(key||"").toLowerCase())||STATUSES[0];}
 
-// ‚îÄ‚îÄ‚îÄ TOGGLES ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- TOGGLES ------------------------------------------------------------------
 function setupToggle(tid, bid, pid, onOpen){
   const t=$(tid),b=$(bid),p=$(pid);if(!t||!b||!p)return;
   t.addEventListener("click",()=>{const hidden=b.classList.toggle("hidden");p.textContent=hidden?"+":"‚Äì";if(!hidden&&onOpen) onOpen();});
 }
 
-// ‚îÄ‚îÄ‚îÄ TOKEN MAP ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- TOKEN MAP ----------------------------------------------------------------
 function tokenMap(){
   if(!selected) return {};
   const photos=parsePhotoLinks(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
@@ -570,7 +570,7 @@ function applyTokens(txt){
   return out;
 }
 
-// ‚îÄ‚îÄ‚îÄ TOKEN BUTTONS ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- TOKEN BUTTONS ------------------------------------------------------------
 document.addEventListener("focusin",e=>{const el=e.target;if(["INPUT","TEXTAREA"].includes(el?.tagName)) lastFocusedField=el;});
 function bindTokenButtons(){
   document.querySelectorAll("button[data-token]").forEach(btn=>btn.addEventListener("click",()=>{
@@ -583,7 +583,7 @@ function bindTokenButtons(){
   }));
 }
 
-// ‚îÄ‚îÄ‚îÄ STATUS SETUP ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- STATUS SETUP -------------------------------------------------------------
 function buildStatusSelect(){
   $("statusSelect").innerHTML="";
   STATUSES.forEach(s=>{const o=document.createElement("option");o.value=s.key;o.textContent=s.label;$("statusSelect").appendChild(o);});
@@ -595,7 +595,7 @@ function renderStatusBadge(key){
   $("statusSelect").value=s.key;
 }
 
-// ‚îÄ‚îÄ‚îÄ PHOTO DISPLAY ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- PHOTO DISPLAY ------------------------------------------------------------
 function renderPhotos(photosRaw){
   const links=parsePhotoLinks(photosRaw);
   $("photoGrid").innerHTML="";
@@ -618,7 +618,7 @@ function renderPhotos(photosRaw){
   });
 }
 
-// ‚îÄ‚îÄ‚îÄ PHOTO EDIT ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- PHOTO EDIT ---------------------------------------------------------------
 function buildPhotoInputs(photosRaw){
   const links=parsePhotoLinks(photosRaw);
   $("photoInputsWrap").innerHTML="";
@@ -643,7 +643,7 @@ $("savePhotosBtn").addEventListener("click",async()=>{
   await loadCases();
 });
 
-// ‚îÄ‚îÄ‚îÄ INVOICE DISPLAY ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- INVOICE DISPLAY ----------------------------------------------------------
 function renderInvoice(num, link){
   const wrap=$("d_invoiceDisplay");
   if(!num&&!link){wrap.textContent="‚Äî";return;}
@@ -653,7 +653,7 @@ function renderInvoice(num, link){
   wrap.innerHTML=html;
 }
 
-// ‚îÄ‚îÄ‚îÄ OPEN ROW ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- OPEN ROW -----------------------------------------------------------------
 async function openRow(rowId){
   selected=cases.find(x=>Number(x.rowId)===rowId);
   if(!selected) return;
@@ -678,7 +678,7 @@ async function openRow(rowId){
   await loadMailLog();
 }
 
-// ‚îÄ‚îÄ‚îÄ SAVE NOTES ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- SAVE NOTES ---------------------------------------------------------------
 $("saveNotesBtn").addEventListener("click",async()=>{
   if(!selected) return;
   $("notesSaveMsg").textContent="Opslaan‚Ä¶";
@@ -688,7 +688,7 @@ $("saveNotesBtn").addEventListener("click",async()=>{
   await loadCases();
 });
 
-// ‚îÄ‚îÄ‚îÄ SAVE REF ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- SAVE REF -----------------------------------------------------------------
 $("saveRefBtn").addEventListener("click",async()=>{
   if(!selected) return;
   $("refSaveMsg").textContent="Opslaan‚Ä¶";
@@ -698,7 +698,7 @@ $("saveRefBtn").addEventListener("click",async()=>{
   await loadCases();
 });
 
-// ‚îÄ‚îÄ‚îÄ SAVE STATUS ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- SAVE STATUS --------------------------------------------------------------
 $("statusSaveBtn").addEventListener("click",async()=>{
   if(!selected) return;
   const newStatus=$("statusSelect").value;
@@ -708,12 +708,12 @@ $("statusSaveBtn").addEventListener("click",async()=>{
   await loadCases();
 });
 
-// ‚îÄ‚îÄ‚îÄ COMPLETED TOGGLE ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- COMPLETED TOGGLE ---------------------------------------------------------
 async function setCompleted(rowId, val){
   return api(`action=complete&supplierKey=${encodeURIComponent(supplierKey)}&rowId=${encodeURIComponent(rowId)}&Completed=${encodeURIComponent(val?"TRUE":"FALSE")}`).catch(()=>null);
 }
 
-// ‚îÄ‚îÄ‚îÄ TEMPLATES ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- TEMPLATES ---------------------------------------------------------------
 function langFlag(lang){const l=String(lang||"").toLowerCase();if(l==="nl")return"üá≥üá±";if(l==="de")return"üá©üá™";if(l==="fr")return"üá´üá∑";if(l==="en")return"üá¨üáß";return"";}
 function findTpl(arr,lang){const l=String(lang||"").toLowerCase();return arr.find(x=>String(x.language||"").toLowerCase()===l&&String(x.label||"").toUpperCase()==="DEFAULT")||arr.find(x=>String(x.language||"").toLowerCase()===l)||null;}
 
@@ -764,7 +764,7 @@ $("tplSave").addEventListener("click",async()=>{
   await loadTemplates();
 });
 
-// ‚îÄ‚îÄ‚îÄ MAIL ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- MAIL ---------------------------------------------------------------------
 function openMailPicker(payload){pendingMail=payload;$("pickHint").textContent=payload.cc?`CC: ${payload.cc}`:"";$("mailPicker").classList.remove("hidden");}
 function closeMailPicker(){pendingMail=null;$("mailPicker").classList.add("hidden");}
 function openGmail(to,cc,subject,body){let u="https://mail.google.com/mail/?view=cm&fs=1"+`&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;if(cc) u+=`&cc=${encodeURIComponent(cc)}`;window.open(u,"_blank","noopener,noreferrer");}
@@ -830,7 +830,7 @@ $("mc_nl").addEventListener("click",e=>mailCustomer("nl",e.currentTarget));
 $("mc_de").addEventListener("click",e=>mailCustomer("de",e.currentTarget));
 $("mc_fr").addEventListener("click",e=>mailCustomer("fr",e.currentTarget));
 
-// ‚îÄ‚îÄ‚îÄ MAIL LOG ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- MAIL LOG -----------------------------------------------------------------
 function formatDT(ts){const s=String(ts||"").trim();const m=s.match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);return m?{date:m[1],time:m[2]}:{date:s,time:""};}
 async function loadMailLog(){
   if(!selected) return;
@@ -844,7 +844,7 @@ async function loadMailLog(){
   $("mailLogList").innerHTML="";$("mailLogList").appendChild(wrap);
 }
 
-// ‚îÄ‚îÄ‚îÄ LOAD CASES ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- LOAD CASES ---------------------------------------------------------------
 async function loadCases(){
   selected=null;
   $("form").classList.add("hidden");
@@ -888,7 +888,7 @@ function renderCases(){
   document.querySelectorAll("button[data-open]").forEach(btn=>btn.addEventListener("click",()=>openRow(Number(btn.dataset.open))));
 }
 
-// ‚îÄ‚îÄ‚îÄ CREATE CASE ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- CREATE CASE --------------------------------------------------------------
 $("newCaseBtn").addEventListener("click",()=>{$("createMsg").textContent="";$("newCaseModal").classList.remove("hidden");});
 $("newCaseClose").addEventListener("click",()=>$("newCaseModal").classList.add("hidden"));
 $("newCaseModal").addEventListener("click",e=>{if(e.target===$("newCaseModal")) $("newCaseModal").classList.add("hidden");});
@@ -912,7 +912,7 @@ $("createBtn").addEventListener("click",async()=>{
   await loadCases();
 });
 
-// ‚îÄ‚îÄ‚îÄ SUPPLIERS ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- SUPPLIERS ----------------------------------------------------------------
 async function loadSuppliers(){
   const data=await api(`action=warranty_suppliers&supplierKey=${encodeURIComponent(supplierKey)}`).catch(()=>null);
   const list=data?.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
@@ -922,7 +922,7 @@ async function loadSuppliers(){
   list.forEach(s=>{const name=typeof s==="object"?s.Name:s;const o=document.createElement("option");o.value=name;o.textContent=name;$("nc_supplier").appendChild(o);});
 }
 
-// ‚îÄ‚îÄ‚îÄ VIEW SWITCH ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- VIEW SWITCH -------------------------------------------------------------
 let currentView = "cases"; // "cases" | "suppliers"
 function setView(v){
   currentView=v;
@@ -937,7 +937,7 @@ function setView(v){
 $("viewCasesBtn").addEventListener("click",()=>setView("cases"));
 $("viewSuppliersBtn").addEventListener("click",()=>setView("suppliers"));
 
-// ‚îÄ‚îÄ‚îÄ SUPPLIERS CRUD ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- SUPPLIERS CRUD -----------------------------------------------------------
 let suppliersData=[]; // full list from backend
 let editingSupplierId=null;
 
@@ -1046,7 +1046,7 @@ $("sup_deleteBtn").addEventListener("click",async()=>{
   await loadSuppliers();
 });
 
-// ‚îÄ‚îÄ‚îÄ LOGIN / LOGOUT ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- LOGIN / LOGOUT -----------------------------------------------------------
 async function doLogin(withKey){
   const key=(withKey??$("keyInput").value).trim();
   if(!key){$("loginMsg").innerHTML='<span style="color:var(--warn)">Voer een wachtwoord in.</span>';return;}
@@ -1091,7 +1091,7 @@ async function init_afterLogin(){
   await loadCases();
 }
 
-// ‚îÄ‚îÄ‚îÄ EVENTS ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- EVENTS -------------------------------------------------------------------
 $("loginBtn").addEventListener("click",()=>doLogin());
 $("keyInput").addEventListener("keydown",e=>{if(e.key==="Enter") doLogin();});
 $("logoutBtn").addEventListener("click",logout);
@@ -1102,7 +1102,7 @@ setupToggle("addTplToggle","addTplBody","addTplPlus",resetTplEditor);
 setupToggle("mailLogToggle","mailLogBody","mailLogPlus");
 setupToggle("completedToggle","completedBody","completedPlus");
 
-// ‚îÄ‚îÄ‚îÄ BOOT ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// --- BOOT ---------------------------------------------------------------------
 (function boot(){
   buildStatusSelect();
   bindTokenButtons();
@@ -1119,4 +1119,3 @@ setupToggle("completedToggle","completedBody","completedPlus");
 </script>
 </body>
 </html>
-
