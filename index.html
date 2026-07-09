@@ -123,10 +123,10 @@
     .modeSwitch{display:inline-flex;align-items:center;gap:6px;padding:6px;background:var(--pill);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
     .modeBtn{border:none;background:transparent;color:var(--pillText);padding:10px 18px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500}
     .modeBtn.active{background:var(--pillActive);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(15,23,42,.18)}
+    .textBlock{font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:40px;color:var(--text)}
   </style>
 </head>
 <body>
-
 <!-- LOGIN -->
 <section id="loginView" class="center">
   <div class="card loginCard">
@@ -140,7 +140,6 @@
     </div>
   </div>
 </section>
-
 <!-- PORTAL -->
 <section id="portalView" class="hidden">
   <div class="wrap">
@@ -158,26 +157,35 @@
         <button id="logoutBtn" class="btn icon" type="button" title="Uitloggen">&#x23FB;</button>
       </div>
     </header>
-
     <div class="two">
-      <!-- LEFT -->
+      <!-- LEFT: detail -->
       <section class="card colStretch">
         <div id="noSelection" class="hint">Open een zaak uit de tabel.</div>
         <div id="form" class="hidden" style="flex:1;display:flex;flex-direction:column;gap:0">
+
+          <!-- klant / status header -->
           <div class="kvRow">
             <div class="kvBlock" style="flex:1;min-width:0">
               <div class="kvLabel">Klant</div>
               <div class="kvValue" id="d_customer">-</div>
               <div class="smallLine" id="d_customerMail"></div>
+              <div class="smallLine" id="d_customerPhone"></div>
+
               <div style="margin-top:10px">
                 <div class="kvLabel">Leverancier</div>
                 <div class="kvValue" id="d_supplier">-</div>
               </div>
-              <div style="margin-top:10px">
-                <div class="kvLabel">Product</div>
-                <div class="kvValueSmall" id="d_product">-</div>
-              </div>
               <div class="kvGrid" style="margin-top:10px">
+                <div class="kvGridItem">
+                  <div class="kvLabel">Product</div>
+                  <div class="kvValueSmall" id="d_product">-</div>
+                </div>
+                <div class="kvGridItem">
+                  <div class="kvLabel">Serienummer</div>
+                  <div class="kvValueSmall" id="d_serialNumber">-</div>
+                </div>
+              </div>
+              <div class="kvGrid" style="margin-top:6px">
                 <div class="kvGridItem">
                   <div class="kvLabel">Aankoopdatum</div>
                   <div class="kvValueSmall" id="d_purchaseDate">-</div>
@@ -187,8 +195,8 @@
                   <div class="kvValueSmall" id="d_caseNumber">-</div>
                 </div>
               </div>
-              <div style="margin-top:10px" id="d_invoiceBlock">
-                <div class="kvLabel">Aankoopfactuur</div>
+              <div style="margin-top:8px" id="d_invoiceBlock">
+                <div class="kvLabel">Factuur</div>
                 <div id="d_invoiceDisplay">-</div>
               </div>
             </div>
@@ -199,17 +207,37 @@
             </div>
           </div>
 
-          <div class="divider"></div>
-          <div class="kvLabel" style="margin-top:0">Klacht / omschrijving</div>
-          <div id="d_complaint" style="font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:50px">-</div>
+          <!-- bevestigingslink -->
+          <div style="margin-top:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <button id="copyConfirmLinkBtn" class="btn small" type="button">🔗 Bevestigingslink</button>
+            <span id="confirmLinkMsg" style="font-size:12px;color:var(--ok)"></span>
+          </div>
 
+          <div class="divider"></div>
+
+          <!-- klacht -->
+          <div class="kvLabel" style="margin-top:0">Klacht</div>
+          <div id="d_complaint" class="textBlock">-</div>
+
+          <!-- hoe is het gebeurd -->
+          <div style="margin-top:10px" id="howHappenedBlock">
+            <div class="kvLabel">Hoe is het gebeurd?</div>
+            <div id="d_howItHappened" class="textBlock">-</div>
+          </div>
+
+          <!-- gewenste oplossing -->
+          <div style="margin-top:10px" id="desiredSolutionBlock">
+            <div class="kvLabel">Gewenste oplossing</div>
+            <div id="d_desiredSolution" class="textBlock">-</div>
+          </div>
+
+          <!-- foto's -->
           <div style="margin-top:12px">
             <div class="sectionTitle">Foto's</div>
             <div id="photoGrid" class="photoGrid"></div>
             <div id="noPhotos" class="hint" style="margin-top:6px">Geen foto's.</div>
             <div id="photoLinkList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
           </div>
-
           <div style="margin-top:10px">
             <div class="toggleRow" id="photoEditToggle"><div class="sectionTitle">Foto-links bewerken</div><div class="plusSym" id="photoEditPlus">+</div></div>
             <div id="photoEditBody" class="hidden" style="margin-top:10px">
@@ -223,6 +251,8 @@
           </div>
 
           <div class="divider"></div>
+
+          <!-- notities -->
           <div class="sectionTitle">Notities</div>
           <textarea id="notesField" rows="3" placeholder="Interne notities..." style="margin-top:6px"></textarea>
           <div class="row" style="margin-top:8px;justify-content:flex-end">
@@ -231,7 +261,9 @@
           <div class="hint" id="notesSaveMsg"></div>
 
           <div class="divider"></div>
-          <div class="sectionTitle">Leveranciers referentie</div>
+
+          <!-- leverancier ref -->
+          <div class="sectionTitle">Leveranciersreferentie</div>
           <input id="supplierRef" placeholder="RMA / zaaknummer leverancier" style="margin-top:6px" />
           <div class="row" style="margin-top:8px;justify-content:flex-end">
             <button id="saveRefBtn" class="btn primary small" type="button">Opslaan</button>
@@ -239,6 +271,8 @@
           <div class="hint" id="refSaveMsg"></div>
 
           <div class="divider"></div>
+
+          <!-- mail leverancier -->
           <div class="sectionTitle" style="margin-bottom:8px">Mail leverancier</div>
           <div class="flagRow" id="supplierMailFlags">
             <button class="btn mailFlagBtn" id="ms_en" type="button"><span class="flag">&#x1F1EC;&#x1F1E7;</span></button>
@@ -246,6 +280,7 @@
           </div>
           <div class="hint" id="mailSupplierMsg"></div>
 
+          <!-- mail klant -->
           <div id="mailCustomerSection" class="hidden">
             <div class="divider"></div>
             <div class="sectionTitle" style="margin-bottom:8px">Mail klant</div>
@@ -258,6 +293,7 @@
             <div class="hint" id="mailCustomerMsg"></div>
           </div>
 
+          <!-- templates -->
           <div id="templatesWrap" style="margin-top:10px">
             <div class="divider"></div>
             <div class="toggleRow" id="templatesToggle"><div class="sectionTitle">Mail templates</div><div class="plusSym" id="templatesPlus">+</div></div>
@@ -283,13 +319,14 @@
                   <button class="btn small" type="button" data-token="{{KlantVolledig}}">{{KlantVolledig}}</button>
                   <button class="btn small" type="button" data-token="{{Leverancier}}">{{Leverancier}}</button>
                   <button class="btn small" type="button" data-token="{{Product}}">{{Product}}</button>
+                  <button class="btn small" type="button" data-token="{{Serienummer}}">{{Serienummer}}</button>
                   <button class="btn small" type="button" data-token="{{Klacht}}">{{Klacht}}</button>
                   <button class="btn small" type="button" data-token="{{Zaaknummer}}">{{Zaaknummer}}</button>
                   <button class="btn small" type="button" data-token="{{Aankoopdatum}}">{{Aankoopdatum}}</button>
                   <button class="btn small" type="button" data-token="{{Factuurnummer}}">{{Factuurnummer}}</button>
                   <button class="btn small" type="button" data-token="{{LeveranciersRef}}">{{LeveranciersRef}}</button>
                   <button class="btn small" type="button" data-token="{{FotoLinks}}">{{FotoLinks}}</button>
-                  <button class="btn small" type="button" data-token="{{FactuurLink}}">{{FactuurLink}}</button>
+                  <button class="btn small" type="button" data-token="{{BevestigingsLink}}">{{BevestigingsLink}}</button>
                 </div>
                 <div class="row" style="margin-top:10px;justify-content:flex-end;gap:8px">
                   <button id="tplCancel" class="btn" type="button">Annuleren</button>
@@ -305,12 +342,10 @@
           <div id="mailLogBody" class="hidden" style="margin-top:10px">
             <div id="mailLogList" class="muted" style="font-size:13px">Geen log.</div>
           </div>
-
           <div class="hint" id="msg" style="margin-top:auto"></div>
         </div>
       </section>
-
-      <!-- RIGHT -->
+      <!-- RIGHT: tabel -->
       <section class="card colStretch">
         <input id="historySearch" placeholder="Zoeken..." style="width:100%;margin-bottom:12px" />
         <table class="table">
@@ -345,7 +380,6 @@
     </div>
   </div>
 </section>
-
 <!-- SUPPLIERS VIEW -->
 <div id="suppliersView" class="hidden">
   <div class="wrap" style="padding-top:0">
@@ -354,12 +388,9 @@
       <button id="newSupplierBtn" class="btn primary" type="button">+ Leverancier toevoegen</button>
     </div>
     <input id="supplierSearch" placeholder="Zoeken op naam, mail, contactpersoon..." style="width:100%;margin-bottom:14px" />
-    <div id="supplierGrid" class="supGrid">
-      <div class="muted" style="font-size:13px">Laden...</div>
-    </div>
+    <div id="supplierGrid" class="supGrid"><div class="muted" style="font-size:13px">Laden...</div></div>
   </div>
 </div>
-
 <!-- SUPPLIER MODAL -->
 <div id="supplierModal" class="overlay hidden">
   <div class="card" style="max-width:540px;width:100%;max-height:90vh;overflow-y:auto">
@@ -368,29 +399,25 @@
       <button id="supplierModalClose" class="btn" type="button">Sluiten</button>
     </div>
     <div class="grid2">
-      <div><label style="margin-top:0">Naam *</label><input id="sup_name" placeholder="Leveranciersnaam" /></div>
-      <div><label style="margin-top:0">Merk / label</label><input id="sup_brand" placeholder="bijv. Fanatic, North..." /></div>
+      <div><label style="margin-top:0">Naam *</label><input id="sup_name" /></div>
+      <div><label style="margin-top:0">Merk / label</label><input id="sup_brand" /></div>
     </div>
     <div class="grid2">
-      <div><label>E-mail garanties *</label><input id="sup_email" type="email" placeholder="garantie@leverancier.com" /></div>
-      <div><label>E-mail algemeen</label><input id="sup_emailGeneral" type="email" placeholder="info@leverancier.com" /></div>
+      <div><label>E-mail garanties *</label><input id="sup_email" type="email" /></div>
+      <div><label>E-mail algemeen</label><input id="sup_emailGeneral" type="email" /></div>
     </div>
     <div class="grid2">
-      <div><label>Contactpersoon</label><input id="sup_contact" placeholder="Naam contactpersoon" /></div>
-      <div><label>Telefoon</label><input id="sup_phone" placeholder="+31 ..." /></div>
+      <div><label>Contactpersoon</label><input id="sup_contact" /></div>
+      <div><label>Telefoon</label><input id="sup_phone" /></div>
     </div>
     <div class="grid2">
-      <div><label>Website</label><input id="sup_website" type="url" placeholder="https://..." /></div>
-      <div><label>Land</label><input id="sup_country" placeholder="Nederland" /></div>
+      <div><label>Website</label><input id="sup_website" type="url" /></div>
+      <div><label>Land</label><input id="sup_country" /></div>
     </div>
-    <label>Garantieportaal / RMA-link</label>
-    <input id="sup_rmaLink" type="url" placeholder="https://..." />
-    <label>Garantievoorwaarden / termijn</label>
-    <input id="sup_warranty" placeholder="bijv. 2 jaar fabrieksgarantie" />
-    <label>Adres</label>
-    <input id="sup_address" placeholder="Straat, postcode, stad" />
-    <label>Notities</label>
-    <textarea id="sup_notes" rows="3" placeholder="Interne notities..."></textarea>
+    <label>Garantieportaal / RMA-link</label><input id="sup_rmaLink" type="url" />
+    <label>Garantievoorwaarden / termijn</label><input id="sup_warranty" />
+    <label>Adres</label><input id="sup_address" />
+    <label>Notities</label><textarea id="sup_notes" rows="3"></textarea>
     <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
       <button id="sup_deleteBtn" class="btn small hidden" type="button" style="color:var(--bad);border-color:rgba(220,38,38,.25)">Verwijderen</button>
       <div class="row" style="gap:8px;margin-left:auto">
@@ -400,7 +427,6 @@
     <div class="hint" id="sup_msg"></div>
   </div>
 </div>
-
 <!-- NEW CASE MODAL -->
 <div id="newCaseModal" class="overlay hidden">
   <div class="card" style="max-width:560px;width:100%;max-height:90vh;overflow-y:auto">
@@ -410,25 +436,26 @@
     </div>
     <div class="grid2">
       <div><label style="margin-top:0">Klant</label><input id="nc_customer" /></div>
-      <div><label style="margin-top:0">E-mail klant</label><input id="nc_mail" type="email" /></div>
+      <div><label style="margin-top:0">E-mail</label><input id="nc_mail" type="email" /></div>
+    </div>
+    <div class="grid2">
+      <div><label style="margin-top:0">Telefoon</label><input id="nc_phone" type="tel" /></div>
+      <div><label style="margin-top:0">Aankoopdatum</label><input id="nc_purchaseDate" type="date" /></div>
     </div>
     <label>Leverancier</label><select id="nc_supplier"></select>
-    <label>Product</label><input id="nc_product" placeholder="Merk / model / artikelnummer" />
-    <label>Aankoopdatum</label><input id="nc_purchaseDate" type="date" />
+    <label>Product (merk, model, jaar, kleur)</label><input id="nc_product" />
     <div class="grid2">
       <div><label style="margin-top:0">Factuurnummer</label><input id="nc_invoiceNumber" /></div>
-      <div><label style="margin-top:0">Factuurlink (URL)</label><input id="nc_invoiceLink" type="url" placeholder="https://..." /></div>
+      <div><label style="margin-top:0">Serienummer</label><input id="nc_serialNumber" /></div>
     </div>
-    <label>Klacht / omschrijving</label><textarea id="nc_complaint" rows="4" placeholder="Beschrijf het probleem..."></textarea>
-    <label>Foto-links (een per regel)</label>
-    <textarea id="nc_photos" rows="4" placeholder="https://i.postimg.cc/..."></textarea>
+    <label>Klacht / omschrijving</label><textarea id="nc_complaint" rows="3"></textarea>
+    <label>Foto-links (een per regel)</label><textarea id="nc_photos" rows="3"></textarea>
     <div class="row" style="margin-top:12px;justify-content:flex-end">
       <button id="createBtn" class="btn primary" type="button">Toevoegen</button>
     </div>
     <div class="hint" id="createMsg"></div>
   </div>
 </div>
-
 <!-- MAIL PICKER -->
 <div id="mailPicker" class="hidden" style="position:fixed;inset:0;background:rgba(15,23,42,.35);display:grid;place-items:center;padding:18px;z-index:9999">
   <div class="card" style="max-width:420px;width:100%">
@@ -441,11 +468,9 @@
     <div class="hint" id="pickHint"></div>
   </div>
 </div>
-
 <script>
 const API_BASE = "https://script.google.com/macros/s/AKfycbxMDioUnR2djbs_qKZgQUtXd543ZlTfgpN8hfakvnRifbWdmeDBa7iS_CUeNpdk-g4i2A/exec";
-const MASTER_NAME = "Jasper";
-
+const WORKER_BASE = "https://surfcenter-upload.jelle-2b7.workers.dev";
 const STATUSES = [
   { key:"new",      label:"Nieuw",          cls:"s-new"      },
   { key:"sent",     label:"Verzonden",       cls:"s-sent"     },
@@ -453,7 +478,6 @@ const STATUSES = [
   { key:"done",     label:"Afgerond",        cls:"s-done"     },
   { key:"rejected", label:"Afgewezen",       cls:"s-rejected" },
 ];
-
 const $ = id => document.getElementById(id);
 let supplierKey="", loginType="", supplier="";
 let cases=[], selected=null, suppliersList=[], suppliersMailMap={};
@@ -479,12 +503,10 @@ function jsonp(url){
   });
 }
 function api(qs){return jsonp(API_BASE+"?"+qs);}
-
 function parsePhotoLinks(val){
   return String(val||"").split(/[\n,]+/).map(s=>s.trim()).filter(s=>s.startsWith("http"));
 }
 function statusInfo(key){return STATUSES.find(x=>x.key===String(key||"").toLowerCase())||STATUSES[0];}
-
 function setupToggle(tid,bid,pid,onOpen){
   const t=$(tid),b=$(bid),p=$(pid);if(!t||!b||!p)return;
   t.addEventListener("click",function(){var hidden=b.classList.toggle("hidden");p.textContent=hidden?"+":"-";if(!hidden&&onOpen) onOpen();});
@@ -493,18 +515,20 @@ function setupToggle(tid,bid,pid,onOpen){
 function tokenMap(){
   if(!selected) return {};
   const photos=parsePhotoLinks(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
+  const caseNum=getAny(selected,["CaseNumber","Case Number","Zaaknummer"]);
   return {
-    "{{Klant}}":           firstNameFrom(getAny(selected,["Customer","Klant"])),
-    "{{KlantVolledig}}":   getAny(selected,["Customer","Klant"]),
-    "{{Leverancier}}":     getAny(selected,["Supplier","Leverancier"]),
-    "{{Product}}":         getAny(selected,["Product"]),
-    "{{Klacht}}":          getAny(selected,["Complaint","Klacht"]),
-    "{{Zaaknummer}}":      getAny(selected,["CaseNumber","Case Number","Zaaknummer"]),
-    "{{Aankoopdatum}}":    getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
-    "{{Factuurnummer}}":   getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
-    "{{FactuurLink}}":     getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]),
-    "{{LeveranciersRef}}": getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
-    "{{FotoLinks}}":       photos.join("\n"),
+    "{{Klant}}":            firstNameFrom(getAny(selected,["Customer","Klant"])),
+    "{{KlantVolledig}}":    getAny(selected,["Customer","Klant"]),
+    "{{Leverancier}}":      getAny(selected,["Supplier","Leverancier"]),
+    "{{Product}}":          getAny(selected,["Product"]),
+    "{{Serienummer}}":      getAny(selected,["SerialNumber","Serienummer"]),
+    "{{Klacht}}":           getAny(selected,["Complaint","Klacht"]),
+    "{{Zaaknummer}}":       caseNum,
+    "{{Aankoopdatum}}":     getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
+    "{{Factuurnummer}}":    getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
+    "{{LeveranciersRef}}":  getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
+    "{{FotoLinks}}":        photos.join("\n"),
+    "{{BevestigingsLink}}": caseNum ? WORKER_BASE+"/case/"+encodeURIComponent(caseNum) : "",
   };
 }
 function applyTokens(txt){
@@ -540,7 +564,6 @@ function renderStatusBadge(key){
   $("statusText").textContent=s.label;
   $("statusSelect").value=s.key;
 }
-
 function renderPhotos(photosRaw){
   var links=parsePhotoLinks(photosRaw);
   $("photoGrid").innerHTML="";
@@ -548,7 +571,7 @@ function renderPhotos(photosRaw){
   if(!links.length){$("noPhotos").classList.remove("hidden");return;}
   $("noPhotos").classList.add("hidden");
   links.forEach(function(url,i){
-    var isImage=/\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(url)||url.includes("postimg")||url.includes("imgur");
+    var isImage=/\.(jpg|jpeg|png|gif|webp|avif)(\?|$)/i.test(url)||url.includes("postimg")||url.includes("imgur")||url.includes("r2.dev");
     if(isImage){
       var a=document.createElement("a");
       a.href=url; a.target="_blank"; a.rel="noopener noreferrer"; a.className="photoThumb";
@@ -562,7 +585,6 @@ function renderPhotos(photosRaw){
     }
   });
 }
-
 function buildPhotoInputs(photosRaw){
   var links=parsePhotoLinks(photosRaw);
   $("photoInputsWrap").innerHTML="";
@@ -571,12 +593,11 @@ function buildPhotoInputs(photosRaw){
 }
 function addPhotoInput(val){
   var row=document.createElement("div");
-  row.className="photoInputRow";
-  row.style.marginBottom="6px";
+  row.className="photoInputRow"; row.style.marginBottom="6px";
   var inp=document.createElement("input");
-  inp.type="url"; inp.placeholder="https://i.postimg.cc/..."; inp.value=val||"";
+  inp.type="url"; inp.value=val||"";
   var btn=document.createElement("button");
-  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="X";
+  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="×";
   btn.onclick=function(){row.remove();};
   row.appendChild(inp); row.appendChild(btn);
   $("photoInputsWrap").appendChild(row);
@@ -601,21 +622,47 @@ function renderInvoice(num,link){
   wrap.innerHTML=html;
 }
 
+// bevestigingslink
+$("copyConfirmLinkBtn").addEventListener("click",function(){
+  if(!selected) return;
+  var caseNum=getAny(selected,["CaseNumber","Case Number","Zaaknummer"]);
+  if(!caseNum){$("confirmLinkMsg").textContent="Geen zaaknummer.";return;}
+  var url=WORKER_BASE+"/case/"+encodeURIComponent(caseNum);
+  navigator.clipboard.writeText(url).then(function(){
+    $("confirmLinkMsg").textContent="Gekopieerd!";
+    setTimeout(function(){$("confirmLinkMsg").textContent="";},2500);
+  }).catch(function(){
+    $("confirmLinkMsg").textContent=url;
+  });
+});
+
 async function openRow(rowId){
   selected=cases.find(function(x){return Number(x.rowId)===rowId;});
   if(!selected) return;
   $("d_customer").textContent=getAny(selected,["Customer","Klant"])||"-";
   $("d_customerMail").textContent=isSupplier()?"":getAny(selected,["MailCustomer","Mail Customer","Email"])||"";
+  $("d_customerPhone").textContent=isSupplier()?"":getAny(selected,["Phone","Telefoon"])||"";
   $("d_supplier").textContent=getAny(selected,["Supplier","Leverancier"])||"-";
   $("d_product").textContent=getAny(selected,["Product"])||"-";
+  $("d_serialNumber").textContent=getAny(selected,["SerialNumber","Serienummer"])||"-";
   $("d_purchaseDate").textContent=getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])||"-";
   $("d_caseNumber").textContent=getAny(selected,["CaseNumber","Case Number","Zaaknummer"])||"-";
-  renderInvoice(getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"]));
+  renderInvoice(
+    getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
+    getAny(selected,["InvoiceLink","Invoice Link","FactuurLink"])
+  );
   $("d_complaint").textContent=getAny(selected,["Complaint","Klacht"])||"-";
+  var how=getAny(selected,["HowItHappened"]);
+  $("d_howItHappened").textContent=how||"-";
+  $("howHappenedBlock").style.display=how?"":"none";
+  var sol=getAny(selected,["DesiredSolution"]);
+  $("d_desiredSolution").textContent=sol||"-";
+  $("desiredSolutionBlock").style.display=sol?"":"none";
   renderPhotos(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   buildPhotoInputs(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   $("notesField").value=getAny(selected,["Notes","Notities"])||"";
   $("supplierRef").value=getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||"";
+  $("confirmLinkMsg").textContent="";
   renderStatusBadge(getAny(selected,["Status"])||"new");
   $("noSelection").classList.add("hidden");
   $("form").classList.remove("hidden");
@@ -631,7 +678,6 @@ $("saveNotesBtn").addEventListener("click",async function(){
   $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   await loadCases();
 });
-
 $("saveRefBtn").addEventListener("click",async function(){
   if(!selected) return;
   $("refSaveMsg").textContent="Opslaan...";
@@ -640,7 +686,6 @@ $("saveRefBtn").addEventListener("click",async function(){
   $("refSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   await loadCases();
 });
-
 $("statusSaveBtn").addEventListener("click",async function(){
   if(!selected) return;
   var newStatus=$("statusSelect").value;
@@ -652,7 +697,6 @@ $("statusSaveBtn").addEventListener("click",async function(){
 
 function langFlag(lang){var l=String(lang||"").toLowerCase();if(l==="nl")return"&#x1F1F3;&#x1F1F1;";if(l==="de")return"&#x1F1E9;&#x1F1EA;";if(l==="fr")return"&#x1F1EB;&#x1F1F7;";return"&#x1F1EC;&#x1F1E7;";}
 function findTpl(arr,lang){var l=String(lang||"").toLowerCase();return arr.find(function(x){return String(x.language||"").toLowerCase()===l&&String(x.label||"").toUpperCase()==="DEFAULT";})||arr.find(function(x){return String(x.language||"").toLowerCase()===l;})||null;}
-
 function renderTemplateList(wrapId,list,sendFn,editFn){
   var wrap=$(wrapId); wrap.innerHTML="";
   if(!list.length){wrap.innerHTML="<div class='muted' style='font-size:13px'>Geen templates.</div>";return;}
@@ -665,7 +709,6 @@ function renderTemplateList(wrapId,list,sendFn,editFn){
     row.querySelector("[data-edit]").addEventListener("click",function(){editFn(t);});
   });
 }
-
 async function loadTemplates(){
   var s=await api("action=warranty_supplier_templates&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
   supplierTemplates=s&&s.ok&&Array.isArray(s.templates)?s.templates:[];
@@ -673,7 +716,6 @@ async function loadTemplates(){
   customerTemplates=c&&c.ok&&Array.isArray(c.templates)?c.templates:[];
   renderTemplateList("supplierTemplatesList",supplierTemplates,sendSupplierTemplate,editTpl);
 }
-
 function editTpl(tpl){
   $("addTplBody").classList.remove("hidden"); $("addTplPlus").textContent="-";
   $("tplLang").value=(tpl.language||"en").toLowerCase();
@@ -697,8 +739,7 @@ $("tplSave").addEventListener("click",async function(){
   var data=await api(qs).catch(function(){return null;});
   if(!data||!data.ok){$("tplSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
   $("tplSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
-  resetTplEditor();
-  await loadTemplates();
+  resetTplEditor(); await loadTemplates();
 });
 
 function openMailPicker(payload){pendingMail=payload;$("pickHint").textContent=payload.cc?"CC: "+payload.cc:"";$("mailPicker").classList.remove("hidden");}
@@ -714,7 +755,6 @@ async function logMail(payload){
   if(!selected) return;
   await api("action=warranty_log_mail&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(String(selected.rowId))+"&To="+encodeURIComponent(payload.to||"")+"&Kind="+encodeURIComponent(payload.kind||"")+"&Language="+encodeURIComponent(payload.language||"")+"&Template="+encodeURIComponent(payload.template||"")+"&Subject="+encodeURIComponent(payload.subject||"")).catch(function(){});
 }
-
 function supplierMailAddress(){
   var supName=getAny(selected,["Supplier","Leverancier"])||"";
   return suppliersMailMap[String(supName).toLowerCase()]||getAny(selected,["MailSupplier","Mail Supplier"])||"";
@@ -731,7 +771,6 @@ async function sendSupplierTemplate(tpl){
     await loadMailLog();
   }});
 }
-
 async function mailSupplier(lang,btn){
   if(!selected) return;
   if(btn){btn.closest(".flagRow").querySelectorAll(".btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");}
@@ -745,7 +784,6 @@ async function mailSupplier(lang,btn){
     await loadMailLog();
   }});
 }
-
 async function mailCustomer(lang,btn){
   if(!selected) return;
   if(btn){btn.closest(".flagRow").querySelectorAll(".btn").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");}
@@ -759,7 +797,6 @@ async function mailCustomer(lang,btn){
     await loadMailLog();
   }});
 }
-
 $("ms_en").addEventListener("click",function(e){mailSupplier("en",e.currentTarget);});
 $("ms_nl").addEventListener("click",function(e){mailSupplier("nl",e.currentTarget);});
 $("mc_en").addEventListener("click",function(e){mailCustomer("en",e.currentTarget);});
@@ -779,7 +816,7 @@ async function loadMailLog(){
   rows.forEach(function(r){
     var dt=formatDT(r.Timestamp||"");
     var el=document.createElement("div"); el.className="savedTemplateRow";
-    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" - "+escapeHTML(r.Subject||"-")+"</div></div>";
+    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" — "+escapeHTML(r.Subject||"-")+"</div></div>";
     wrap.appendChild(el);
   });
   $("mailLogList").innerHTML=""; $("mailLogList").appendChild(wrap);
@@ -791,18 +828,15 @@ async function loadCases(){
   $("noSelection").classList.remove("hidden");
   $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>Laden...</td></tr>";
   $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>Laden...</td></tr>";
-  var url=API_BASE+"?action=warranty_orders&supplierKey="+encodeURIComponent(supplierKey);
-  var data=await jsonp(url).catch(function(){return null;});
+  var data=await jsonp(API_BASE+"?action=warranty_orders&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
   if(!data||!data.ok){
     var err=escapeHTML(data&&data.error?data.error:"Fout");
     $("tbodyOpen").innerHTML="<tr><td colspan='4' class='muted'>"+err+"</td></tr>";
-    $("tbodyCompleted").innerHTML="<tr><td colspan='4' class='muted'>"+err+"</td></tr>";
     return;
   }
   cases=(data.orders||[]).slice().sort(function(a,b){return Number(b.rowId||0)-Number(a.rowId||0);});
   renderCases();
 }
-
 function renderCases(){
   var q=($("historySearch").value||"").trim().toLowerCase();
   function match(o){return !q||[getAny(o,["Customer","Klant"]),getAny(o,["Product"]),getAny(o,["Supplier","Leverancier"]),getAny(o,["MailCustomer","Mail Customer"])].join(" ").toLowerCase().includes(q);}
@@ -816,7 +850,7 @@ function renderCases(){
       var statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
       var si=statusInfo(statusKey);
       var product=getAny(o,["Product"])||"";
-      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>V</span>":"<span class='checkPill'>-</span>")+"</td>";
+      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>✓</span>":"<span class='checkPill'>—</span>")+"</td>";
       target.appendChild(tr);
     });
   }
@@ -833,16 +867,27 @@ $("newCaseModal").addEventListener("click",function(e){if(e.target===$("newCaseM
 $("createBtn").addEventListener("click",async function(){
   var Customer=$("nc_customer").value.trim();
   var MailCustomer=$("nc_mail").value.trim();
+  var Phone=$("nc_phone").value.trim();
   var Supplier=$("nc_supplier").value;
   var Product=$("nc_product").value.trim();
   var PurchaseDate=$("nc_purchaseDate").value;
   var InvoiceNumber=$("nc_invoiceNumber").value.trim();
-  var InvoiceLink=$("nc_invoiceLink").value.trim();
+  var SerialNumber=$("nc_serialNumber").value.trim();
   var Complaint=$("nc_complaint").value.trim();
   var Photos=$("nc_photos").value.trim();
   if(!Customer||!Supplier||!Product){$("createMsg").innerHTML="<span style='color:var(--warn)'>Klant, leverancier en product zijn verplicht.</span>";return;}
   $("createBtn").disabled=true; $("createMsg").textContent="Toevoegen...";
-  var qs="action=warranty_create&supplierKey="+encodeURIComponent(supplierKey)+"&Customer="+encodeURIComponent(Customer)+"&MailCustomer="+encodeURIComponent(MailCustomer)+"&Supplier="+encodeURIComponent(Supplier)+"&Product="+encodeURIComponent(Product)+"&PurchaseDate="+encodeURIComponent(PurchaseDate)+"&InvoiceNumber="+encodeURIComponent(InvoiceNumber)+"&InvoiceLink="+encodeURIComponent(InvoiceLink)+"&Complaint="+encodeURIComponent(Complaint)+"&Photos="+encodeURIComponent(Photos);
+  var qs="action=warranty_create&supplierKey="+encodeURIComponent(supplierKey)
+    +"&Customer="+encodeURIComponent(Customer)
+    +"&MailCustomer="+encodeURIComponent(MailCustomer)
+    +"&Phone="+encodeURIComponent(Phone)
+    +"&Supplier="+encodeURIComponent(Supplier)
+    +"&Product="+encodeURIComponent(Product)
+    +"&PurchaseDate="+encodeURIComponent(PurchaseDate)
+    +"&InvoiceNumber="+encodeURIComponent(InvoiceNumber)
+    +"&SerialNumber="+encodeURIComponent(SerialNumber)
+    +"&Complaint="+encodeURIComponent(Complaint)
+    +"&Photos="+encodeURIComponent(Photos);
   var data=await api(qs).catch(function(){return null;});
   $("createBtn").disabled=false;
   if(!data||!data.ok){$("createMsg").innerHTML="<span style='color:var(--bad)'>Mislukt: "+escapeHTML(data&&data.error?data.error:"Onbekend")+"</span>";return;}
@@ -875,13 +920,11 @@ $("viewSuppliersBtn").addEventListener("click",function(){setView("suppliers");}
 
 var suppliersData=[];
 var editingSupplierId=null;
-
 async function loadSuppliersData(){
   var data=await api("action=warranty_suppliers&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
   suppliersData=data&&data.ok&&Array.isArray(data.suppliers)?data.suppliers:[];
   renderSupplierGrid();
 }
-
 function renderSupplierGrid(){
   var q=($("supplierSearch").value||"").trim().toLowerCase();
   var list=suppliersData.filter(function(s){return !q||[s.Name,s.Brand,s.Email,s.EmailGeneral,s.Contact,s.Country].join(" ").toLowerCase().includes(q);});
@@ -894,17 +937,11 @@ function renderSupplierGrid(){
     var emailGenHref=s.EmailGeneral&&s.EmailGeneral!==s.Email?"<a href='mailto:"+escapeHTML(s.EmailGeneral)+"' class='linkBtn' style='font-size:11px'>"+escapeHTML(s.EmailGeneral)+"</a>":"";
     var rmaHref=s.RmaLink?"<a href='"+escapeHTML(s.RmaLink)+"' target='_blank' rel='noopener' class='linkBtn' style='font-size:11px'>Garantieportaal</a>":"";
     var webHref=s.Website?"<a href='"+escapeHTML(s.Website)+"' target='_blank' rel='noopener' class='linkBtn' style='font-size:11px'>Website</a>":"";
-    var phonePart=s.Phone?"<span>"+escapeHTML(s.Phone)+"</span>":"";
-    var countryPart=s.Country?"<span>"+escapeHTML(s.Country)+"</span>":"";
-    var contactPart=s.Contact?"<span>"+escapeHTML(s.Contact)+"</span>":"";
-    var warrantyPart=s.Warranty?"<div class='supMeta' style='margin-top:2px'>"+escapeHTML(s.Warranty)+"</div>":"";
-    var notesPart=s.Notes?"<div style='font-size:12px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:8px;white-space:pre-wrap'>"+escapeHTML(s.Notes)+"</div>":"";
-    card.innerHTML="<div><div class='supName'>"+escapeHTML(s.Name||"-")+"</div>"+(s.Brand?"<div style='font-size:12px;color:var(--muted);font-weight:500'>"+escapeHTML(s.Brand)+"</div>":"")+"</div><div class='supMeta'>"+contactPart+phonePart+countryPart+"</div>"+warrantyPart+"<div class='supActions'>"+emailHref+emailGenHref+rmaHref+webHref+"</div>"+notesPart+"<div class='supActions' style='margin-top:6px;border-top:1px solid var(--border);padding-top:8px'><button class='btn small' data-sup-edit='"+escapeHTML(String(s.id||""))+"'>Bewerken</button></div>";
+    card.innerHTML="<div><div class='supName'>"+escapeHTML(s.Name||"-")+"</div>"+(s.Brand?"<div style='font-size:12px;color:var(--muted);font-weight:500'>"+escapeHTML(s.Brand)+"</div>":"")+"</div><div class='supMeta'>"+(s.Contact?"<span>"+escapeHTML(s.Contact)+"</span>":"")+(s.Phone?"<span>"+escapeHTML(s.Phone)+"</span>":"")+(s.Country?"<span>"+escapeHTML(s.Country)+"</span>":"")+"</div>"+(s.Warranty?"<div class='supMeta' style='margin-top:2px'>"+escapeHTML(s.Warranty)+"</div>":"")+"<div class='supActions'>"+emailHref+emailGenHref+rmaHref+webHref+"</div>"+(s.Notes?"<div style='font-size:12px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:8px;white-space:pre-wrap'>"+escapeHTML(s.Notes)+"</div>":"")+"<div class='supActions' style='margin-top:6px;border-top:1px solid var(--border);padding-top:8px'><button class='btn small' data-sup-edit='"+escapeHTML(String(s.id||""))+"'>Bewerken</button></div>";
     card.querySelector("[data-sup-edit]").addEventListener("click",function(){openSupplierModal(s);});
     grid.appendChild(card);
   });
 }
-
 $("supplierSearch").addEventListener("input",renderSupplierGrid);
 
 function openSupplierModal(sup){
@@ -926,14 +963,11 @@ function openSupplierModal(sup){
   $("sup_deleteBtn").classList.toggle("hidden",!sup);
   $("supplierModal").classList.remove("hidden");
 }
-
 $("newSupplierBtn").addEventListener("click",function(){openSupplierModal(null);});
 $("supplierModalClose").addEventListener("click",function(){$("supplierModal").classList.add("hidden");});
 $("supplierModal").addEventListener("click",function(e){if(e.target===$("supplierModal")) $("supplierModal").classList.add("hidden");});
-
 $("sup_saveBtn").addEventListener("click",async function(){
-  var name=$("sup_name").value.trim();
-  var email=$("sup_email").value.trim();
+  var name=$("sup_name").value.trim(), email=$("sup_email").value.trim();
   if(!name||!email){$("sup_msg").innerHTML="<span style='color:var(--warn)'>Naam en e-mail zijn verplicht.</span>";return;}
   $("sup_saveBtn").disabled=true; $("sup_msg").textContent="Opslaan...";
   var qs="action=warranty_supplier_upsert&supplierKey="+encodeURIComponent(supplierKey)+(editingSupplierId?"&id="+encodeURIComponent(editingSupplierId):"")+"&Name="+encodeURIComponent(name)+"&Brand="+encodeURIComponent($("sup_brand").value.trim())+"&Email="+encodeURIComponent(email)+"&EmailGeneral="+encodeURIComponent($("sup_emailGeneral").value.trim())+"&Contact="+encodeURIComponent($("sup_contact").value.trim())+"&Phone="+encodeURIComponent($("sup_phone").value.trim())+"&Website="+encodeURIComponent($("sup_website").value.trim())+"&Country="+encodeURIComponent($("sup_country").value.trim())+"&RmaLink="+encodeURIComponent($("sup_rmaLink").value.trim())+"&Warranty="+encodeURIComponent($("sup_warranty").value.trim())+"&Address="+encodeURIComponent($("sup_address").value.trim())+"&Notes="+encodeURIComponent($("sup_notes").value.trim());
@@ -942,17 +976,14 @@ $("sup_saveBtn").addEventListener("click",async function(){
   if(!data||!data.ok){$("sup_msg").innerHTML="<span style='color:var(--bad)'>Mislukt: "+escapeHTML(data&&data.error?data.error:"")+"</span>";return;}
   $("sup_msg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
   $("supplierModal").classList.add("hidden");
-  await loadSuppliersData();
-  await loadSuppliers();
+  await loadSuppliersData(); await loadSuppliers();
 });
-
 $("sup_deleteBtn").addEventListener("click",async function(){
   if(!editingSupplierId||!confirm("Leverancier verwijderen?")) return;
   var data=await api("action=warranty_supplier_delete&supplierKey="+encodeURIComponent(supplierKey)+"&id="+encodeURIComponent(editingSupplierId)).catch(function(){return null;});
   if(!data||!data.ok){$("sup_msg").innerHTML="<span style='color:var(--bad)'>Verwijderen mislukt.</span>";return;}
   $("supplierModal").classList.add("hidden");
-  await loadSuppliersData();
-  await loadSuppliers();
+  await loadSuppliersData(); await loadSuppliers();
 });
 
 async function doLogin(withKey){
@@ -970,12 +1001,10 @@ async function doLogin(withKey){
     sessionStorage.setItem("wgl",loginType);
     await init_afterLogin();
   }catch(err){
-    console.error(err);
     $("loginMsg").innerHTML="<span style='color:var(--bad)'>Server niet bereikbaar.</span>";
   }
   $("loginBtn").disabled=false;
 }
-
 function logout(){
   supplierKey="";supplier="";loginType="";cases=[];selected=null;
   suppliersList=[];suppliersMailMap={};supplierTemplates=[];customerTemplates=[];
@@ -984,7 +1013,6 @@ function logout(){
   $("loginView").classList.remove("hidden");
   $("loginMsg").textContent=""; $("keyInput").value="";
 }
-
 async function init_afterLogin(){
   $("loginView").classList.add("hidden");
   $("portalView").classList.remove("hidden");
@@ -998,7 +1026,6 @@ async function init_afterLogin(){
   await loadTemplates();
   await loadCases();
 }
-
 $("loginBtn").addEventListener("click",function(){doLogin();});
 $("keyInput").addEventListener("keydown",function(e){if(e.key==="Enter") doLogin();});
 $("logoutBtn").addEventListener("click",logout);
@@ -1008,7 +1035,6 @@ setupToggle("templatesToggle","templatesBody","templatesPlus");
 setupToggle("addTplToggle","addTplBody","addTplPlus",resetTplEditor);
 setupToggle("mailLogToggle","mailLogBody","mailLogPlus");
 setupToggle("completedToggle","completedBody","completedPlus");
-
 (function boot(){
   buildStatusSelect();
   bindTokenButtons();
@@ -1021,4 +1047,3 @@ setupToggle("completedToggle","completedBody","completedPlus");
 </script>
 </body>
 </html>
-
