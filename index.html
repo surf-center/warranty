@@ -154,6 +154,9 @@
           <span style="font-weight:700;font-size:16px;line-height:1">+</span>
           <span>Nieuwe zaak</span>
         </button>
+        <a id="warrantyFormBtn" class="btn icon" href="https://surf-center.com/warranty" target="_blank" rel="noopener noreferrer" title="Garantieformulier openen">
+          <span style="font-weight:700;font-size:18px;line-height:1">+</span>
+        </a>
         <button id="logoutBtn" class="btn icon" type="button" title="Uitloggen">&#x23FB;</button>
       </div>
     </header>
@@ -209,7 +212,7 @@
 
           <!-- bevestigingslink -->
           <div style="margin-top:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <button id="copyConfirmLinkBtn" class="btn small" type="button">🔗 Bevestigingslink</button>
+            <button id="copyConfirmLinkBtn" class="btn small" type="button">üîó Bevestigingslink</button>
             <span id="confirmLinkMsg" style="font-size:12px;color:var(--ok)"></span>
           </div>
 
@@ -254,9 +257,11 @@
 
           <!-- notities -->
           <div class="sectionTitle">Notities</div>
-          <textarea id="notesField" rows="3" placeholder="Interne notities..." style="margin-top:6px"></textarea>
-          <div class="row" style="margin-top:8px;justify-content:flex-end">
-            <button id="saveNotesBtn" class="btn primary small" type="button">Notities opslaan</button>
+          <div id="notesList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
+          <div id="noNotes" class="hint" style="margin-top:6px">Nog geen notities.</div>
+          <div class="row" style="margin-top:10px;gap:8px;flex-wrap:nowrap">
+            <input id="newNoteText" placeholder="Nieuwe notitie..." style="flex:1" />
+            <button id="addNoteBtn" class="btn primary small" type="button" style="flex-shrink:0">Toevoegen</button>
           </div>
           <div class="hint" id="notesSaveMsg"></div>
 
@@ -298,16 +303,28 @@
             <div class="divider"></div>
             <div class="toggleRow" id="templatesToggle"><div class="sectionTitle">Mail templates</div><div class="plusSym" id="templatesPlus">+</div></div>
             <div id="templatesBody" class="hidden" style="margin-top:10px">
+              <div class="sectionTitle" style="margin-bottom:8px">Leverancier</div>
               <div id="supplierTemplatesList"><div class="muted" style="font-size:13px">Geen templates.</div></div>
+              <div class="divider"></div>
+              <div class="sectionTitle" style="margin-bottom:8px">Klant</div>
+              <div id="customerTemplatesList"><div class="muted" style="font-size:13px">Geen templates.</div></div>
               <div class="hint" id="tplSendMsg"></div>
               <div class="divider"></div>
               <div class="toggleRow" id="addTplToggle"><div class="sectionTitle">Template toevoegen</div><div class="plusSym" id="addTplPlus">+</div></div>
               <div id="addTplBody" class="hidden" style="margin-top:10px">
-                <div class="grid2">
+                <div class="grid3">
+                  <div><label style="margin-top:0">Type</label>
+                    <select id="tplType">
+                      <option value="supplier">Leverancier</option>
+                      <option value="customer">Klant</option>
+                    </select>
+                  </div>
                   <div><label style="margin-top:0">Taal</label>
                     <select id="tplLang">
                       <option value="en">EN</option>
                       <option value="nl">NL</option>
+                      <option value="de">DE</option>
+                      <option value="fr">FR</option>
                     </select>
                   </div>
                   <div><label style="margin-top:0">Naam</label><input id="tplLabel" /></div>
@@ -469,7 +486,7 @@
   </div>
 </div>
 <script>
-const API_BASE = "https://script.google.com/macros/s/AKfycbxmAuwej_xWBEMx88G_6r822CDPX8CBXUB8drMHvX29xSkCR183McTy6fOzxVtCWdI4Hg/exec";
+const API_BASE = "https://script.google.com/macros/s/AKfycbxMDioUnR2djbs_qKZgQUtXd543ZlTfgpN8hfakvnRifbWdmeDBa7iS_CUeNpdk-g4i2A/exec";
 const WORKER_BASE = "https://surfcenter-upload.jelle-2b7.workers.dev";
 const STATUSES = [
   { key:"new",      label:"Nieuw",          cls:"s-new"      },
@@ -597,7 +614,7 @@ function addPhotoInput(val){
   var inp=document.createElement("input");
   inp.type="url"; inp.value=val||"";
   var btn=document.createElement("button");
-  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="×";
+  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="√ó";
   btn.onclick=function(){row.remove();};
   row.appendChild(inp); row.appendChild(btn);
   $("photoInputsWrap").appendChild(row);
@@ -660,7 +677,7 @@ async function openRow(rowId){
   $("desiredSolutionBlock").style.display=sol?"":"none";
   renderPhotos(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
   buildPhotoInputs(getAny(selected,["Photos","Fotos","Photo Links","PhotoLinks"]));
-  $("notesField").value=getAny(selected,["Notes","Notities"])||"";
+  renderNotes(selected);
   $("supplierRef").value=getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||"";
   $("confirmLinkMsg").textContent="";
   renderStatusBadge(getAny(selected,["Status"])||"new");
@@ -670,13 +687,35 @@ async function openRow(rowId){
   await loadMailLog();
 }
 
-$("saveNotesBtn").addEventListener("click",async function(){
+function renderNotes(order){
+  var wrap=$("notesList");
+  wrap.innerHTML="";
+  var any=false;
+  for(var i=1;i<=10;i++){
+    var val=getAny(order,["Note "+i]);
+    if(!val) continue;
+    any=true;
+    var row=document.createElement("div");
+    row.className="textBlock";
+    row.style.fontSize="12px";
+    row.style.padding="8px 10px";
+    row.textContent=val;
+    wrap.appendChild(row);
+  }
+  $("noNotes").classList.toggle("hidden",any);
+}
+$("addNoteBtn").addEventListener("click",async function(){
   if(!selected) return;
+  var text=$("newNoteText").value.trim();
+  if(!text){$("notesSaveMsg").innerHTML="<span style='color:var(--warn)'>Vul een notitie in.</span>";return;}
+  var rowId=selected.rowId;
   $("notesSaveMsg").textContent="Opslaan...";
-  var data=await api("action=update_notes&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(selected.rowId)+"&Notes="+encodeURIComponent($("notesField").value.trim())).catch(function(){return null;});
-  if(!data||!data.ok){$("notesSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
-  $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
+  var data=await api("action=warranty_add_note&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(rowId)+"&Note="+encodeURIComponent(text)).catch(function(){return null;});
+  if(!data||!data.ok){$("notesSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt"+(data&&data.error?": "+escapeHTML(data.error):"")+".</span>";return;}
+  $("newNoteText").value="";
+  $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>Toegevoegd</span>";
   await loadCases();
+  await openRow(rowId);
 });
 $("saveRefBtn").addEventListener("click",async function(){
   if(!selected) return;
@@ -714,28 +753,33 @@ async function loadTemplates(){
   supplierTemplates=s&&s.ok&&Array.isArray(s.templates)?s.templates:[];
   var c=await api("action=warranty_customer_templates&supplierKey="+encodeURIComponent(supplierKey)).catch(function(){return null;});
   customerTemplates=c&&c.ok&&Array.isArray(c.templates)?c.templates:[];
-  renderTemplateList("supplierTemplatesList",supplierTemplates,sendSupplierTemplate,editTpl);
+  renderTemplateList("supplierTemplatesList",supplierTemplates,sendSupplierTemplate,function(t){editTpl(t,"supplier");});
+  renderTemplateList("customerTemplatesList",customerTemplates,sendCustomerTemplate,function(t){editTpl(t,"customer");});
 }
-function editTpl(tpl){
+function editTpl(tpl,type){
   $("addTplBody").classList.remove("hidden"); $("addTplPlus").textContent="-";
+  $("tplType").value=type||"supplier";
   $("tplLang").value=(tpl.language||"en").toLowerCase();
   $("tplLabel").value=tpl.label||"";
   $("tplSubject").value=tpl.subject||"";
   $("tplBodyText").value=tpl.body||"";
   $("tplSave").dataset.editId=String(tpl.id||"");
+  $("tplSave").dataset.editType=type||"supplier";
   $("tplSave").textContent="Bijwerken";
 }
 function resetTplEditor(){
-  $("tplLang").value="nl"; $("tplLabel").value=""; $("tplSubject").value=""; $("tplBodyText").value="";
-  $("tplSaveMsg").textContent=""; delete $("tplSave").dataset.editId; $("tplSave").textContent="Opslaan";
+  $("tplType").value="supplier"; $("tplLang").value="nl"; $("tplLabel").value=""; $("tplSubject").value=""; $("tplBodyText").value="";
+  $("tplSaveMsg").textContent=""; delete $("tplSave").dataset.editId; delete $("tplSave").dataset.editType; $("tplSave").textContent="Opslaan";
 }
 $("tplCancel").addEventListener("click",resetTplEditor);
 $("tplSave").addEventListener("click",async function(){
   var id=$("tplSave").dataset.editId||"";
+  var type=$("tplSave").dataset.editType||$("tplType").value||"supplier";
   var lang=$("tplLang").value, label=$("tplLabel").value.trim(), subj=$("tplSubject").value.trim(), body=$("tplBodyText").value.trim();
   if(!label||!subj||!body){$("tplSaveMsg").innerHTML="<span style='color:var(--warn)'>Vul alle velden in.</span>";return;}
   $("tplSaveMsg").textContent="Opslaan...";
-  var qs="action=warranty_supplier_template_upsert&supplierKey="+encodeURIComponent(supplierKey)+(id?"&id="+encodeURIComponent(id):"")+"&language="+encodeURIComponent(lang)+"&label="+encodeURIComponent(label)+"&subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+  var action=type==="customer"?"warranty_customer_template_upsert":"warranty_supplier_template_upsert";
+  var qs="action="+action+"&supplierKey="+encodeURIComponent(supplierKey)+(id?"&id="+encodeURIComponent(id):"")+"&language="+encodeURIComponent(lang)+"&label="+encodeURIComponent(label)+"&subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
   var data=await api(qs).catch(function(){return null;});
   if(!data||!data.ok){$("tplSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt.</span>";return;}
   $("tplSaveMsg").innerHTML="<span style='color:var(--ok)'>Opgeslagen</span>";
@@ -767,6 +811,16 @@ async function sendSupplierTemplate(tpl){
   var subject=applyTokens(tpl.subject||""), body=applyTokens(tpl.body||"");
   openMailPicker({to:to,cc:"",subject:subject,body:body,afterOpen:async function(){
     await logMail({to:to,kind:"supplier",language:String(tpl.language||"").toLowerCase(),template:tpl.label||"",subject:subject});
+    $("tplSendMsg").innerHTML="<span style='color:var(--ok)'>Mail geopend</span>";
+    await loadMailLog();
+  }});
+}
+async function sendCustomerTemplate(tpl){
+  var to=customerMailAddress();
+  if(!to){$("tplSendMsg").innerHTML="<span style='color:var(--warn)'>Geen klant-e-mail gevonden.</span>";return;}
+  var subject=applyTokens(tpl.subject||""), body=applyTokens(tpl.body||"");
+  openMailPicker({to:to,cc:"",subject:subject,body:body,afterOpen:async function(){
+    await logMail({to:to,kind:"customer",language:String(tpl.language||"").toLowerCase(),template:tpl.label||"",subject:subject});
     $("tplSendMsg").innerHTML="<span style='color:var(--ok)'>Mail geopend</span>";
     await loadMailLog();
   }});
@@ -816,7 +870,7 @@ async function loadMailLog(){
   rows.forEach(function(r){
     var dt=formatDT(r.Timestamp||"");
     var el=document.createElement("div"); el.className="savedTemplateRow";
-    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" — "+escapeHTML(r.Subject||"-")+"</div></div>";
+    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" ‚Äî "+escapeHTML(r.Subject||"-")+"</div></div>";
     wrap.appendChild(el);
   });
   $("mailLogList").innerHTML=""; $("mailLogList").appendChild(wrap);
@@ -850,7 +904,7 @@ function renderCases(){
       var statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
       var si=statusInfo(statusKey);
       var product=getAny(o,["Product"])||"";
-      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>✓</span>":"<span class='checkPill'>—</span>")+"</td>";
+      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>‚úì</span>":"<span class='checkPill'>‚Äî</span>")+"</td>";
       target.appendChild(tr);
     });
   }
