@@ -123,6 +123,16 @@
     .modeSwitch{display:inline-flex;align-items:center;gap:6px;padding:6px;background:var(--pill);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
     .modeBtn{border:none;background:transparent;color:var(--pillText);padding:10px 18px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500}
     .modeBtn.active{background:var(--pillActive);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(15,23,42,.18)}
+    .noteItem{border:1px solid var(--border);border-radius:12px;padding:8px 10px;background:var(--soft)}
+    .noteItem.ext{background:rgba(22,163,74,.05);border-color:rgba(22,163,74,.3)}
+    .noteHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+    .noteTag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted);white-space:nowrap}
+    .noteItem.ext .noteTag{color:var(--ok);border-color:rgba(22,163,74,.35)}
+    .noteMeta{font-size:11px;color:var(--muted);font-weight:500}
+    .noteText{font-size:12px;line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word}
+    .noteActions{display:flex;gap:6px}
+    .noteActions button{border:none;background:none;padding:2px 4px;font-family:inherit;font-size:11px;font-weight:700;color:var(--info);cursor:pointer}
+    .noteActions button.del{color:var(--bad)}
     .textBlock{font-size:13px;line-height:1.6;padding:10px 12px;background:var(--soft);border:1px solid var(--border);border-radius:12px;white-space:pre-wrap;min-height:40px;color:var(--text)}
   </style>
 </head>
@@ -207,12 +217,13 @@
               <span id="statusBadge" class="statusPill s-new"><span class="dot"></span><span id="statusText">Nieuw</span></span>
               <select id="statusSelect" style="width:130px;font-size:12px;padding:7px 10px;border-radius:10px"></select>
               <button id="statusSaveBtn" class="btn small primary" type="button">Opslaan</button>
+              <button id="editCaseBtn" class="btn small hidden" type="button">‚úé Bewerken</button>
             </div>
           </div>
 
           <!-- bevestigingslink -->
           <div style="margin-top:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <button id="copyConfirmLinkBtn" class="btn small" type="button">üîó Bevestigingslink</button>
+            <button id="copyConfirmLinkBtn" class="btn small" type="button">Ô£øüîó Bevestigingslink</button>
             <span id="confirmLinkMsg" style="font-size:12px;color:var(--ok)"></span>
           </div>
 
@@ -257,10 +268,15 @@
 
           <!-- notities -->
           <div class="sectionTitle">Notities</div>
+          <div class="hint" style="margin-top:4px">Intern = alleen in de portal. Klant = ook zichtbaar via de bevestigingslink (bijv. de uitkomst van de zaak).</div>
           <div id="notesList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
           <div id="noNotes" class="hint" style="margin-top:6px">Nog geen notities.</div>
-          <div class="row" style="margin-top:10px;gap:8px;flex-wrap:nowrap">
-            <input id="newNoteText" placeholder="Nieuwe notitie..." style="flex:1" />
+          <textarea id="newNoteText" rows="2" placeholder="Nieuwe notitie..." style="margin-top:10px"></textarea>
+          <div class="row" style="margin-top:8px;gap:8px;flex-wrap:nowrap;justify-content:flex-end">
+            <select id="newNoteType" style="width:auto;font-size:12px;padding:8px 10px;border-radius:10px">
+              <option value="internal">Intern</option>
+              <option value="external">Zichtbaar voor klant</option>
+            </select>
             <button id="addNoteBtn" class="btn primary small" type="button" style="flex-shrink:0">Toevoegen</button>
           </div>
           <div class="hint" id="notesSaveMsg"></div>
@@ -473,6 +489,37 @@
     <div class="hint" id="createMsg"></div>
   </div>
 </div>
+<!-- EDIT CASE MODAL -->
+<div id="editCaseModal" class="overlay hidden">
+  <div class="card" style="max-width:560px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="font-weight:700">Zaak bewerken</div>
+      <button id="editCaseClose" class="btn" type="button">Sluiten</button>
+    </div>
+    <div class="grid2">
+      <div><label style="margin-top:0">Klant</label><input id="ec_Customer" /></div>
+      <div><label style="margin-top:0">E-mail</label><input id="ec_MailCustomer" type="email" /></div>
+    </div>
+    <div class="grid2">
+      <div><label style="margin-top:0">Telefoon</label><input id="ec_Phone" type="tel" /></div>
+      <div><label style="margin-top:0">Aankoopdatum</label><input id="ec_PurchaseDate" type="date" /></div>
+    </div>
+    <label>Leverancier</label><select id="ec_Supplier"></select>
+    <label>Product (merk, model, jaar, kleur)</label><input id="ec_Product" />
+    <div class="grid2">
+      <div><label style="margin-top:0">Factuurnummer</label><input id="ec_InvoiceNumber" /></div>
+      <div><label style="margin-top:0">Serienummer</label><input id="ec_SerialNumber" /></div>
+    </div>
+    <label>Factuurlink</label><input id="ec_InvoiceLink" type="url" />
+    <label>Klacht / omschrijving</label><textarea id="ec_Complaint" rows="3"></textarea>
+    <label>Hoe is het gebeurd?</label><textarea id="ec_HowItHappened" rows="2"></textarea>
+    <label>Gewenste oplossing</label><textarea id="ec_DesiredSolution" rows="2"></textarea>
+    <div class="row" style="margin-top:12px;justify-content:flex-end">
+      <button id="editCaseSave" class="btn primary" type="button">Opslaan</button>
+    </div>
+    <div class="hint" id="editCaseMsg"></div>
+  </div>
+</div>
 <!-- MAIL PICKER -->
 <div id="mailPicker" class="hidden" style="position:fixed;inset:0;background:rgba(15,23,42,.35);display:grid;place-items:center;padding:18px;z-index:9999">
   <div class="card" style="max-width:420px;width:100%">
@@ -523,6 +570,12 @@ function api(qs){return jsonp(API_BASE+"?"+qs);}
 function parsePhotoLinks(val){
   return String(val||"").split(/[\n,]+/).map(s=>s.trim()).filter(s=>s.startsWith("http"));
 }
+function dateOnly(v){
+  var s=String(v||"").trim();if(!s) return "";
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  if(/^\d{4}-\d{2}-\d{2}T/.test(s)){var d=new Date(s);if(!isNaN(d)) return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+  return s.slice(0,10);
+}
 function statusInfo(key){return STATUSES.find(x=>x.key===String(key||"").toLowerCase())||STATUSES[0];}
 function setupToggle(tid,bid,pid,onOpen){
   const t=$(tid),b=$(bid),p=$(pid);if(!t||!b||!p)return;
@@ -541,7 +594,7 @@ function tokenMap(){
     "{{Serienummer}}":      getAny(selected,["SerialNumber","Serienummer"]),
     "{{Klacht}}":           getAny(selected,["Complaint","Klacht"]),
     "{{Zaaknummer}}":       caseNum,
-    "{{Aankoopdatum}}":     getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]),
+    "{{Aankoopdatum}}":     dateOnly(getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])),
     "{{Factuurnummer}}":    getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
     "{{LeveranciersRef}}":  getAny(selected,["SupplierRef","Supplier Ref","LeveranciersRef"])||$("supplierRef").value.trim(),
     "{{FotoLinks}}":        photos.join("\n"),
@@ -662,7 +715,7 @@ async function openRow(rowId){
   $("d_supplier").textContent=getAny(selected,["Supplier","Leverancier"])||"-";
   $("d_product").textContent=getAny(selected,["Product"])||"-";
   $("d_serialNumber").textContent=getAny(selected,["SerialNumber","Serienummer"])||"-";
-  $("d_purchaseDate").textContent=getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"])||"-";
+  $("d_purchaseDate").textContent=dateOnly(getAny(selected,["PurchaseDate","Purchase Date","Aankoopdatum"]))||"-";
   $("d_caseNumber").textContent=getAny(selected,["CaseNumber","Case Number","Zaaknummer"])||"-";
   renderInvoice(
     getAny(selected,["InvoiceNumber","Invoice Number","Factuurnummer"]),
@@ -684,38 +737,108 @@ async function openRow(rowId){
   $("noSelection").classList.add("hidden");
   $("form").classList.remove("hidden");
   $("mailCustomerSection").classList.toggle("hidden",isSupplier());
+  $("editCaseBtn").classList.toggle("hidden",!isMaster());
+  $("newNoteType").classList.toggle("hidden",isSupplier());
   await loadMailLog();
 }
 
+// Notities staan als JSON in kolom "Notes": [{id,text,type:"internal"|"external",created,updated}].
+// Oude data (platte tekst of "Note 1".."Note N") wordt als interne notitie getoond.
+function parseNotes(order){
+  var raw=String(order&&order.Notes||"").trim();
+  if(raw.charAt(0)==="["){try{var arr=JSON.parse(raw);if(Array.isArray(arr)) return arr.filter(function(n){return n&&String(n.text||"").trim();});}catch(_){}}
+  var out=[];
+  if(raw) out.push({id:"legacy0",text:raw,type:"internal"});
+  Object.keys(order||{}).forEach(function(k){var m=k.match(/^Note (\d+)$/);if(m&&String(order[k]||"").trim()) out.push({id:"legacy"+m[1],text:String(order[k]).trim(),type:"internal"});});
+  return out;
+}
 function renderNotes(order){
   var wrap=$("notesList");
   wrap.innerHTML="";
-  var any=false;
-  for(var i=1;i<=10;i++){
-    var val=getAny(order,["Note "+i]);
-    if(!val) continue;
-    any=true;
-    var row=document.createElement("div");
-    row.className="textBlock";
-    row.style.fontSize="12px";
-    row.style.padding="8px 10px";
-    row.textContent=val;
-    wrap.appendChild(row);
-  }
-  $("noNotes").classList.toggle("hidden",any);
+  var notes=parseNotes(order);
+  notes.forEach(function(n){
+    var ext=n.type==="external";
+    var item=document.createElement("div");
+    item.className="noteItem"+(ext?" ext":"");
+    var date=n.updated?("bewerkt "+n.updated):(n.created||"");
+    item.innerHTML="<div class='noteHead'><div class='row' style='gap:6px'><span class='noteTag'>"+(ext?"Klant":"Intern")+"</span><span class='noteMeta'>"+escapeHTML(date)+"</span></div><div class='noteActions'><button type='button' data-act='edit'>Bewerken</button><button type='button' class='del' data-act='del'>Verwijderen</button></div></div><div class='noteText'></div>";
+    item.querySelector(".noteText").textContent=n.text;
+    item.querySelector("[data-act=edit]").addEventListener("click",function(){editNoteInline(item,n);});
+    item.querySelector("[data-act=del]").addEventListener("click",function(){deleteNote(n);});
+    wrap.appendChild(item);
+  });
+  $("noNotes").classList.toggle("hidden",notes.length>0);
 }
-$("addNoteBtn").addEventListener("click",async function(){
-  if(!selected) return;
-  var text=$("newNoteText").value.trim();
-  if(!text){$("notesSaveMsg").innerHTML="<span style='color:var(--warn)'>Vul een notitie in.</span>";return;}
+function editNoteInline(item,n){
+  item.innerHTML="<textarea rows='3' style='font-size:12px'></textarea><div class='row' style='margin-top:6px;gap:6px;justify-content:flex-end;flex-wrap:nowrap'>"+(isSupplier()?"":"<select style='width:auto;font-size:12px;padding:6px 8px;border-radius:10px'><option value='internal'>Intern</option><option value='external'>Zichtbaar voor klant</option></select>")+"<button type='button' class='btn small' data-act='cancel'>Annuleren</button><button type='button' class='btn small primary' data-act='save'>Opslaan</button></div>";
+  var ta=item.querySelector("textarea"), sel=item.querySelector("select");
+  ta.value=n.text; if(sel) sel.value=n.type==="external"?"external":"internal";
+  ta.focus();
+  item.querySelector("[data-act=cancel]").addEventListener("click",function(){renderNotes(selected);});
+  item.querySelector("[data-act=save]").addEventListener("click",function(){
+    var text=ta.value.trim();
+    if(!text){$("notesSaveMsg").innerHTML="<span style='color:var(--warn)'>Notitie is leeg.</span>";return;}
+    notesCall("warranty_note_update","&noteId="+encodeURIComponent(n.id)+"&text="+encodeURIComponent(text)+(sel?"&type="+encodeURIComponent(sel.value):""),"Opgeslagen");
+  });
+}
+function deleteNote(n){
+  if(!confirm("Notitie verwijderen?")) return;
+  notesCall("warranty_note_delete","&noteId="+encodeURIComponent(n.id),"Verwijderd");
+}
+async function notesCall(action,extra,okMsg){
+  if(!selected) return false;
   var rowId=selected.rowId;
   $("notesSaveMsg").textContent="Opslaan...";
-  var data=await api("action=warranty_add_note&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(rowId)+"&Note="+encodeURIComponent(text)).catch(function(){return null;});
-  if(!data||!data.ok){$("notesSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt"+(data&&data.error?": "+escapeHTML(data.error):"")+".</span>";return;}
-  $("newNoteText").value="";
-  $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>Toegevoegd</span>";
+  var data=await api("action="+action+"&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(rowId)+extra).catch(function(){return null;});
+  if(!data||!data.ok){$("notesSaveMsg").innerHTML="<span style='color:var(--bad)'>Mislukt"+(data&&data.error?": "+escapeHTML(data.error):"")+".</span>";return false;}
+  var c=cases.find(function(x){return Number(x.rowId)===Number(rowId);});
+  if(c&&Array.isArray(data.notes)){c.Notes=JSON.stringify(data.notes);Object.keys(c).forEach(function(k){if(/^Note \d+$/.test(k)) c[k]="";});}
+  if(selected&&Number(selected.rowId)===Number(rowId)) renderNotes(selected);
+  $("notesSaveMsg").innerHTML="<span style='color:var(--ok)'>"+okMsg+"</span>";
+  setTimeout(function(){$("notesSaveMsg").textContent="";},2500);
+  return true;
+}
+$("addNoteBtn").addEventListener("click",async function(){
+  var text=$("newNoteText").value.trim();
+  if(!text){$("notesSaveMsg").innerHTML="<span style='color:var(--warn)'>Vul een notitie in.</span>";return;}
+  var type=isSupplier()?"internal":$("newNoteType").value;
+  if(await notesCall("warranty_note_add","&text="+encodeURIComponent(text)+"&type="+encodeURIComponent(type),"Toegevoegd")){
+    $("newNoteText").value=""; $("newNoteType").value="internal";
+  }
+});
+
+// zaak bewerken
+var EDIT_FIELDS=[
+  ["Customer",["Customer","Klant"]],["MailCustomer",["MailCustomer","Mail Customer","Email"]],["Phone",["Phone","Telefoon"]],
+  ["Supplier",["Supplier","Leverancier"]],["Product",["Product"]],["SerialNumber",["SerialNumber","Serienummer"]],
+  ["PurchaseDate",["PurchaseDate","Purchase Date","Aankoopdatum"]],["InvoiceNumber",["InvoiceNumber","Invoice Number","Factuurnummer"]],
+  ["InvoiceLink",["InvoiceLink","Invoice Link","FactuurLink"]],["Complaint",["Complaint","Klacht"]],
+  ["HowItHappened",["HowItHappened"]],["DesiredSolution",["DesiredSolution"]]
+];
+$("editCaseBtn").addEventListener("click",function(){
+  if(!selected) return;
+  var sel=$("ec_Supplier"); sel.innerHTML="<option value=''>-</option>"+$("nc_supplier").innerHTML;
+  var cur=getAny(selected,["Supplier","Leverancier"]);
+  if(cur&&![].some.call(sel.options,function(o){return o.value===cur;})){var o=document.createElement("option");o.value=cur;o.textContent=cur;sel.appendChild(o);}
+  EDIT_FIELDS.forEach(function(f){var v=getAny(selected,f[1]);$("ec_"+f[0]).value=f[0]==="PurchaseDate"?dateOnly(v):v;});
+  $("editCaseMsg").textContent="";
+  $("editCaseModal").classList.remove("hidden");
+});
+$("editCaseClose").addEventListener("click",function(){$("editCaseModal").classList.add("hidden");});
+$("editCaseModal").addEventListener("click",function(e){if(e.target===$("editCaseModal")) $("editCaseModal").classList.add("hidden");});
+$("editCaseSave").addEventListener("click",async function(){
+  if(!selected) return;
+  if(!$("ec_Customer").value.trim()||!$("ec_Product").value.trim()){$("editCaseMsg").innerHTML="<span style='color:var(--warn)'>Klant en product zijn verplicht.</span>";return;}
+  var rowId=selected.rowId, qs="action=warranty_update_case&supplierKey="+encodeURIComponent(supplierKey)+"&rowId="+encodeURIComponent(rowId);
+  EDIT_FIELDS.forEach(function(f){qs+="&"+f[0]+"="+encodeURIComponent($("ec_"+f[0]).value.trim());});
+  $("editCaseSave").disabled=true; $("editCaseMsg").textContent="Opslaan...";
+  var data=await api(qs).catch(function(){return null;});
+  $("editCaseSave").disabled=false;
+  if(!data||!data.ok){$("editCaseMsg").innerHTML="<span style='color:var(--bad)'>Mislukt"+(data&&data.error?": "+escapeHTML(data.error):"")+".</span>";return;}
+  $("editCaseModal").classList.add("hidden");
   await loadCases();
-  await openRow(rowId);
+  await openRow(Number(rowId));
+  $("msg").innerHTML="<span style='color:var(--ok)'>Zaak bijgewerkt</span>";
 });
 $("saveRefBtn").addEventListener("click",async function(){
   if(!selected) return;
