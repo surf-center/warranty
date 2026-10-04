@@ -216,14 +216,16 @@
             <div class="kvBlock" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
               <span id="statusBadge" class="statusPill s-new"><span class="dot"></span><span id="statusText">Nieuw</span></span>
               <select id="statusSelect" style="width:130px;font-size:12px;padding:7px 10px;border-radius:10px"></select>
-              <button id="statusSaveBtn" class="btn small primary" type="button">Opslaan</button>
-              <button id="editCaseBtn" class="btn small hidden" type="button">‚úé Bewerken</button>
+              <div class="row" style="gap:6px;flex-wrap:nowrap;justify-content:flex-end;width:130px">
+                <button id="editCaseBtn" class="btn small hidden" type="button" title="Zaak bewerken" style="flex:1">Bewerk</button>
+                <button id="statusSaveBtn" class="btn small primary" type="button" title="Status opslaan" style="flex:1">Opslaan</button>
+              </div>
             </div>
           </div>
 
           <!-- bevestigingslink -->
           <div style="margin-top:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <button id="copyConfirmLinkBtn" class="btn small" type="button">Ô£øüîó Bevestigingslink</button>
+            <button id="copyConfirmLinkBtn" class="btn small" type="button">Bevestigingslink</button>
             <span id="confirmLinkMsg" style="font-size:12px;color:var(--ok)"></span>
           </div>
 
@@ -268,7 +270,6 @@
 
           <!-- notities -->
           <div class="sectionTitle">Notities</div>
-          <div class="hint" style="margin-top:4px">Intern = alleen in de portal. Klant = ook zichtbaar via de bevestigingslink (bijv. de uitkomst van de zaak).</div>
           <div id="notesList" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
           <div id="noNotes" class="hint" style="margin-top:6px">Nog geen notities.</div>
           <textarea id="newNoteText" rows="2" placeholder="Nieuwe notitie..." style="margin-top:10px"></textarea>
@@ -285,7 +286,7 @@
 
           <!-- leverancier ref -->
           <div class="sectionTitle">Leveranciersreferentie</div>
-          <input id="supplierRef" placeholder="RMA / zaaknummer leverancier" style="margin-top:6px" />
+          <input id="supplierRef" placeholder="Referentie leverancier" style="margin-top:6px" />
           <div class="row" style="margin-top:8px;justify-content:flex-end">
             <button id="saveRefBtn" class="btn primary small" type="button">Opslaan</button>
           </div>
@@ -417,7 +418,10 @@
 <div id="suppliersView" class="hidden">
   <div class="wrap" style="padding-top:0">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-      <div style="font-weight:700;font-size:16px">Leveranciers</div>
+      <div class="row" style="gap:10px">
+        <button id="suppliersBackBtn" class="btn" type="button">&larr; Terug</button>
+        <div style="font-weight:700;font-size:16px">Leveranciers</div>
+      </div>
       <button id="newSupplierBtn" class="btn primary" type="button">+ Leverancier toevoegen</button>
     </div>
     <input id="supplierSearch" placeholder="Zoeken op naam, mail, contactpersoon..." style="width:100%;margin-bottom:14px" />
@@ -447,7 +451,7 @@
       <div><label>Website</label><input id="sup_website" type="url" /></div>
       <div><label>Land</label><input id="sup_country" /></div>
     </div>
-    <label>Garantieportaal / RMA-link</label><input id="sup_rmaLink" type="url" />
+    <label>Garantieportaal</label><input id="sup_rmaLink" type="url" />
     <label>Garantievoorwaarden / termijn</label><input id="sup_warranty" />
     <label>Adres</label><input id="sup_address" />
     <label>Notities</label><textarea id="sup_notes" rows="3"></textarea>
@@ -667,7 +671,7 @@ function addPhotoInput(val){
   var inp=document.createElement("input");
   inp.type="url"; inp.value=val||"";
   var btn=document.createElement("button");
-  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="√ó";
+  btn.className="btn small"; btn.type="button"; btn.style.flexShrink="0"; btn.style.color="var(--bad)"; btn.textContent="\u00d7";
   btn.onclick=function(){row.remove();};
   row.appendChild(inp); row.appendChild(btn);
   $("photoInputsWrap").appendChild(row);
@@ -993,7 +997,7 @@ async function loadMailLog(){
   rows.forEach(function(r){
     var dt=formatDT(r.Timestamp||"");
     var el=document.createElement("div"); el.className="savedTemplateRow";
-    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" ‚Äî "+escapeHTML(r.Subject||"-")+"</div></div>";
+    el.innerHTML="<div style='width:100%'><div class='mailLogRow'><div class='mailLogDate'>"+escapeHTML(dt.date)+"</div><div class='mailLogTime'>"+escapeHTML(dt.time)+"</div></div><div class='tplMeta' style='margin-top:6px'>"+escapeHTML(r.Template||"-")+" \u2014 "+escapeHTML(r.Subject||"-")+"</div></div>";
     wrap.appendChild(el);
   });
   $("mailLogList").innerHTML=""; $("mailLogList").appendChild(wrap);
@@ -1027,7 +1031,7 @@ function renderCases(){
       var statusKey=String(getAny(o,["Status"])||"new").toLowerCase();
       var si=statusInfo(statusKey);
       var product=getAny(o,["Product"])||"";
-      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>‚úì</span>":"<span class='checkPill'>‚Äî</span>")+"</td>";
+      tr.innerHTML="<td><div style='font-weight:700;overflow-wrap:break-word;word-break:break-word'>"+escapeHTML(getAny(o,["Customer","Klant"]))+"</div>"+(product?"<div class='smallLine'>"+escapeHTML(product)+"</div>":"")+"</td><td class='statusCell'><div class='statusWrap'><span class='statusPill "+si.cls+"'><span class='dot'></span>"+escapeHTML(si.label)+"</span></div></td><td><div class='actionsCell'><button class='btn openBtn' data-open='"+escapeHTML(String(o.rowId))+"'>Openen</button></div></td><td class='completedCell'>"+(isTruthy(o.Completed)?"<span class='checkPill yes'>\u2713</span>":"<span class='checkPill'>\u2014</span>")+"</td>";
       target.appendChild(tr);
     });
   }
@@ -1094,6 +1098,7 @@ function setView(v){
 }
 $("viewCasesBtn").addEventListener("click",function(){setView("cases");});
 $("viewSuppliersBtn").addEventListener("click",function(){setView("suppliers");});
+$("suppliersBackBtn").addEventListener("click",function(){setView("cases");});
 
 var suppliersData=[];
 var editingSupplierId=null;
